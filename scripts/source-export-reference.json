@@ -2018,7 +2018,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "77e2cd8563dfe0445a3abe2b63b0511563a799d3ab72d87665de0d0a326d7af8"
+      "sha256": "7118dc203466ab91f368f8ae592b6236e17bd137aa6e64f44a0b3c0710f8cc4f"
     },
     "service/guests.ts": {
       "kind": "source",

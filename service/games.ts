@@ -519,8 +519,9 @@ export function registerGames(world: World): void {
       if (me.state === 'played') throw new WorldError('conflict', 'You have already played this one.')
       if (me.state === 'declined' || !open(m, ctx.now)) throw new WorldError('conflict', 'This match is not open for play.')
     }
-    // One open attempt per member and match: a new one replaces the old.
-    for (const old of Object.values(data.attempts)) if (old.member === ctx.memberId && old.matchId === m.id && !old.consumed) old.consumed = true
+    // One open attempt per member, in any match: a new one replaces the old. A person plays one run at a time, so
+    // courses begun together in several matches can never all be paid for one run's worth of waiting.
+    for (const old of Object.values(data.attempts)) if (old.member === ctx.memberId && !old.consumed) old.consumed = true
     const course = buildDashCourse(m.seed)
     const startedAt = ctx.now
     const attempt: AttemptRec = {
