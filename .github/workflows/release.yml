@@ -1,0 +1,158 @@
+# Manual release of reviewed main to Cloudflare Workers Free. Two jobs:
+#   package  builds and gates the complete package with no secrets, from the dispatched commit.
+#   deploy   runs only for refs/heads/main, only when asked, and only after the protected
+#            "production" environment approves. The provider token exists only in that environment.
+# Nothing here uses pull_request_target, workflow_run or a pull request's code.
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: Deploy after the package gate passes (main only; waits for environment approval)
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: allworld-release
+  cancel-in-progress: false
+
+jobs:
+  package:
+    name: Build and gate the package
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    outputs:
+      build-id: ${{ steps.assemble.outputs.build-id }}
+      artifact-sha: ${{ steps.assemble.outputs.artifact-sha }}
+      config-sha: ${{ steps.assemble.outputs.config-sha }}
+      legacy-origin: ${{ steps.assemble.outputs.legacy-origin }}
+      package-sha: ${{ steps.pack.outputs.package-sha }}
+      origin: ${{ vars.ALLWORLD_ORIGIN }}
+    steps:
+      - name: Check out the dispatched commit
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - name: Set up Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22.18.0
+
+      - name: Install dependencies from the lockfile
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: Validate workflows and release configuration
+        run: node scripts/check-workflows.mjs
+
+      - name: Typecheck, structure, assets and service probes
+        run: npm run check
+
+      - name: Assemble the release package
+        id: assemble
+        env:
+          ALLWORLD_ORIGIN: ${{ vars.ALLWORLD_ORIGIN }}
+          ALLWORLD_AUDIENCE: ${{ vars.ALLWORLD_AUDIENCE }}
+          ALLWORLD_LEGACY_ORIGIN: ${{ vars.ALLWORLD_LEGACY_ORIGIN }}
+          ALLWORLD_SITE_ID: ${{ vars.ALLWORLD_SITE_ID }}
+          ALLWORLD_PACKAGE_ID: ${{ vars.ALLWORLD_PACKAGE_ID }}
+          ALLWORLD_WORKER_NAME: ${{ vars.ALLWORLD_WORKER_NAME }}
+          ALLWORLD_CF_ACCOUNT_ID: ${{ vars.ALLWORLD_CF_ACCOUNT_ID }}
+          ALLWORLD_FIREBASE_PROJECT_ID: ${{ vars.ALLWORLD_FIREBASE_PROJECT_ID }}
+          ALLWORLD_FIREBASE_PROJECT_NUMBER: ${{ vars.ALLWORLD_FIREBASE_PROJECT_NUMBER }}
+          ALLWORLD_MAX_CONNECTIONS: ${{ vars.ALLWORLD_MAX_CONNECTIONS }}
+          ALLWORLD_IMPORT_MAX_BYTES: ${{ vars.ALLWORLD_IMPORT_MAX_BYTES }}
+          ALLWORLD_DO_MIGRATION_TAG: ${{ vars.ALLWORLD_DO_MIGRATION_TAG }}
+          ALLWORLD_BUILD_ID: allworld-${{ github.sha }}
+        run: node scripts/assemble-release-package.mjs --out "$RUNNER_TEMP/package" --github-output "$GITHUB_OUTPUT"
+
+      - name: Run the package gate
+        env:
+          BUILD_ID: ${{ steps.assemble.outputs.build-id }}
+          ARTIFACT_SHA: ${{ steps.assemble.outputs.artifact-sha }}
+          CONFIG_SHA: ${{ steps.assemble.outputs.config-sha }}
+          LEGACY_ORIGIN: ${{ steps.assemble.outputs.legacy-origin }}
+        run: node scripts/run-release-gate.mjs check --package "$RUNNER_TEMP/package" --build-id "$BUILD_ID" --artifact-sha "$ARTIFACT_SHA" --config-sha "$CONFIG_SHA" --legacy-origin "$LEGACY_ORIGIN"
+
+      - name: Seal the package as one archive
+        id: pack
+        run: |
+          tar --sort=name --owner=0 --group=0 --numeric-owner --mtime='UTC 2020-01-01' -C "$RUNNER_TEMP/package" -cf "$RUNNER_TEMP/allworld-package.tar" .
+          echo "package-sha=$(sha256sum "$RUNNER_TEMP/allworld-package.tar" | cut -d ' ' -f 1)" >> "$GITHUB_OUTPUT"
+
+      - name: Upload the sealed package
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: allworld-package-${{ github.sha }}
+          path: ${{ runner.temp }}/allworld-package.tar
+          if-no-files-found: error
+          retention-days: 14
+
+  deploy:
+    name: Deploy to Cloudflare Workers
+    needs: package
+    if: inputs.deploy && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    environment: production
+    steps:
+      - name: Check out the same commit
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Refuse a commit that is no longer the head of main
+        run: |
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git rev-parse refs/remotes/origin/main)" = "$GITHUB_SHA"
+
+      - name: Set up Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22.18.0
+
+      - name: Install dependencies from the lockfile (the Worker bundle includes tz-lookup)
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: Install the pinned Worker tool
+        run: |
+          mkdir "$RUNNER_TEMP/tools"
+          cp .github/wrangler/package.json .github/wrangler/package-lock.json "$RUNNER_TEMP/tools/"
+          npm ci --ignore-scripts --no-audit --no-fund --prefix "$RUNNER_TEMP/tools"
+          test -x "$RUNNER_TEMP/tools/node_modules/wrangler/bin/wrangler.js"
+
+      - name: Download the sealed package
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: allworld-package-${{ github.sha }}
+          path: ${{ runner.temp }}/sealed
+
+      - name: Verify the sealed package digest and unpack it
+        env:
+          PACKAGE_SHA: ${{ needs.package.outputs.package-sha }}
+        run: |
+          echo "$PACKAGE_SHA  $RUNNER_TEMP/sealed/allworld-package.tar" | sha256sum --check --strict
+          mkdir "$RUNNER_TEMP/package"
+          tar --no-same-owner -xf "$RUNNER_TEMP/sealed/allworld-package.tar" -C "$RUNNER_TEMP/package"
+
+      - name: Run the package gate and deploy
+        env:
+          BUILD_ID: ${{ needs.package.outputs.build-id }}
+          ARTIFACT_SHA: ${{ needs.package.outputs.artifact-sha }}
+          CONFIG_SHA: ${{ needs.package.outputs.config-sha }}
+          LEGACY_ORIGIN: ${{ needs.package.outputs.legacy-origin }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.ALLWORLD_CF_ACCOUNT_ID }}
+        run: node scripts/run-release-gate.mjs deploy --package "$RUNNER_TEMP/package" --build-id "$BUILD_ID" --artifact-sha "$ARTIFACT_SHA" --config-sha "$CONFIG_SHA" --legacy-origin "$LEGACY_ORIGIN" --wrangler "$RUNNER_TEMP/tools/node_modules/wrangler/bin/wrangler.js"
+
+      - name: Confirm the origin serves this build
+        env:
+          ORIGIN: ${{ needs.package.outputs.origin }}
+          BUILD_ID: ${{ needs.package.outputs.build-id }}
+        run: node scripts/verify-deployed-build.mjs --origin "$ORIGIN" --build-id "$BUILD_ID"

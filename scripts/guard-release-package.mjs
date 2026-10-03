@@ -94,7 +94,10 @@ export function verifyPackage(options, road = ROAD) {
   const pub = publicConfig(metadata.config)
   if (pub.buildId !== options.buildId || !same(json(join(artifact, 'playtest-config.json'), 'PUBLIC_CONFIG_JSON'), pub)) fail('BUILD_CONFIG_MISMATCH')
   const world = binding(config.vars.WORLD_BINDING)
-  if (!object(world) || !same(Object.keys(world).sort(), [...PUBLIC_KEYS.filter(k => k !== 'endpoint'), 'artifactId'].sort()) || PUBLIC_KEYS.filter(k => k !== 'endpoint').some(k => world[k] !== pub[k]) || world.artifactId !== artifactSha256 || config.vars.WORLD_LEGACY_ORIGIN !== pub.audience) fail('BINDING_METADATA_MISMATCH')
+  const legacyOrigin = options.legacyOrigin ?? pub.audience
+  const legacyUrl = new URL(legacyOrigin)
+  if (legacyUrl.protocol !== 'https:' || legacyUrl.origin !== legacyOrigin || legacyUrl.username || legacyUrl.password || legacyOrigin === pub.origin) fail('LEGACY_ORIGIN_INVALID')
+  if (!object(world) || !same(Object.keys(world).sort(), [...PUBLIC_KEYS.filter(k => k !== 'endpoint'), 'artifactId'].sort()) || PUBLIC_KEYS.filter(k => k !== 'endpoint').some(k => world[k] !== pub[k]) || world.artifactId !== artifactSha256 || config.vars.WORLD_LEGACY_ORIGIN !== legacyOrigin) fail('BINDING_METADATA_MISMATCH')
   if (!same(binding(config.vars.WORLD_GUEST_ADMISSION), { kind: pub.guestAdmission })) fail('ADMISSION_MISMATCH')
   const app = json(join(artifact, 'app-build.json'), 'APP_BUILD_JSON')
   if (!object(app) || !/^[a-f0-9]{12}$/.test(app.id) || app.assets !== metadata.assetRevision || !/^[a-f0-9]{12}$/.test(metadata.assetRevision)) fail('ASSET_REVISION_MISMATCH')
@@ -137,7 +140,7 @@ export function verifyPackage(options, road = ROAD) {
 function cli() {
   const args = process.argv.slice(2), mode = args.shift()
   if (!['check', 'deploy'].includes(mode) || args.length % 2) fail('USAGE')
-  const opts = {}, names = { '--package': 'package', '--config': 'config', '--artifact': 'artifact', '--build-id': 'buildId', '--artifact-sha': 'artifactSha', '--config-sha': 'configSha', '--road-source': 'roadSource', '--deploy-executable': 'deployExecutable' }
+  const opts = {}, names = { '--package': 'package', '--config': 'config', '--artifact': 'artifact', '--build-id': 'buildId', '--artifact-sha': 'artifactSha', '--config-sha': 'configSha', '--road-source': 'roadSource', '--deploy-executable': 'deployExecutable', '--legacy-origin': 'legacyOrigin' }
   while (args.length) { const key = names[args.shift()], value = args.shift(); if (!key || opts[key] !== undefined || !value) fail('USAGE'); opts[key] = value }
   if (['package', 'config', 'artifact', 'buildId', 'artifactSha', 'configSha', 'roadSource'].some(k => !opts[k])) fail('USAGE')
   if (mode === 'check' && opts.deployExecutable) fail('USAGE')

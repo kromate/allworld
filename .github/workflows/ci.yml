@@ -1,0 +1,71 @@
+# Checks for pull requests and for main. Runs the pull request's own code, so it has no secrets, no
+# environment, read-only permissions and no pull_request_target. It never deploys.
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Check, build and package gate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Check out the commit under test
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - name: Set up Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22.18.0
+
+      - name: Install dependencies from the lockfile
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: Validate workflows and release configuration
+        run: node scripts/check-workflows.mjs
+
+      - name: Probe the CI and release controls
+        run: |
+          node scripts/probe-cicd.mjs
+          node scripts/probe-release-package-guard.mjs
+
+      - name: Typecheck, structure, assets and service probes
+        run: npm run check
+
+      - name: Assemble a synthetic release package
+        id: assemble
+        run: node scripts/assemble-release-package.mjs --out "$RUNNER_TEMP/package" --synthetic --github-output "$GITHUB_OUTPUT"
+
+      - name: Run the package gate
+        env:
+          BUILD_ID: ${{ steps.assemble.outputs.build-id }}
+          ARTIFACT_SHA: ${{ steps.assemble.outputs.artifact-sha }}
+          CONFIG_SHA: ${{ steps.assemble.outputs.config-sha }}
+          LEGACY_ORIGIN: ${{ steps.assemble.outputs.legacy-origin }}
+        run: node scripts/run-release-gate.mjs check --package "$RUNNER_TEMP/package" --build-id "$BUILD_ID" --artifact-sha "$ARTIFACT_SHA" --config-sha "$CONFIG_SHA" --legacy-origin "$LEGACY_ORIGIN"
+
+      - name: Install the pinned Worker tool
+        run: |
+          mkdir "$RUNNER_TEMP/tools"
+          cp .github/wrangler/package.json .github/wrangler/package-lock.json "$RUNNER_TEMP/tools/"
+          npm ci --ignore-scripts --no-audit --no-fund --prefix "$RUNNER_TEMP/tools"
+
+      - name: Bundle the Worker without uploading (dry run)
+        working-directory: ${{ runner.temp }}/package
+        env:
+          WRANGLER_SEND_METRICS: "false"
+          WRANGLER_LOG_PATH: ${{ runner.temp }}/wrangler-logs
+        run: node "$RUNNER_TEMP/tools/node_modules/wrangler/bin/wrangler.js" deploy --config wrangler.json --dry-run --outdir "$RUNNER_TEMP/worker-bundle"

@@ -25,6 +25,7 @@ The separate candidates remain outside this export. See [CURRENT-SOURCE.md](CURR
 | Sessions and guest admission | `src/state/app.ts`, `src/platform/gateway.ts`, `runtime.ts`, `guestService.ts`, `hostedService.ts`, `src/features/guest/` | `src/shared/guest.ts`, `service/identity.ts`, `hostedIdentity.ts`, `guests.ts` | `scripts/verify-guest.ts`; never expose local `?as=` identity to a hosted audience |
 | Creator welcome | `src/shared/creator.ts`, `service/creator.ts` | Verified creator configuration and consent checks; no guessed creator identity | `scripts/verify-creator.ts` |
 | Persistence and host transports | `service/README.md`, `service/server.ts`, `transport.ts`, `hostedServer.ts`, `hostedStandalone.ts`, `hostedFiles.ts`, `persist.ts` | `service/kernel.ts` owns operation dispatch; persistence has one writer | `scripts/verify-persist.ts`; hosted identity, TLS, origins, admission, and durability require separate acceptance |
+| CI and release | `.github/workflows/`, `docs/CI-CD.md`, `scripts/assemble-release-package.mjs`, `run-release-gate.mjs`, `verify-deployed-build.mjs`, `check-workflows.mjs` | `scripts/guard-release-package.mjs` stays the only deploy gate; the provider token exists only in the protected environment | `scripts/check-workflows.mjs`, `scripts/probe-cicd.mjs`, `scripts/probe-release-package-guard.mjs` |
 
 Some table cells name files relative to the folder at the start of that cell.
 Read the imports and callers before changing an entry point.

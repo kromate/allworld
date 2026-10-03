@@ -25,6 +25,8 @@ load, performance, private-playtest, and experimental-cast tools are excluded.
 | `verify-geo.ts` | Live map data; requires network access |
 | `verify-guest.ts` | Guest permission and lifecycle rules |
 | `verify-creator.ts` | Creator welcome contract and consent |
+| `check-workflows.mjs` | Workflow rules, pinned actions and deploy tool, private-path exclusion |
+| `probe-cicd.mjs` | Mocked CI and release controls: gate argv, refusals, package tampering, deployed-build check |
 
 Run a focused probe with `node scripts/verify-social.ts`, replacing the filename for your area.
 `npm run verify` runs nine service probes. Geo, game-specific, guest, and creator probes are
@@ -47,5 +49,6 @@ After an intentional asset change, record its source, terms, and modifications i
 index. Its `--check` option writes nothing and rejects stale hashes or unclassified files.
 Do not regenerate a manifest just to hide an unexpected pack change.
 
-The separate source export tool uses an exact reviewed manifest. See
+Release packaging is `assemble-release-package.mjs`, then `run-release-gate.mjs`; see
+[CI and release workflows](../docs/CI-CD.md). The separate source export tool uses an exact reviewed manifest. See
 [SOURCE-EXPORT.md](../docs/SOURCE-EXPORT.md). It is preparation tooling, not a game runtime.
