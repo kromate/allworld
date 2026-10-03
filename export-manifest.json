@@ -71,7 +71,7 @@
       "target": ".github/PULL_REQUEST_TEMPLATE.md"
     },
     {
-      "bytes": 871,
+      "bytes": 886,
       "kind": "documentation",
       "license": "Apache-2.0",
       "notices": [
@@ -80,7 +80,7 @@
       ],
       "path": ".gitignore",
       "root": "project",
-      "sha256": "ac05132328e5bdf39a69fae727ff5a34fc615fed58c82790e03977c3d5e61c2d",
+      "sha256": "f54b1636228c737a9e71f619696cd80b0146e118556e3a9d923bc014313db7ef",
       "target": ".gitignore"
     },
     {
@@ -227,7 +227,7 @@
       "target": "docs/CONTRIBUTOR-MAP.md"
     },
     {
-      "bytes": 1730,
+      "bytes": 2139,
       "kind": "documentation",
       "license": "Apache-2.0",
       "notices": [
@@ -236,7 +236,7 @@
       ],
       "path": "docs/CURRENT-SOURCE.md",
       "root": "project",
-      "sha256": "59bded250ec654eb06bfec012f105bd757b71786f9ea277c0b4ad2d1d9793817",
+      "sha256": "fae102b0c574e5c78bc5e38792e2123003e8191b7a692f7cb1c03d638e43b84c",
       "target": "docs/CURRENT-SOURCE.md"
     },
     {

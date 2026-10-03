@@ -28,6 +28,7 @@ docs/playtest/round-*/
 # Runtime/account configuration and local operational evidence are never contributor source.
 .goalmatic/
 diagnostics/
+docs/handover/
 *.tar.gz
 # Unreviewed asset source archives and experimental cast remain outside the export allowlist.
 assets-src/
