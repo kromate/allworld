@@ -39,7 +39,7 @@ import type { RegionLayer } from './regionMount.ts'
 import { STARTER_PLACES } from '../shared/places.ts'
 import { districtIdOf } from '../shared/geo.ts'
 import type { MinimapOptions } from './minimap.ts'
-import type { VehicleSnapshot, VehicleSelf, VehicleControls } from '../shared/vehicles.ts'
+import type { VehicleSnapshot, VehicleSelf, VehicleControls, VehicleEvent } from '../shared/vehicles.ts'
 import { NEUTRAL_CONTROLS } from '../shared/vehicles.ts'
 import { VehicleScene } from './vehicles/scene.ts'
 import { vehicleDistrictContext } from './vehicles/provenance.ts'
@@ -935,12 +935,12 @@ export class WorldEngine {
     return Boolean(expected && this.regionState === 'ready' && this.region?.root.userData.regionDiagnostics?.kit === expected.regionKitId)
   }
 
-  syncVehicles(snapshots: readonly VehicleSnapshot[], self: VehicleSelf | null, room: { key: RoomKey; instance: number } | null): void {
+  syncVehicles(snapshots: readonly VehicleSnapshot[], self: VehicleSelf | null, room: { key: RoomKey; instance: number } | null, motion?: Extract<VehicleEvent, { type: 'vehicle.move' }>): void {
     const changed = this.vehicleSelf?.seat?.vehicleId !== self?.seat?.vehicleId || this.vehicleSelf?.seat?.seatId !== self?.seat?.seatId
     this.vehicleSelf = self
     this.footVehicles = room && this.mode === 'district' ? snapshots.filter(vehicle => vehicle.room.key === room.key && vehicle.room.instance === room.instance) : []
     if (changed) { this.keys.clear(); this.joystick = { x: 0, z: 0 }; this.path = []; this.marker.visible = false; this.neutralVehicleInput(); this.local?.setVehiclePose(null) }
-    this.vehicles.sync(room && this.mode === 'district' ? snapshots.filter(vehicle => vehicle.room.key === room.key && vehicle.room.instance === room.instance) : [])
+    this.vehicles.sync(room && this.mode === 'district' ? snapshots.filter(vehicle => vehicle.room.key === room.key && vehicle.room.instance === room.instance) : [], motion)
     if (!self?.seat) { this.local?.setVehiclePose(null); if (this.local) this.local.group.visible = true }
     this.wake()
   }

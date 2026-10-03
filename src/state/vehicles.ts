@@ -2,7 +2,7 @@ import { computed, reactive, watch } from 'vue'
 import { guestAccess } from '../shared/guest.ts'
 import { randomToken } from '../shared/ids.ts'
 import type { MemberId, VehicleId, VehicleInviteId, VehicleQuoteId } from '../shared/ids.ts'
-import { WorldError } from '../shared/model.ts'
+import { WorldError, roomKey } from '../shared/model.ts'
 import type { RoomSnapshot } from '../shared/model.ts'
 import type { Vec2 } from '../shared/geo.ts'
 import { NEUTRAL_CONTROLS, VEHICLE_RULES } from '../shared/vehicles.ts'
@@ -82,13 +82,19 @@ export function createVehicleClient(runtime: VehicleRuntime) {
   }
   let account = 0, revision = 0, disposed = false
   let reading: Promise<void> | null = null, followUp: Promise<void> | null = null
+  /** A seat kept for this member while their page was away is only handed back by vehicle.resume; vehicle.state shows no seat, and the scene's room.enter would give it up. */
+  let needsResume = false, resuming: Promise<void> | null = null
+  /** Resume requests run one at a time; a plain repeat joins the one already under way instead of overwriting the scene's pending work. */
+  let flight: Promise<void> | null = null, flightInitial = false
   let retry: (() => Promise<void>) | null = null
   let bridge: VehicleWorldBridge | null = null
   let crossing = new AbortController()
   let transferOrigin: { vehicleId: VehicleId; epoch: string; room: VehicleSnapshot['room'] } | null = null
   let inputTimer: ReturnType<typeof setInterval> | undefined
+  let changeTimer: ReturnType<typeof setTimeout> | undefined
   let controls: VehicleControls = { ...NEUTRAL_CONTROLS }
-  let inputEpoch = '', sequence = 0, inputBusy = false
+  let inputEpoch = '', sequence = 0, inputRun = 0, lastSentAt = -Infinity, acceptedSeq = 0, refusedSeq = 0, refusals = 0
+  const outstandingInputs = new Set<object>()
   const motionTicks = new Map<VehicleId, number>()
   const retiredEpochs = new Map<VehicleId, Set<string>>()
   const self = computed(() => state.data?.self ?? null)
@@ -132,8 +138,15 @@ export function createVehicleClient(runtime: VehicleRuntime) {
   }
   async function load(): Promise<void> {
     if (disposed || !state.connected || !runtime.actor() || !runtime.allowed('vehicle.state', {})) return
+    // First read on a new link: ask for the kept seat back before anything reads the vehicle state or enters a room. Concurrent loads wait for it.
+    if (resuming) return resuming
+    if (needsResume && runtime.allowed('vehicle.resume', {})) { needsResume = false; const first: Promise<void> = resume(true).finally(() => { if (resuming === first) resuming = null }); resuming = first; return first }
+    return read()
+  }
+  async function read(): Promise<void> {
+    if (disposed || !state.connected || !runtime.actor() || !runtime.allowed('vehicle.state', {})) return
     if (reading) {
-      if (!followUp) { const next = reading.then(() => { followUp = null; return load() }); followUp = next }
+      if (!followUp) { const next = reading.then(() => { followUp = null; return read() }); followUp = next }
       return followUp
     }
     const asked = account, actor = runtime.actor(), before = revision
@@ -282,40 +295,110 @@ export function createVehicleClient(runtime: VehicleRuntime) {
     else await runCancel(action.input)
   }
   async function destination(destination: VehicleDestination): Promise<void> { const vehicle = current(); await mutate('vehicle.destination', { vehicleId: vehicle.id, destination, expectedRevision: vehicle.revision }, 'Checking the driving route…', result => { put(result.vehicle); state.route = result.route }) }
-  async function resume(): Promise<void> {
-    const asked = account, actor = runtime.actor(), before = ++revision
+  const SCENE_RESTORE_FAILED = 'Your seat is kept, but the scene could not be restored. Try again.'
+  /** The restore could not be completed from a coherent answer. Said plainly; the next scene-owned resume() is the retry. Never touches a booking's own uncertain/retry state. */
+  function sceneRestoreFailed(): void { if (!state.uncertain && !state.retryLabel) state.problem = SCENE_RESTORE_FAILED }
+  function coherentPair(result: Awaited<ReturnType<VehicleRuntime['call']>> & { self: VehicleSelf; snapshot: RoomSnapshot | null }): boolean {
+    const { self, snapshot } = result, vehicle = self.vehicle
+    return Boolean(self.seat && vehicle && snapshot && self.seat.vehicleId === vehicle.id && snapshot.ref.kind === 'district'
+      && snapshot.room === vehicle.room.key && snapshot.room === roomKey(snapshot.ref) && snapshot.instance === vehicle.room.instance && snapshot.ref.districtId === vehicle.room.districtId)
+  }
+  function resume(initial = false): Promise<void> {
+    if (flight && !initial && !flightInitial) return flight
+    const prior = flight
+    const mine: Promise<void> = (prior ? prior.catch(() => undefined).then(() => resumeRun(initial, 3)) : resumeRun(initial, 3)).finally(() => { if (flight === mine) flight = null })
+    flight = mine; flightInitial = initial
+    return mine
+  }
+  /** What to do once an answer is in: for the same account and actor, any resume still wanted for this link, else a fresh read of the state. */
+  async function afterResume(asked: number, actor: MemberId | null): Promise<void> {
+    if (!live(asked, actor)) return
+    if (needsResume && runtime.allowed('vehicle.resume', {})) { needsResume = false; return resumeRun(true, 3) } // already inside the flight: run, do not queue behind ourselves
+    await read()
+  }
+  async function resumeRun(initial: boolean, attempts: number): Promise<void> {
+    const asked = account, actor = runtime.actor(), target = bridge, before = ++revision
+    let again = false
     try {
       check('vehicle.resume', {}, false)
       const result = await runtime.call('vehicle.resume', {})
-      if (!live(asked, actor) || before !== revision) return
-      applySelf(result.self); rollbackTransfer(result.self.vehicle); if (state.transfer && (!result.self.seat || result.self.vehicle?.phase !== 'transferring')) { crossing.abort(); state.transfer = null; transferOrigin = null }; bridge?.resumed(result.snapshot, result.self)
+      if (!live(asked, actor)) return
+      const superseded = before !== revision
+      if (!superseded) { applySelf(result.self); rollbackTransfer(result.self.vehicle); if (state.transfer && (!result.self.seat || result.self.vehicle?.phase !== 'transferring')) { crossing.abort(); state.transfer = null; transferOrigin = null } }
+      const snapshot = result.snapshot, seated = result.self.seat
+      // The scene is only ever given one coherent answer: the seat's vehicle, its room and the room snapshot must all name the same room. No exception for a crossing or a missing piece.
+      if (initial && seated) { /* the scene's own resume, once it has its engine, asks again and is told from a fresh answer */ }
+      else if (bridge && (!target || bridge === target)) { // a world that appeared while this was in flight may be told; one that was replaced may not
+        if (!seated) { if (superseded) again = attempts > 1; else bridge.resumed(snapshot, result.self) }
+        else if (superseded || !coherentPair(result)) { again = attempts > 1; if (!again) sceneRestoreFailed() }
+        else { if (state.problem === SCENE_RESTORE_FAILED) state.problem = ''; bridge.resumed(snapshot, result.self) }
+      }
     } catch (error) { if (live(asked, actor)) state.problem = runtime.message(error) }
-    await load()
+    if (again) return resumeRun(initial, attempts - 1)
+    await afterResume(asked, actor)
   }
+  const INPUT_EVERY_MS = 100, INPUT_CHANGE_GAP_MS = 60, INPUT_BACKLOG = 8, INPUT_REFUSALS = 3
+  const coasting = (): boolean => controls.throttle === 0 && controls.steer === 0 && !controls.brake
   async function sendInput(): Promise<void> {
     const vehicle = driver.value
-    if (!canDrive.value || !vehicle || vehicle.control.kind !== 'member' || inputBusy) return
-    if (inputEpoch !== vehicle.control.controlEpoch) { inputEpoch = vehicle.control.controlEpoch; sequence = 0 }
-    const asked = account, actor = runtime.actor(), epoch = inputEpoch
-    inputBusy = true
+    if (!canDrive.value || !vehicle || vehicle.control.kind !== 'member' || outstandingInputs.size >= INPUT_BACKLOG
+      || performance.now() - lastSentAt < INPUT_CHANGE_GAP_MS) return
+    if (coasting() && vehicle.speed === 0) { stopDriving(); return }
+    if (inputEpoch !== vehicle.control.controlEpoch) { inputEpoch = vehicle.control.controlEpoch; sequence = 0; acceptedSeq = 0; refusedSeq = 0; refusals = 0 }
+    const asked = account, actor = runtime.actor(), epoch = inputEpoch, run = inputRun, seq = ++sequence
+    const vehicleId = vehicle.id, vehicleEpoch = vehicle.epoch, room = vehicle.room.key, instance = vehicle.room.instance
+    const current = (): boolean => live(asked, actor) && run === inputRun && epoch === inputEpoch
+      && driver.value?.id === vehicleId && driver.value.epoch === vehicleEpoch && driver.value.room.key === room
+      && driver.value.room.instance === instance && driver.value.control.kind === 'member' && driver.value.control.controlEpoch === epoch
+    const token = {}
+    outstandingInputs.add(token); lastSentAt = performance.now()
     try {
-      const result = await runtime.call('vehicle.input', { vehicleId: vehicle.id, controlEpoch: epoch, seq: ++sequence, ...controls })
-      if (!live(asked, actor) || epoch !== inputEpoch) return
-      if (!result.accepted) { stopDriving(); await resume() }
-    } catch (error) { if (live(asked, actor)) { stopDriving(); state.problem = runtime.message(error) } }
-    finally { if (live(asked, actor) && epoch === inputEpoch) inputBusy = false }
+      const result = await runtime.call('vehicle.input', { vehicleId, controlEpoch: epoch, seq, ...controls })
+      if (!current()) return
+      if (result.accepted) {
+        acceptedSeq = Math.max(acceptedSeq, seq)
+        if (seq > refusedSeq) refusals = 0
+      } else if (seq > acceptedSeq && seq > refusedSeq) {
+        refusedSeq = seq
+        if (++refusals >= INPUT_REFUSALS) { stopDriving(); await resume() }
+      }
+    } catch (error) { if (current()) { stopDriving(); state.problem = runtime.message(error) } }
+    finally { outstandingInputs.delete(token) }
+  }
+  function scheduleInput(): void {
+    if (!inputTimer || changeTimer) return
+    const wait = INPUT_CHANGE_GAP_MS - (performance.now() - lastSentAt)
+    if (wait <= 0) void sendInput()
+    else changeTimer = setTimeout(() => { changeTimer = undefined; if (inputTimer) void sendInput() }, wait)
   }
   function drive(intent: VehicleControls): void {
     if (!canDrive.value || (intent.throttle === 0 && intent.steer === 0 && intent.brake)) { stopDriving(); return }
-    controls = { throttle: Math.max(-1, Math.min(1, intent.throttle)), steer: Math.max(-1, Math.min(1, intent.steer)), brake: intent.brake }
-    if (!inputTimer) { void sendInput(); inputTimer = setInterval(() => { void sendInput() }, 100) }
+    const next = { throttle: Math.max(-1, Math.min(1, intent.throttle)), steer: Math.max(-1, Math.min(1, intent.steer)), brake: intent.brake }
+    const changed = next.throttle !== controls.throttle || next.steer !== controls.steer || next.brake !== controls.brake
+    controls = next
+    if (!inputTimer && coasting() && driver.value?.speed === 0) { controls = { ...NEUTRAL_CONTROLS }; return }
+    if (!inputTimer) {
+      inputRun++; acceptedSeq = 0; refusedSeq = 0; refusals = 0
+      inputTimer = setInterval(() => { void sendInput() }, INPUT_EVERY_MS)
+      scheduleInput()
+    } else if (changed) scheduleInput()
   }
   function stopDriving(): void {
-    controls = { ...NEUTRAL_CONTROLS }
+    const wasActive = inputTimer !== undefined
+    inputRun++; controls = { ...NEUTRAL_CONTROLS }
     clearInterval(inputTimer); inputTimer = undefined
+    clearTimeout(changeTimer); changeTimer = undefined
+    refusals = 0
     const vehicle = driver.value
-    if (state.connected && vehicle?.control.kind === 'member' && inputEpoch === vehicle.control.controlEpoch) void runtime.call('vehicle.input', { vehicleId: vehicle.id, controlEpoch: inputEpoch, seq: ++sequence, ...NEUTRAL_CONTROLS }).catch(() => undefined)
-    inputBusy = false
+    if (wasActive && !disposed && state.connected && runtime.actor() && vehicle?.control.kind === 'member'
+      && inputEpoch === vehicle.control.controlEpoch && outstandingInputs.size < INPUT_BACKLOG) {
+      const token = {}
+      outstandingInputs.add(token); lastSentAt = performance.now()
+      void runtime.call('vehicle.input', { vehicleId: vehicle.id, controlEpoch: inputEpoch, seq: ++sequence, ...NEUTRAL_CONTROLS })
+        .catch(() => undefined).finally(() => { outstandingInputs.delete(token) })
+    }
+    // Never erase pending tokens: their own settlement releases capacity, even across stop/reset.
+    // At a full backlog no extra neutral is queued; the service brakes when its last input becomes stale.
   }
   function rollbackTransfer(vehicle: VehicleSnapshot | null): void {
     const origin = transferOrigin
@@ -381,17 +464,17 @@ export function createVehicleClient(runtime: VehicleRuntime) {
       default: { const exhaustive: never = event; return exhaustive }
     }
   }
-  function connect(online: boolean): void { if (online) restoreRecovery(); state.connected = online; if (!online) stopDriving() }
+  function connect(online: boolean): void { if (online) { restoreRecovery(); if (!state.connected) needsResume = true } else needsResume = false; state.connected = online; if (!online) stopDriving() }
   function reset(clearSaved = true): void {
     if (clearSaved) { state.paidRide = null; paidRequest = null; stoppedRide = null; saveRecovery() }
     recoveryKey = null; paidRequest = null; stoppedRide = null; state.paidRide = null
-    stopDriving(); crossing.abort(); crossing = new AbortController(); account++; revision++; reading = null; followUp = null; retry = null
+    stopDriving(); crossing.abort(); crossing = new AbortController(); account++; revision++; reading = null; followUp = null; retry = null; needsResume = false; resuming = null; flight = null
     state.data = null; state.load = 'idle'; state.selectedId = null; state.actions = null; state.quote = null; state.pending = ''; state.problem = ''; state.uncertain = false; state.retryLabel = ''; state.route = []; state.transfer = null; state.sceneData = null; state.connected = false; state.destinationMode = null; state.previewDestination = null
-    transferOrigin = null; motionTicks.clear(); retiredEpochs.clear(); inputEpoch = ''; sequence = 0; inputBusy = false
+    transferOrigin = null; motionTicks.clear(); retiredEpochs.clear(); inputEpoch = ''; sequence = 0; lastSentAt = -Infinity; acceptedSeq = 0; refusedSeq = 0; refusals = 0
   }
   const stopGuard = watch(() => [canDrive.value, driver.value?.control.kind === 'member' ? driver.value.control.controlEpoch : null] as const, ([allowed, epoch], before) => { if (!allowed || epoch !== before?.[1]) stopDriving() })
   function dispose(): void { if (!disposed) { reset(false); stopGuard(); bridge = null; disposed = true } }
-  return { state, self, seated, selected, driver, canDrive, compatible, capabilityReason, load, inspect, loan, returnVehicle, board, exit, access, invite, respondInvite, offerDriver, acceptDriver, quote, book, depart, cancelTrip, destination, resume, drive, stopDriving, event, connect, reset, dispose,
+  return { state, self, seated, selected, driver, canDrive, compatible, capabilityReason, load, inspect, loan, returnVehicle, board, exit, access, invite, respondInvite, offerDriver, acceptDriver, quote, book, depart, cancelTrip, destination, resume: (): Promise<void> => resume(), drive, stopDriving, event, connect, reset, dispose,
     bindWorld(next: VehicleWorldBridge | null): void { stopDriving(); crossing.abort(); bridge = next; state.worldBound = Boolean(next) },
     scene(next: VehicleDataVersion | null): void { state.sceneData = next; if (!compatible.value) stopDriving() },
     async retryLast(): Promise<void> { if (retry && !state.pending) await retry() },

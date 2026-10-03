@@ -2074,7 +2074,11 @@ export function registerVehicles(world: World): void {
       return { self: selfOf(world, rt, me), snapshot: roomFor(world, me) }
     }
     if (held) releaseHeld(world, rt, me)
-    if (placeOf(world, me)) return { self: selfOf(world, rt, me), snapshot: null }
+    if (placeOf(world, me)) {
+      // Seated callers receive the current viewer-scoped room with self from the same call.
+      const self = selfOf(world, rt, me)
+      return { self, snapshot: self.seat ? roomFor(world, me) : null }
+    }
     // The seat is gone: on foot, where the service put them down. After a restart that is beside where their ride had got to.
     let pose: Pose | null = rt.foot.get(me)?.pose ?? null
     if (!pose) {

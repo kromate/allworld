@@ -2243,7 +2243,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "575b4a879f7bf3c0bf334922a4f69609a43916d801f54c52fcfca3e62bcbb537"
+      "sha256": "8bf12a5799a88f703af5d4d6a5f8f4e7c5363670ea6c86c26639bb1172192dc2"
     },
     "service/work.ts": {
       "kind": "source",
@@ -4259,7 +4259,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "ca1bf2b5ac152d9b3cdf47b4d7c4d963d2728889cf18c45e859563d0f0a79acf"
+      "sha256": "46d7e94b8b8a3a6aeda723fb6bb109ae80eaf6757826073df38f6d4475fb9b4a"
     },
     "src/state/world.ts": {
       "kind": "source",
@@ -4268,7 +4268,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "4407169164f85f22e2ad4266bec433c98ca01a21858810635287573018a1db66"
+      "sha256": "425233e22342fd9fdf693fe510366e8c08a8b847360a7cf917b47e18268bde04"
     },
     "src/ui/AssetProgress.vue": {
       "kind": "source",
@@ -4538,7 +4538,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "6b26a7a9bbd21f1de880690ca10831bbf59340f8c572a4a77e484ae4df0d9cb9"
+      "sha256": "17430bfaa0d2a4079194127d16be99978a154e6dea403e10cfe10c7a075ed18f"
     },
     "src/world/facadeDetails.ts": {
       "kind": "source",
@@ -4898,7 +4898,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "2720c40f34701699f9a7db7b76bc46b64b923610cf13f426930053b2c7698fb8"
+      "sha256": "bc41848c23a165fb32f23e8466da8650f2495429f2224336bdda49d9e132df25"
     },
     "src/world/venueInteriors.ts": {
       "kind": "source",
