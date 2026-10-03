@@ -343,9 +343,18 @@ export function accountApi(config: HostedWorldSetup): AccountApi {
           ? `The sign-in did not finish, so it was cancelled.${after}`
           : `The sign-in did not finish, and the server has not yet confirmed it was cancelled. No account is used on this device until it does.${after}`)
       } finally {
-        if (!sent) attempt.settle('none')
-        if (held && !sent && held.state !== 'done') await cancelAttempt(held.id)
-        if (held && held.state !== 'done') finishPreparation(held, 'cancelled')
+        if (!sent) {
+          if (held && held.state !== 'done') {
+            const confirmed = await cancelAttempt(held.id)
+            if (!confirmed) owedCancels.add(held.id)
+            attempt.settle(confirmed ? 'confirmed' : 'unconfirmed')
+          } else attempt.settle('none')
+        }
+        if (held && held.state !== 'done') {
+          // Both an already waiting active cancel and a later lease cancel keep this exact receipt.
+          held.cancellation = attempt.cancelled
+          finishPreparation(held, 'cancelled')
+        }
         if (current === attempt) current = null
       }
     })

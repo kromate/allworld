@@ -2602,7 +2602,7 @@
       ],
       "path": "scripts/source-export-reference.json",
       "root": "project",
-      "sha256": "9f7936168c9c89eee378c9121254875ac2c4173fa1ec16d0b9f7b2c37acb9483",
+      "sha256": "1aa6e7347db239974b7ace72e38ce5d9908e016844182f8625e5daee082df4fc",
       "target": "scripts/source-export-reference.json"
     },
     {
@@ -6535,7 +6535,7 @@
       "target": "src/geo/mvt.ts"
     },
     {
-      "bytes": 25811,
+      "bytes": 26157,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -6544,7 +6544,7 @@
       ],
       "path": "src/platform/account.ts",
       "root": "project",
-      "sha256": "7fdd8a7444cca00b1bd40934aa25b8f671e4b447917e0a7958c7339bc1988796",
+      "sha256": "8a7faf0a5a2c5f2f5b5a5067d994475299bdd864deb951f9700bd4799aba24f6",
       "target": "src/platform/account.ts"
     },
     {
