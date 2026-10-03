@@ -42,7 +42,7 @@ onBeforeUnmount(() => { if (account?.access.at === 'save') account.cancelAccess(
 <template>
   <PanelPage :title="title" :subtitle="subtitle">
     <GuestClaim
-      :session="session" :claim="shown" :busy="guest?.busy.value" :access="access" :password-policy="account?.passwordPolicy()" :google-sign-in="account?.googleAvailable.value ? account.submitGoogleAccess : undefined" :uncertain="account?.claimUncertain.value"
+      :session="session" :claim="shown" :busy="guest?.busy.value" :access="access" :password-policy="account?.passwordPolicy()" :google-sign-in="account?.googleAvailable.value ? account.submitGoogleAccess : undefined" :google-prepare="account?.googleAvailable.value ? account.prepareGoogleAccess : undefined" :uncertain="account?.claimUncertain.value"
       @save="guest?.save()" @retry="guest?.save()" @cancel="guest?.cancel()" @access="account?.submitAccess($event)"
       @continue-as="account?.continueAs()" @use-another="account?.useAnother()"
       @use-saved="guest?.useSaved()" @keep-guest="guest?.keepGuest()"

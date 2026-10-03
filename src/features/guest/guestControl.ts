@@ -21,7 +21,7 @@ import { WorldError } from '../../shared/model.ts'
 import { ClaimUncertainError, app, messageOf, toast, transfer } from '../../state/app.ts'
 import type { ReloadContext } from '../../ui/gameReload.ts'
 import { PASSWORD_RULE } from '../../platform/account.ts'
-import type { AccountUser, GoogleCredentialCollector } from '../../platform/account.ts'
+import type { AccountUser, GoogleCredentialCollector, GooglePreparedAttempt } from '../../platform/account.ts'
 import type { GuestHooks } from './guestHooks.ts'
 import { claimFailureOf } from './guestView.ts'
 import type { ClaimFailure, ClaimState, GuestCharacter, GuestController, GuestEnded, GuestSessionView } from './guestView.ts'
@@ -43,7 +43,8 @@ export interface GuestAccess {
   /** Root password policy, for the form's own check when creating an account. The server decides. */
   passwordPolicy(): { minLength: number; hint: string }
   googleAvailable: Readonly<{ value: boolean }>
-  submitGoogleAccess(collect: GoogleCredentialCollector): Promise<void>
+  prepareGoogleAccess(signal?: AbortSignal): Promise<GooglePreparedAttempt>
+  submitGoogleAccess(collect: GoogleCredentialCollector, prepared?: GooglePreparedAttempt): Promise<void>
   submitAccess(credentials: AccessCredentials): void
   /** The visitor confirmed the account named in `existing`. */
   continueAs(): void
@@ -271,15 +272,25 @@ export function createGuestControl(hooks: GuestHooks, go: (path: string) => void
     return Boolean(session.value) || !hooks.hasStoredGuest()
   }
 
+  function heldUntil<T>(work: Promise<T>, signal?: AbortSignal): Promise<T> {
+    if (!signal) return work
+    return new Promise((resolve, reject) => {
+      const stopped = (): void => { signal.removeEventListener('abort', stopped); reject(new WorldError('expired', 'Google sign-in expired or was cancelled. Load Google again to continue.')) }
+      if (signal.aborted) { stopped(); void work.catch(() => undefined); return }
+      signal.addEventListener('abort', stopped, { once: true })
+      work.then(value => { signal.removeEventListener('abort', stopped); if (signal.aborted) stopped(); else resolve(value) }, error => { signal.removeEventListener('abort', stopped); reject(error) })
+    })
+  }
+
   /** Common to both ways of choosing: the request is marked running, and the held guest is open first. Null when stopped. */
-  async function begin(): Promise<{ at: 'welcome' | 'save'; current: () => boolean } | null> {
+  async function begin(signal?: AbortSignal): Promise<{ at: 'welcome' | 'save'; current: () => boolean } | null> {
     const at = access.at
     if (!at || access.pending) return null
     const run = at === 'save' ? attempt : signInRun
     const current = (): boolean => access.at === at && run === (at === 'save' ? attempt : signInRun)
     access.pending = true
     access.error = null
-    if (!await holdGuest(current)) {
+    if (!await heldUntil(holdGuest(() => current() && !signal?.aborted), signal)) {
       if (current()) throw new WorldError('unavailable', hooks.failure() || 'Your guest character could not be opened, so nothing was sent. Try again.')
       return null
     }
@@ -310,19 +321,34 @@ export function createGuestControl(hooks: GuestHooks, go: (path: string) => void
     await proceed(step.at, step.current, user)
   }
 
-  /** Uses the same guest hold, explicit account choice and claim branch as the password form. */
-  async function submitGoogleAccess(collect: GoogleCredentialCollector): Promise<void> {
-    if (!googleAvailable.value || !access.at || access.pending) return
-    let step: Awaited<ReturnType<typeof begin>>
-    try { step = await begin() } catch (error) { if (access.at) refuse(error); return }
-    if (!step) return
-    creating = false
-    let user: AccountUser
+  /** Passive readiness is separate from begin(): it opens no guest and marks no authentication pending. */
+  async function prepareGoogleAccess(signal?: AbortSignal): Promise<GooglePreparedAttempt> {
+    if (!googleAvailable.value || !access.at || access.existing || access.pending) throw new WorldError('unavailable', 'Google sign-in is not available on this form.')
+    const at = access.at, run = at === 'save' ? attempt : signInRun
+    const prepared = await hooks.prepareGoogleAuthentication(signal)
+    if (signal?.aborted || access.at !== at || access.pending || run !== (at === 'save' ? attempt : signInRun)) {
+      await prepared.cancel()
+      throw new DOMException('The account form changed.', 'AbortError')
+    }
+    return prepared
+  }
+  /** The real Google click reserves the nonce first. Hold this guest before exchanging any callback. */
+  async function submitGoogleAccess(collect: GoogleCredentialCollector, prepared?: GooglePreparedAttempt): Promise<void> {
     try {
-      user = await hooks.authenticateGoogle(collect)
-      if (!step.current()) return
-    } catch (error) { if (step.current()) refuse(error); return }
-    await proceed(step.at, step.current, user)
+      if (!googleAvailable.value || !access.at || access.pending) return
+      const at = access.at, run = at === 'save' ? attempt : signInRun
+      const selected = (): boolean => access.at === at && run === (at === 'save' ? attempt : signInRun)
+      let step: Awaited<ReturnType<typeof begin>>
+      try { step = await begin(prepared?.signal) } catch (error) { if (selected()) refuse(error); return }
+      if (!step) return
+      creating = false
+      let user: AccountUser
+      try {
+        user = await hooks.authenticateGoogle(collect, prepared)
+        if (!step.current()) return
+      } catch (error) { if (step.current()) refuse(error); return }
+      await proceed(step.at, step.current, user)
+    } finally { if (prepared) await prepared.cancel() }
   }
 
   /** "Continue as <email>": the visitor confirmed the account already signed in here. */
@@ -489,7 +515,7 @@ export function createGuestControl(hooks: GuestHooks, go: (path: string) => void
 
   return {
     session, claim, busy, welcome, start, ended, storedGuest, returnable, account, savedUnopened, switchFailed,
-    access, claimUncertain, googleAvailable, submitGoogleAccess, dispose, passwordPolicy: () => ({ minLength: hooks.passwordBounds().min, hint: PASSWORD_RULE }),
+    access, claimUncertain, googleAvailable, prepareGoogleAccess, submitGoogleAccess, dispose, passwordPolicy: () => ({ minLength: hooks.passwordBounds().min, hint: PASSWORD_RULE }),
     submitAccess: credentials => { void submitAccess(credentials) }, continueAs: () => { void continueAs() }, useAnother, cancelAccess,
     admission: () => hooks.admission(), canSignIn,
     save: () => { void save() }, cancel, useSaved: () => { void useSaved() }, keepGuest: () => { void keepGuest() }, reset,

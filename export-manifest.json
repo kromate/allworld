@@ -149,7 +149,7 @@
       "target": "AGENTS.md"
     },
     {
-      "bytes": 44212,
+      "bytes": 44298,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -158,7 +158,7 @@
       ],
       "path": "App.vue",
       "root": "project",
-      "sha256": "f388599e6471ad0f309882b19b3ee435da95bc3bf91144f13f9529d20f32967e",
+      "sha256": "3e59ca51ab44dc942928b00b73fad7b52ef30f1999146e8af958c0b4a2302e3f",
       "target": "App.vue"
     },
     {
@@ -2602,7 +2602,7 @@
       ],
       "path": "scripts/source-export-reference.json",
       "root": "project",
-      "sha256": "c66e617969b675da2b3f4cb9220773c1a9ee21562337db0ec53caa3dd8631806",
+      "sha256": "9f7936168c9c89eee378c9121254875ac2c4173fa1ec16d0b9f7b2c37acb9483",
       "target": "scripts/source-export-reference.json"
     },
     {
@@ -4000,7 +4000,7 @@
       "target": "src/config/wardrobe.ts"
     },
     {
-      "bytes": 12010,
+      "bytes": 13566,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -4009,11 +4009,11 @@
       ],
       "path": "src/features/account/AccountAccess.vue",
       "root": "project",
-      "sha256": "32a4ab24ee24e4e7d8b83f80306b4f02a4f053db50607125e40aa0ba3fdc6c3d",
+      "sha256": "bd96aebadb3b1410e398dcbbb95c3b5517fbc6e4d7f97baa7cef61ef0e30f1cd",
       "target": "src/features/account/AccountAccess.vue"
     },
     {
-      "bytes": 3696,
+      "bytes": 10619,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -4022,7 +4022,7 @@
       ],
       "path": "src/features/account/googleIdentity.ts",
       "root": "project",
-      "sha256": "525055cefbefd3471e76535c671aacc5caed02b993466a79b055e6cdec477072",
+      "sha256": "f9db821c3e51594bbf375fa4b075af55c80ebd65f3590f666f1bc8b1cc035bcc",
       "target": "src/features/account/googleIdentity.ts"
     },
     {
@@ -4780,7 +4780,7 @@
       "target": "src/features/guest/GuestChip.vue"
     },
     {
-      "bytes": 9184,
+      "bytes": 9347,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -4789,7 +4789,7 @@
       ],
       "path": "src/features/guest/GuestClaim.vue",
       "root": "project",
-      "sha256": "51e40434a08197190c36a3165cbf68b89421e3c39b6f73d1b172510fb5549215",
+      "sha256": "846e7a4607d2b1040dd6d2a285c33e143392982c30c3c19ae5a95a446c6ec77f",
       "target": "src/features/guest/GuestClaim.vue"
     },
     {
@@ -4845,7 +4845,7 @@
       "target": "src/features/guest/GuestKeeps.vue"
     },
     {
-      "bytes": 3995,
+      "bytes": 4086,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -4854,7 +4854,7 @@
       ],
       "path": "src/features/guest/GuestSavePage.vue",
       "root": "project",
-      "sha256": "966a489518343ae97a781f3c1da1c130d098576c7c30cd875e4104a1217f0479",
+      "sha256": "bb73a3ef7aa1f96ec97229f4998e028af8354ecc16ba1b245113e1a8f9504523",
       "target": "src/features/guest/GuestSavePage.vue"
     },
     {
@@ -4884,7 +4884,7 @@
       "target": "src/features/guest/GuestWelcome.vue"
     },
     {
-      "bytes": 27586,
+      "bytes": 29594,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -4893,11 +4893,11 @@
       ],
       "path": "src/features/guest/guestControl.ts",
       "root": "project",
-      "sha256": "1eb6b822da49010fa057b2534f04f3f7ba35507c03bd55fff4b0d4dfc64406a9",
+      "sha256": "38d2ab76205146d26221137e4e0a3dda90c26692c84b5bb3b58815252c85d844",
       "target": "src/features/guest/guestControl.ts"
     },
     {
-      "bytes": 6725,
+      "bytes": 6924,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -4906,7 +4906,7 @@
       ],
       "path": "src/features/guest/guestHooks.ts",
       "root": "project",
-      "sha256": "c9f72cec38659c730dc8a6cb7e8a3c5398c23350989f674a1fe87a8c5ecbcee3",
+      "sha256": "541e4df2eadd996abef6557bc0801e0d30356aaeba86369b648482e674b733a9",
       "target": "src/features/guest/guestHooks.ts"
     },
     {
@@ -6535,7 +6535,7 @@
       "target": "src/geo/mvt.ts"
     },
     {
-      "bytes": 19908,
+      "bytes": 25811,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -6544,7 +6544,7 @@
       ],
       "path": "src/platform/account.ts",
       "root": "project",
-      "sha256": "72fcab453731f5dc8daafaf18c81b24d1ddd5d23866c4c713611e0cc6dd3747f",
+      "sha256": "7fdd8a7444cca00b1bd40934aa25b8f671e4b447917e0a7958c7339bc1988796",
       "target": "src/platform/account.ts"
     },
     {
@@ -7042,7 +7042,7 @@
       "target": "src/shared/worldCollision.ts"
     },
     {
-      "bytes": 35536,
+      "bytes": 35964,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -7051,7 +7051,7 @@
       ],
       "path": "src/state/app.ts",
       "root": "project",
-      "sha256": "61e1687d76d3e940cbd9074d8bf4136ff4e30de691cfc572828b3b17ac40870f",
+      "sha256": "86f7d71cd09b18ea6c95c7312bcc347ff1be2bec4cf08ffc24c25ab1ed892d20",
       "target": "src/state/app.ts"
     },
     {

@@ -19,6 +19,7 @@ import { ERROR_CODES, WorldError } from '../shared/model.ts'
 import type { ErrorCode } from '../shared/model.ts'
 import type { IdentityIssuer } from './hostedService.ts'
 import type { HostedWorldSetup } from './runtime.ts'
+import { monotonicNow } from './sessionTiming.ts'
 import { accountEndpoint } from './worldEndpoint.ts'
 
 /**
@@ -38,6 +39,16 @@ export type SignOutResult = 'confirmed' | 'unconfirmed' | 'unreached'
 export type CancelResult = 'none' | 'confirmed' | 'unconfirmed'
 
 export interface GoogleCredentialRequest { clientId: string; nonce: string }
+export interface GooglePreparedAttempt {
+  readonly request: Readonly<GoogleCredentialRequest>
+  readonly signal: AbortSignal
+  remainingMs(): number
+  /** Historical successful validated proof, used only to retire its nonce deadline. */
+  authenticated(): boolean
+  /** Synchronous reservation by the real Google button click; does not authenticate. */
+  reserve(): boolean
+  cancel(): Promise<CancelResult>
+}
 export type GoogleCredentialCollector = (request: GoogleCredentialRequest, signal: AbortSignal) => Promise<string>
 
 export interface AccountApi {
@@ -46,7 +57,8 @@ export interface AccountApi {
   /** Who this browser's session names, or null. The server's record, not proof: `issuer` is the authority. */
   me(signal?: AbortSignal): Promise<AccountUser | null>
   googleConfiguration(signal?: AbortSignal): Promise<{ clientId: string } | null>
-  signInGoogle(collect: GoogleCredentialCollector): Promise<AccountUser>
+  prepareGoogle(signal?: AbortSignal): Promise<GooglePreparedAttempt>
+  signInGoogle(collect: GoogleCredentialCollector, prepared?: GooglePreparedAttempt): Promise<AccountUser>
   signIn(email: string, password: string): Promise<AccountUser>
   signUp(email: string, password: string): Promise<AccountUser>
   /** Ends this device's session only. Never rejects: the caller has already closed the world here. */
@@ -70,6 +82,11 @@ export const PASSWORD_RULE = `Use a password of ${ACCOUNT_PASSWORD_MIN} to ${ACC
 
 type AccountPath = '/world/account/google-config' | '/world/account/google' | '/world/account/attempt' | '/world/account/signup' | '/world/account/signin' | '/world/account/me' | '/world/account/grant' | '/world/account/signout' | '/world/account/cancel'
 interface Answer { ok: boolean; status: number; value: unknown }
+interface PreparedRecord {
+  id: string; clientId: string; askedAt: number; deadline: number; generation: number
+  state: 'ready' | 'reserved' | 'adopted' | 'done' | 'cancelled'
+  stop: AbortController; expiry: ReturnType<typeof setTimeout> | null; active: Attempt | null; cancellation: Promise<CancelResult> | null; detach(): void
+}
 interface Attempt { run: number; stop: AbortController; cancelled: Promise<CancelResult>; settle(result: CancelResult): void }
 
 const record = (value: unknown): value is Record<string, unknown> => typeof value === 'object' && value !== null && !Array.isArray(value)
@@ -128,6 +145,9 @@ export function accountApi(config: HostedWorldSetup): AccountApi {
   let generation = 0
   let queue: Promise<unknown> = Promise.resolve()
   let current: Attempt | null = null
+  const preparations = new WeakMap<GooglePreparedAttempt, PreparedRecord>()
+  let preparedRecord: PreparedRecord | null = null
+  let lastPreparedIssue = -Infinity
   /** Attempts sent and then given up on, whose cancel the server has not confirmed. */
   const owedCancels = new Set<string>()
   /** A sign-out got no answer: this browser may hold a session nobody was told about. */
@@ -183,15 +203,80 @@ export function accountApi(config: HostedWorldSetup): AccountApi {
     return owedCancels.size === 0 && !owedSignOut
   }
 
-  function credential(path: '/world/account/signup' | '/world/account/signin' | '/world/account/google', email: string, password: string, collect?: GoogleCredentialCollector): Promise<AccountUser> {
+  function finishPreparation(record: PreparedRecord, state: 'done' | 'cancelled', reason?: DOMException): void {
+    if (record.expiry !== null) clearTimeout(record.expiry); record.expiry = null
+    record.state = state; record.detach(); record.stop.abort(reason)
+    if (preparedRecord === record) preparedRecord = null
+  }
+  function cancelPreparation(record: PreparedRecord, reason?: DOMException): Promise<CancelResult> {
+    if (record.state === 'done') return Promise.resolve('none')
+    if (record.state === 'cancelled') return record.cancellation ?? Promise.resolve('none')
+    if (record.state === 'adopted' && record.active) { record.stop.abort(reason); record.active.stop.abort(reason); return record.active.cancelled }
+    if (record.cancellation) return record.cancellation
+    finishPreparation(record, 'cancelled', reason)
+    record.cancellation = serial(async () => await cancelAttempt(record.id) ? 'confirmed' : 'unconfirmed')
+    return record.cancellation
+  }
+  function invalidatePreparation(except?: PreparedRecord): void {
+    const record = preparedRecord
+    if (record && record !== except) void cancelPreparation(record)
+  }
+  async function prepareGoogle(signal?: AbortSignal): Promise<GooglePreparedAttempt> {
+    const epoch = generation
+    return serial(async () => {
+      signal?.throwIfAborted()
+      if (current || epoch !== generation) throw stopped()
+      if (owedCancels.size > 0 || owedSignOut) throw new WorldError('unavailable', UNSETTLED)
+      if (preparedRecord) throw new WorldError('unavailable', 'The previous Google button is still being closed. Try again.')
+      if (monotonicNow() - lastPreparedIssue < 10_000) throw new WorldError('rate_limited', 'Wait a few seconds before loading Google again, or use your password.')
+      const metadata = await send('/world/account/google-config', {}, signal)
+      if (!metadata.ok) throw refusal(metadata)
+      if (!record(metadata.value) || typeof metadata.value.clientId !== 'string' || !/^[0-9]+-[A-Za-z0-9_-]+\.apps\.googleusercontent\.com$/.test(metadata.value.clientId)) throw new WorldError('unavailable', 'Google sign-in is not available here. Use your password instead.')
+      signal?.throwIfAborted()
+      if (current || epoch !== generation) throw stopped()
+      const askedAt = Date.now(), started = monotonicNow()
+      lastPreparedIssue = started
+      const issued = await send('/world/account/attempt', {}, signal)
+      if (!issued.ok) throw refusal(issued)
+      const id = issuedAttempt(issued.value), deadline = started + ATTEMPT_MS
+      if (signal?.aborted || current || epoch !== generation || monotonicNow() >= deadline) {
+        await cancelAttempt(id)
+        throw stopped()
+      }
+      const owned: PreparedRecord = { id, clientId: metadata.value.clientId, askedAt, deadline, generation: epoch, state: 'ready', stop: new AbortController(), expiry: null, active: null, cancellation: null, detach: () => undefined }
+      const lease: GooglePreparedAttempt = Object.freeze({
+        request: Object.freeze({ clientId: owned.clientId, nonce: owned.id }), signal: owned.stop.signal,
+        authenticated: () => owned.state === 'done',
+        remainingMs: () => owned.state === 'cancelled' || owned.state === 'done' ? 0 : Math.max(0, owned.deadline - monotonicNow()),
+        reserve() {
+          if (owned.state !== 'ready' || owned.generation !== generation || monotonicNow() >= owned.deadline) return false
+          owned.state = 'reserved'; return true
+        },
+        cancel: () => cancelPreparation(owned),
+      })
+      const stop = (): void => { void cancelPreparation(owned) }
+      signal?.addEventListener('abort', stop, { once: true })
+      owned.detach = () => signal?.removeEventListener('abort', stop)
+      owned.expiry = setTimeout(() => { owned.expiry = null; void cancelPreparation(owned, new DOMException('The Google sign-in window expired.', 'TimeoutError')) }, Math.max(0, owned.deadline - monotonicNow()))
+      preparations.set(lease, owned); preparedRecord = owned
+      return lease
+    })
+  }
+
+  function credential(path: '/world/account/signup' | '/world/account/signin' | '/world/account/google', email: string, password: string, collect?: GoogleCredentialCollector, prepared?: GooglePreparedAttempt): Promise<AccountUser> {
     // Out of bounds: refused here, before any attempt exists, with the same sentence the server uses.
     if (path !== '/world/account/google' && (length(password) > ACCOUNT_PASSWORD_MAX || (path === '/world/account/signup' && length(password) < ACCOUNT_PASSWORD_MIN))) return Promise.reject(new WorldError('invalid', PASSWORD_RULE))
+    const held = prepared ? preparations.get(prepared) : undefined
+    if (prepared && (!held || path !== '/world/account/google' || held.state !== 'reserved' || held.generation !== generation || monotonicNow() >= held.deadline)) return Promise.reject(new WorldError('expired', 'The Google button expired. Load it again and choose your account.'))
+    if (held) held.state = 'adopted'
+    invalidatePreparation(held)
     const creating = path === '/world/account/signup'
     const run = ++generation
     current?.stop.abort()
     let settle: (result: CancelResult) => void = () => undefined
     const attempt: Attempt = { run, stop: new AbortController(), cancelled: new Promise(resolve => { settle = resolve }), settle: result => settle(result) }
     current = attempt
+    if (held) held.active = attempt
     const live = (): boolean => run === generation && !attempt.stop.signal.aborted
     return serial(async () => {
       let sent = false
@@ -199,35 +284,38 @@ export function accountApi(config: HostedWorldSetup): AccountApi {
         if (!live()) throw stopped()
         if (!await settleOwed()) throw new WorldError('unavailable', UNSETTLED)
         if (!live()) throw stopped()
-        let clientId: string | null = null
-        if (path === '/world/account/google') {
+        let clientId: string | null = held?.clientId ?? null
+        if (path === '/world/account/google' && !held) {
           const metadata = await send('/world/account/google-config', {}, attempt.stop.signal)
           if (!metadata.ok) throw refusal(metadata)
           if (!record(metadata.value) || typeof metadata.value.clientId !== 'string' || !/^[0-9]+-[A-Za-z0-9_-]+\.apps\.googleusercontent\.com$/.test(metadata.value.clientId)) throw new WorldError('unavailable', 'Google sign-in is not available here. Use your password instead.')
           clientId = metadata.value.clientId
           if (!live()) throw stopped()
         }
-        // 1. A fresh attempt from the server, asked for now that the form was submitted.
-        const askedAt = Date.now()
-        let issued: Answer
-        try { issued = await send('/world/account/attempt', {}, attempt.stop.signal) }
-        catch (error) { if (!live()) throw stopped(); throw error }
-        if (!issued.ok) { if (!live()) throw stopped(); throw refusal(issued) }
-        const attemptId = issuedAttempt(issued.value)
-        if (!live() || Date.now() >= askedAt + ATTEMPT_MS) {
-          // Cancelled while it was being issued, or too old to use: no credentials are ever sent with it.
-          // It has authenticated nothing, so the cancel is a courtesy and nothing is owed if it fails.
+        // A reserved Google button adopts its original server nonce and deadline; nothing is renewed.
+        const askedAt = held?.askedAt ?? Date.now()
+        let attemptId: string
+        if (held) attemptId = held.id
+        else {
+          let issued: Answer
+          try { issued = await send('/world/account/attempt', {}, attempt.stop.signal) }
+          catch (error) { if (!live()) throw stopped(); throw error }
+          if (!issued.ok) { if (!live()) throw stopped(); throw refusal(issued) }
+          attemptId = issuedAttempt(issued.value)
+        }
+        const remaining = (): number => Math.max(0, held ? held.deadline - monotonicNow() : askedAt + ATTEMPT_MS - Date.now())
+        if (!live() || remaining() === 0) {
           await cancelAttempt(attemptId)
           if (!live()) throw stopped()
-          throw new WorldError('unavailable', 'The sign-in took too long to start. Nothing was sent. Try again.')
+          throw new WorldError('expired', 'The sign-in expired before it could finish. Try again.')
         }
         // 2. The credentials, with that attempt only.
         let answer: Answer | null = null
         let failure: unknown
         sent = true
-        const deadline = AbortSignal.timeout(Math.max(0, askedAt + ATTEMPT_MS - Date.now()) + 15_000)
+        const deadline = AbortSignal.timeout(remaining() + 15_000)
         try {
-          const signal = AbortSignal.any([attempt.stop.signal, deadline, ...(path === '/world/account/google' ? [AbortSignal.timeout(Math.max(0, askedAt + ATTEMPT_MS - Date.now()))] : [])])
+          const signal = AbortSignal.any([attempt.stop.signal, deadline, ...(path === '/world/account/google' ? [AbortSignal.timeout(remaining())] : [])])
           let body: Record<string, string> = { email, password, attemptId }
           if (path === '/world/account/google') {
             if (!collect || !clientId) throw new WorldError('unavailable', 'Google sign-in is not available here.')
@@ -239,7 +327,7 @@ export function accountApi(config: HostedWorldSetup): AccountApi {
         } catch (error) { failure = error }
         let user: AccountUser | null = null
         if (answer?.ok) { try { user = userOf(answer.value) } catch (error) { failure = error } }
-        if (live() && user) { attempt.settle('none'); tell(user); return user }
+        if (live() && user) { if (held) finishPreparation(held, 'done'); attempt.settle('none'); tell(user); return user }
         // Answered and refused (409 included: a cancelled or used attempt): the server made no session.
         if (live() && answer && !answer.ok) { attempt.settle('none'); throw refusal(answer) }
         // Cancelled, superseded, timed out, or no readable answer: the server may hold a session for
@@ -256,6 +344,8 @@ export function accountApi(config: HostedWorldSetup): AccountApi {
           : `The sign-in did not finish, and the server has not yet confirmed it was cancelled. No account is used on this device until it does.${after}`)
       } finally {
         if (!sent) attempt.settle('none')
+        if (held && !sent && held.state !== 'done') await cancelAttempt(held.id)
+        if (held && held.state !== 'done') finishPreparation(held, 'cancelled')
         if (current === attempt) current = null
       }
     })
@@ -281,10 +371,12 @@ export function accountApi(config: HostedWorldSetup): AccountApi {
       if (!record(answer.value) || typeof answer.value.clientId !== 'string' || !/^[0-9]+-[A-Za-z0-9_-]+\.apps\.googleusercontent\.com$/.test(answer.value.clientId)) throw new WorldError('unavailable', 'The account service returned an invalid reply. Try again.')
       return { clientId: answer.value.clientId }
     },
-    signInGoogle: collect => credential('/world/account/google', '', '', collect),
+    prepareGoogle,
+    signInGoogle: (collect, prepared) => credential('/world/account/google', '', '', collect, prepared),
     signIn: (email, password) => credential('/world/account/signin', email, password),
     signUp: (email, password) => credential('/world/account/signup', email, password),
     signOut() {
+      invalidatePreparation()
       generation++
       current?.stop.abort()
       return serial(async () => {
@@ -297,6 +389,7 @@ export function accountApi(config: HostedWorldSetup): AccountApi {
       })
     },
     abandon() {
+      invalidatePreparation()
       generation++
       const attempt = current
       if (!attempt) return Promise.resolve('none')
@@ -314,7 +407,7 @@ export function accountApi(config: HostedWorldSetup): AccountApi {
       if (run !== generation || owedCancels.size > 0) throw stopped()
       if (answer.ok) return answer.value
       // The session is gone or refused for good. Busy or unreachable is not that: the world retries.
-      if (answer.status === 401) { generation++; tell(null) }
+      if (answer.status === 401) { invalidatePreparation(); generation++; tell(null) }
       throw refusal(answer)
     },
     onChange(listener) { listeners.add(listener); return () => { listeners.delete(listener) } },

@@ -2,9 +2,9 @@
 // src/platform/, owned by the hosted-bridge track). The controller in guestControl.ts is written
 // against this interface, so a change to those hooks is a change to this file only. Nothing here
 // reads or returns the guest capability itself: the windows only ever learn whether one is held.
-import { accountAvailable, app, authenticate, authenticateGoogle, googleAccountConfiguration, cancelAuthentication, claimGuest, claimRecovery, claimRecoveryKept, currentAccount, hasStoredGuest, openAccount, resumeGuest, settleAccount, signOutAccount, startGuest, useSavedAccount } from '../../state/app.ts'
+import { accountAvailable, app, authenticate, authenticateGoogle, prepareGoogleAuthentication, googleAccountConfiguration, cancelAuthentication, claimGuest, claimRecovery, claimRecoveryKept, currentAccount, hasStoredGuest, openAccount, resumeGuest, settleAccount, signOutAccount, startGuest, useSavedAccount } from '../../state/app.ts'
 import { ACCOUNT_PASSWORD_MAX, ACCOUNT_PASSWORD_MIN } from '../../platform/account.ts'
-import type { AccountUser, CancelResult, GoogleCredentialCollector } from '../../platform/account.ts'
+import type { AccountUser, CancelResult, GoogleCredentialCollector, GooglePreparedAttempt } from '../../platform/account.ts'
 import { guestStorageScope } from '../../platform/guestService.ts'
 import { hostedWorldConfig } from '../../platform/runtime.ts'
 import type { GuestClaimResult, GuestStatus } from '../../shared/guest.ts'
@@ -56,7 +56,8 @@ export interface GuestHooks {
    * character. Resolves with the account just signed in: submitting the form is choosing it.
    */
   googleConfiguration(signal?: AbortSignal): Promise<{ clientId: string } | null>
-  authenticateGoogle(collect: GoogleCredentialCollector): Promise<AccountUser>
+  prepareGoogleAuthentication(signal?: AbortSignal): Promise<GooglePreparedAttempt>
+  authenticateGoogle(collect: GoogleCredentialCollector, prepared?: GooglePreparedAttempt): Promise<AccountUser>
   authenticate(mode: 'signin' | 'create', email: string, password: string): Promise<AccountUser>
   /** Stop `authenticate`. The server is asked to cancel that exact attempt; resolves with its receipt (`confirmed`) or without one (`unconfirmed`). */
   cancelAuthentication(): Promise<CancelResult>
@@ -91,6 +92,6 @@ export const guestHooks: GuestHooks = {
   hasStoredGuest,
   scope: () => { const config = hostedWorldConfig(); return config ? guestStorageScope(config) : null },
   admission: () => { const config = hostedWorldConfig(); return (config?.guestAdmission ?? (config?.channel === 'test' ? 'invite' : 'public')) === 'invite' ? 'pass' : 'open' },
-  canSignIn: accountAvailable, passwordBounds: () => ({ min: ACCOUNT_PASSWORD_MIN, max: ACCOUNT_PASSWORD_MAX }), currentUser: () => currentAccount(), googleConfiguration: googleAccountConfiguration, authenticateGoogle, authenticate, cancelAuthentication, settleAccount, openAccount,
+  canSignIn: accountAvailable, passwordBounds: () => ({ min: ACCOUNT_PASSWORD_MIN, max: ACCOUNT_PASSWORD_MAX }), currentUser: () => currentAccount(), googleConfiguration: googleAccountConfiguration, prepareGoogleAuthentication, authenticateGoogle, authenticate, cancelAuthentication, settleAccount, openAccount,
   startGuest, claimGuest, useSavedAccount, resumeGuest, signOutAccount,
 }
