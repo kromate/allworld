@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<defs>
+ <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#1c1a24"/><stop offset="1" stop-color="#12131d"/></linearGradient>
+ <linearGradient id="amber" x2="1" y2="1"><stop stop-color="#ffc64d"/><stop offset="1" stop-color="#f39a00"/></linearGradient>
+ <pattern id="grid" width="52" height="52" patternUnits="userSpaceOnUse"><path d="M52 0H0V52" fill="none" stroke="#34313f" stroke-width="1"/></pattern>
+</defs>
+<rect width="1200" height="630" fill="url(#bg)"/>
+<rect x="656" width="544" height="630" fill="url(#grid)" opacity=".55"/>
+<path d="M775 -40C640 175 1130 112 1070 320S735 458 895 685" fill="none" stroke="#282634" stroke-width="94"/>
+<path d="M775 -40C640 175 1130 112 1070 320S735 458 895 685" fill="none" stroke="#514252" stroke-width="2"/>
+<path d="M775 -40C640 175 1130 112 1070 320S735 458 895 685" fill="none" stroke="#ffb020" stroke-width="5" stroke-dasharray="12 16" opacity=".65"/>
+<rect x="756" y="159" width="120" height="82" rx="15" fill="#2a2938" stroke="#40384b" transform="rotate(-12 816 200)"/>
+<rect x="977" y="401" width="112" height="90" rx="15" fill="#282837" stroke="#40384b" transform="rotate(10 1033 446)"/>
+<rect x="908" y="85" width="99" height="56" rx="13" fill="#263a38" transform="rotate(12 958 113)"/>
+<circle cx="870" cy="445" r="22" fill="#2f8fd6"/><circle cx="870" cy="445" r="8" fill="#c3e5ff"/>
+<circle cx="1039" cy="166" r="18" fill="#f0553a"/><circle cx="1039" cy="166" r="6" fill="#ffdacd"/>
+<circle cx="970" cy="296" r="78" fill="#171620" stroke="#ffb020" stroke-width="3"/>
+<g transform="translate(906 232) scale(3.2)">
+ <rect width="40" height="40" rx="12" fill="#1c1a24"/>
+ <path d="M8 30c7 0 9-5 12-10s5-10 12-10" fill="none" stroke="#3a3648" stroke-width="7" stroke-linecap="round"/>
+ <path d="M8 30c7 0 9-5 12-10s5-10 12-10" fill="none" stroke="url(#amber)" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="4 4.5"/>
+ <circle cx="20" cy="20" r="6.2" fill="url(#amber)"/><circle cx="20" cy="20" r="2.4" fill="#1c1a24"/>
+ <circle cx="31.5" cy="10" r="2.6" fill="#f0553a"/><circle cx="8.5" cy="30" r="2.6" fill="#2f8fd6"/>
+</g>
+<text x="72" y="150" fill="#ffb020" font-family="Arial, sans-serif" font-size="26" font-weight="700" letter-spacing="4">A SOCIAL WORLD ON REAL MAPS</text>
+<text x="68" y="265" fill="#fffaf0" font-family="Arial, sans-serif" font-size="104" font-weight="700" letter-spacing="-4">Allworld</text>
+<text x="72" y="350" fill="#e6e2ec" font-family="Arial, sans-serif" font-size="38">Explore real streets.</text>
+<text x="72" y="405" fill="#e6e2ec" font-family="Arial, sans-serif" font-size="38">Play together.</text>
+<rect x="72" y="493" width="288" height="54" rx="27" fill="#ffb020"/>
+<text x="98" y="528" fill="#241a05" font-family="Arial, sans-serif" font-size="25" font-weight="700">joinallworld.com</text>
+</svg>

@@ -160,7 +160,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "33675a2d695b7992ee7f0c137070aa320ad0f3a788e9feae0eace78e3da496e1"
+      "sha256": "408a178003bd5e9456cc93bd7bf92b1556cd81111de7eebcf580738e9919081b"
     },
     "docs/CI-CD.md": {
       "kind": "documentation",
@@ -178,7 +178,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "1b2ce3da20a1e146d0fbb1d711a5bb6c440090ef2c852664be918cf3e85a8bfe"
+      "sha256": "4590ccebf6506f08fdc00d8f6a3a9b4ef74a8268b87dbd69afde4e5d763cd8ec"
     },
     "docs/CURRENT-SOURCE.md": {
       "kind": "documentation",
@@ -232,7 +232,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "14c1a9e49ec9415d9468bf4a1100b4212fffba81f2ae5e3f8e52593cad1b880c"
+      "sha256": "c78f73bd475ebb577afc89bf1919e8b23ee2e818c820688d72f0a73423df4e9b"
     },
     "main.ts": {
       "kind": "source",
@@ -1487,7 +1487,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "187c709b5cf508235bb00b170efa695d65d829fc3b2088750fd03152b0b943eb"
+      "sha256": "9dc21032bff4f9f5d9d6e55dabb5ce4bf8d9d274b0a74140a613db332692e04b"
     },
     "scripts/build-asset-packs.mjs": {
       "kind": "source",
@@ -1568,7 +1568,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "382a317747433cdf95a2b0a1e634b0d331a239aa2e2147c0177c7d98db98d85b"
+      "sha256": "26a180c095ac0e31c6c1885cc10eb0f7cc2910b041b945f319beafc6fd1e9d86"
     },
     "scripts/preview/build-info.mjs": {
       "kind": "source",
@@ -1872,7 +1872,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "d09f218e136ca3ad6ba2f66bfa23dd7fa0cd71428b1c5b28ff7704068d5eb578"
+      "sha256": "1365d9ae9f9bc457a5b109058fc65cc80f88d5291ab7509dd07a9bc2f26ad4eb"
     },
     "service/cluster-edge.ts": {
       "kind": "source",
@@ -4944,6 +4944,120 @@
         "NOTICE"
       ],
       "sha256": "70f26e885707223432d7d1b73c94a27dec45532f3a440597f3743d6a2881b20f"
+    },
+    "public/apple-touch-icon.png": {
+      "kind": "asset",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE",
+        "public/social/NOTICE.md"
+      ],
+      "sha256": "84248be4c046df8ea4f4e53f09821f77c835942b457648a133a388ef96150763"
+    },
+    "public/favicon.png": {
+      "kind": "asset",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE",
+        "public/social/NOTICE.md"
+      ],
+      "sha256": "7ac10120dea802214bf8fa24f07036f9cdcfe67dc5cb75039b156aac95a9ac14"
+    },
+    "public/robots.txt": {
+      "kind": "documentation",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "2df9457530344ae3406592b93447d4cd1afa7baf17d61215e1cce2273ac1ac76"
+    },
+    "public/sitemap.xml": {
+      "kind": "documentation",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "4d5281528ffa28fda22fa38853d7adc1a7fcda07e7657ff9afef708289405c91"
+    },
+    "public/social/NOTICE.md": {
+      "kind": "documentation",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE",
+        "public/social/NOTICE.md"
+      ],
+      "sha256": "c0971291bdfe001a7908e490ae337acd8f738df879fef83a72d1ee3b4532d1d0"
+    },
+    "public/social/allworld-og.png": {
+      "kind": "asset",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE",
+        "public/social/NOTICE.md"
+      ],
+      "sha256": "1f496f5af7f0e2a1d4689f4b2086676da6b2494863668f8d5a758697f87c6717"
+    },
+    "scripts/build-private-playtest.mjs": {
+      "kind": "tooling",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "e5e4c5282dcef5b0a3e537129a2b06374a3c606aece467b0420edf62e20ec995"
+    },
+    "scripts/seo/allworld-og.svg": {
+      "kind": "tooling",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE",
+        "public/social/NOTICE.md"
+      ],
+      "sha256": "aba35628d79bc2572685c3c4920e22cddd6e31cd502ef04dc3c6302182d49c4e"
+    },
+    "scripts/seo/favicon.svg": {
+      "kind": "tooling",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE",
+        "public/social/NOTICE.md"
+      ],
+      "sha256": "476c66e015eb1376f4b273ce76e67a418e3b874b5c157e5364bf58ea77abb69f"
+    },
+    "scripts/source-export-audit.py": {
+      "kind": "tooling",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "58559992ec7e218f0d1973cce8bbada2589f0b0d54ac314c122209d8d8fb7bea"
+    },
+    "scripts/verify-seo.ts": {
+      "kind": "tooling",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "47dffa500d3b50b2adaae87d044c287d3e8d7303b47a0a04ca103cf8eb3fc863"
+    },
+    "service/pageMetadata.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "58dcdc5bd4b9b1e67115a2f23f836335c7068292ef9eb76b79be2c075a516ef0"
     }
   },
   "priorManifestSha256": "491b4ac1913ba05807f1c5e3eb11f9c84ec293fb9722f5f0e39a13e8f14dab4b",

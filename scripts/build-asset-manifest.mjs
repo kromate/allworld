@@ -94,7 +94,7 @@ for (const path of walk('').sort()) {
   if (experiment) { row.kind = 'experiment'; row.note = experiment.why; if (referenced) problems.push(`${path} is in an experiment folder but App source names it`) }
   else if (RETIRED.has(path)) { row.kind = 'retired'; row.note = RETIRED.get(path); if (referenced) problems.push(`${path} is marked retired but App source names it`) }
   else if (/\.(md|txt)$/.test(path)) row.kind = 'notice'
-  else if (/\.json$/.test(path)) row.kind = 'record'
+  else if (/\.json$/.test(path) || path === 'sitemap.xml') row.kind = 'record'
   else if (/\.(jpg|png)$/.test(path)) row.kind = 'image'
   else if (path.endsWith('.pack.gz')) {
     const group = GROUPS.find(([test]) => test.test(path))

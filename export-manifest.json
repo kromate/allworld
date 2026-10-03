@@ -253,7 +253,7 @@
       "target": "docs/ARCHITECTURE.md"
     },
     {
-      "bytes": 13758,
+      "bytes": 14324,
       "kind": "documentation",
       "license": "Apache-2.0",
       "notices": [
@@ -262,7 +262,7 @@
       ],
       "path": "docs/ASSETS-LICENSES.md",
       "root": "project",
-      "sha256": "02535f2a1db592abe6f3afc7817ee2d98f55bbe1b2406794144a3662033c14b0",
+      "sha256": "408a178003bd5e9456cc93bd7bf92b1556cd81111de7eebcf580738e9919081b",
       "target": "docs/ASSETS-LICENSES.md"
     },
     {
@@ -279,7 +279,7 @@
       "target": "docs/CI-CD.md"
     },
     {
-      "bytes": 7076,
+      "bytes": 7432,
       "kind": "documentation",
       "license": "Apache-2.0",
       "notices": [
@@ -288,7 +288,7 @@
       ],
       "path": "docs/CONTRIBUTOR-MAP.md",
       "root": "project",
-      "sha256": "1b2ce3da20a1e146d0fbb1d711a5bb6c440090ef2c852664be918cf3e85a8bfe",
+      "sha256": "4590ccebf6506f08fdc00d8f6a3a9b4ef74a8268b87dbd69afde4e5d763cd8ec",
       "target": "docs/CONTRIBUTOR-MAP.md"
     },
     {
@@ -357,7 +357,7 @@
       "target": "env.d.ts"
     },
     {
-      "bytes": 1362,
+      "bytes": 2213,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -366,7 +366,7 @@
       ],
       "path": "index.html",
       "root": "project",
-      "sha256": "14c1a9e49ec9415d9468bf4a1100b4212fffba81f2ae5e3f8e52593cad1b880c",
+      "sha256": "c78f73bd475ebb577afc89bf1919e8b23ee2e818c820688d72f0a73423df4e9b",
       "target": "index.html"
     },
     {
@@ -407,6 +407,20 @@
       "root": "project",
       "sha256": "084d9fba1595fb62fcdc29036fc4f71a59fa66dd5ba8b63a367119380e38cca6",
       "target": "package.json"
+    },
+    {
+      "bytes": 5897,
+      "kind": "asset",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE",
+        "public/social/NOTICE.md"
+      ],
+      "path": "public/apple-touch-icon.png",
+      "root": "project",
+      "sha256": "84248be4c046df8ea4f4e53f09821f77c835942b457648a133a388ef96150763",
+      "target": "public/apple-touch-icon.png"
     },
     {
       "bytes": 1066,
@@ -964,6 +978,20 @@
       "target": "public/avatars/m18.pack.gz"
     },
     {
+      "bytes": 1471,
+      "kind": "asset",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE",
+        "public/social/NOTICE.md"
+      ],
+      "path": "public/favicon.png",
+      "root": "project",
+      "sha256": "7ac10120dea802214bf8fa24f07036f9cdcfe67dc5cb75039b156aac95a9ac14",
+      "target": "public/favicon.png"
+    },
+    {
       "bytes": 4016,
       "kind": "notice-or-metadata",
       "license": "CC0-1.0",
@@ -1142,6 +1170,60 @@
       "root": "project",
       "sha256": "d8dc04d209921d5206ce3bff4faf56bd965b1bdd2a24577b22c60c54524c028d",
       "target": "public/regions/nigeria.pack.gz"
+    },
+    {
+      "bytes": 113,
+      "kind": "documentation",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "path": "public/robots.txt",
+      "root": "project",
+      "sha256": "2df9457530344ae3406592b93447d4cd1afa7baf17d61215e1cce2273ac1ac76",
+      "target": "public/robots.txt"
+    },
+    {
+      "bytes": 160,
+      "kind": "documentation",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "path": "public/sitemap.xml",
+      "root": "project",
+      "sha256": "4d5281528ffa28fda22fa38853d7adc1a7fcda07e7657ff9afef708289405c91",
+      "target": "public/sitemap.xml"
+    },
+    {
+      "bytes": 852,
+      "kind": "documentation",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE",
+        "public/social/NOTICE.md"
+      ],
+      "path": "public/social/NOTICE.md",
+      "root": "project",
+      "sha256": "c0971291bdfe001a7908e490ae337acd8f738df879fef83a72d1ee3b4532d1d0",
+      "target": "public/social/NOTICE.md"
+    },
+    {
+      "bytes": 91979,
+      "kind": "asset",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE",
+        "public/social/NOTICE.md"
+      ],
+      "path": "public/social/allworld-og.png",
+      "root": "project",
+      "sha256": "1f496f5af7f0e2a1d4689f4b2086676da6b2494863668f8d5a758697f87c6717",
+      "target": "public/social/allworld-og.png"
     },
     {
       "bytes": 2174,
@@ -2184,7 +2266,7 @@
       "target": "scripts/assemble-release-package.mjs"
     },
     {
-      "bytes": 10278,
+      "bytes": 10304,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -2193,7 +2275,7 @@
       ],
       "path": "scripts/build-asset-manifest.mjs",
       "root": "project",
-      "sha256": "187c709b5cf508235bb00b170efa695d65d829fc3b2088750fd03152b0b943eb",
+      "sha256": "9dc21032bff4f9f5d9d6e55dabb5ce4bf8d9d274b0a74140a613db332692e04b",
       "target": "scripts/build-asset-manifest.mjs"
     },
     {
@@ -2236,7 +2318,7 @@
       "target": "scripts/build-home-parcels.ts"
     },
     {
-      "bytes": 11552,
+      "bytes": 11765,
       "kind": "tooling",
       "license": "Apache-2.0",
       "notices": [
@@ -2245,7 +2327,7 @@
       ],
       "path": "scripts/build-private-playtest.mjs",
       "root": "project",
-      "sha256": "8da29c537bbff6770bcae54bfb0d0c525361b5b04e77838c2433afb5e78ad7b1",
+      "sha256": "e5e4c5282dcef5b0a3e537129a2b06374a3c606aece467b0420edf62e20ec995",
       "target": "scripts/build-private-playtest.mjs"
     },
     {
@@ -2353,7 +2435,7 @@
       "target": "scripts/export-source.mjs"
     },
     {
-      "bytes": 13905,
+      "bytes": 14042,
       "kind": "tooling",
       "license": "Apache-2.0",
       "notices": [
@@ -2362,7 +2444,7 @@
       ],
       "path": "scripts/guard-release-package.mjs",
       "root": "project",
-      "sha256": "382a317747433cdf95a2b0a1e634b0d331a239aa2e2147c0177c7d98db98d85b",
+      "sha256": "26a180c095ac0e31c6c1885cc10eb0f7cc2910b041b945f319beafc6fd1e9d86",
       "target": "scripts/guard-release-package.mjs"
     },
     {
@@ -2444,6 +2526,34 @@
       "target": "scripts/run-release-gate.mjs"
     },
     {
+      "bytes": 2898,
+      "kind": "tooling",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE",
+        "public/social/NOTICE.md"
+      ],
+      "path": "scripts/seo/allworld-og.svg",
+      "root": "project",
+      "sha256": "aba35628d79bc2572685c3c4920e22cddd6e31cd502ef04dc3c6302182d49c4e",
+      "target": "scripts/seo/allworld-og.svg"
+    },
+    {
+      "bytes": 589,
+      "kind": "tooling",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE",
+        "public/social/NOTICE.md"
+      ],
+      "path": "scripts/seo/favicon.svg",
+      "root": "project",
+      "sha256": "476c66e015eb1376f4b273ce76e67a418e3b874b5c157e5364bf58ea77abb69f",
+      "target": "scripts/seo/favicon.svg"
+    },
+    {
       "bytes": 2606,
       "kind": "tooling",
       "license": "Apache-2.0",
@@ -2457,7 +2567,7 @@
       "target": "scripts/source-export-archive.py"
     },
     {
-      "bytes": 17243,
+      "bytes": 18234,
       "kind": "tooling",
       "license": "Apache-2.0",
       "notices": [
@@ -2466,7 +2576,7 @@
       ],
       "path": "scripts/source-export-audit.py",
       "root": "project",
-      "sha256": "2daf06235e0f595a17bdcfc778eea42baa523896eef886c7a99a5359ec2a4be5",
+      "sha256": "58559992ec7e218f0d1973cce8bbada2589f0b0d54ac314c122209d8d8fb7bea",
       "target": "scripts/source-export-audit.py"
     },
     {
@@ -2483,7 +2593,7 @@
       "target": "scripts/source-export-install.py"
     },
     {
-      "bytes": 142972,
+      "bytes": 146123,
       "kind": "tooling",
       "license": "Apache-2.0",
       "notices": [
@@ -2492,7 +2602,7 @@
       ],
       "path": "scripts/source-export-reference.json",
       "root": "project",
-      "sha256": "757292ea60a44ba2ab90d4aabcbcad67c3d31ff0d1040d10fc97377a799191cb",
+      "sha256": "4ce36450c2048ac41495d8ddbb946c161d3dea31f61367f2651e2cd1b0804cd4",
       "target": "scripts/source-export-reference.json"
     },
     {
@@ -2689,6 +2799,19 @@
       "root": "project",
       "sha256": "fcbf7a88c2d0b74aceda85ed72f468943310b823de42578fdde226a8248ddc28",
       "target": "scripts/verify-play.ts"
+    },
+    {
+      "bytes": 7681,
+      "kind": "tooling",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "path": "scripts/verify-seo.ts",
+      "root": "project",
+      "sha256": "47dffa500d3b50b2adaae87d044c287d3e8d7303b47a0a04ca103cf8eb3fc863",
+      "target": "scripts/verify-seo.ts"
     },
     {
       "bytes": 26358,
@@ -3002,7 +3125,7 @@
       "target": "service/cloudflare/transport.ts"
     },
     {
-      "bytes": 21729,
+      "bytes": 21854,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -3011,7 +3134,7 @@
       ],
       "path": "service/cloudflare/worker.ts",
       "root": "project",
-      "sha256": "d09f218e136ca3ad6ba2f66bfa23dd7fa0cd71428b1c5b28ff7704068d5eb578",
+      "sha256": "1365d9ae9f9bc457a5b109058fc65cc80f88d5291ab7509dd07a9bc2f26ad4eb",
       "target": "service/cloudflare/worker.ts"
     },
     {
@@ -3511,6 +3634,19 @@
       "root": "project",
       "sha256": "a283d7cce8875c10288eeddd0286dd76366e134d7de0fe118962dabbf35dc12d",
       "target": "service/notify.ts"
+    },
+    {
+      "bytes": 528,
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "path": "service/pageMetadata.ts",
+      "root": "project",
+      "sha256": "58dcdc5bd4b9b1e67115a2f23f836335c7068292ef9eb76b79be2c075a516ef0",
+      "target": "service/pageMetadata.ts"
     },
     {
       "bytes": 3926,

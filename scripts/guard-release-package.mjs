@@ -35,14 +35,14 @@ function safePath(path, kind) {
 }
 function assetName(name) {
   if (typeof name !== 'string' || !/^[A-Za-z0-9_][A-Za-z0-9_./-]*$/.test(name) || name.split('/').some(p => !p || p === '.' || p === '..' || p.startsWith('.'))) fail('ASSET_PATH_INVALID')
-  if (!/^(?:assets|avatars|packs|regions|wardrobe)\/[A-Za-z0-9_./-]+$/.test(name) && !['index.html', 'app-build.json', 'playtest-config.json', 'playtest-build.json', '_headers', '__world-data/yaba-vehicles.json'].includes(name)) fail('UNREVIEWED_ASSET_PATH')
+  if (!/^(?:assets|avatars|packs|regions|wardrobe)\/[A-Za-z0-9_./-]+$/.test(name) && !['index.html', 'app-build.json', 'playtest-config.json', 'playtest-build.json', '_headers', '__world-data/yaba-vehicles.json', 'favicon.png', 'apple-touch-icon.png', 'robots.txt', 'sitemap.xml', 'social/allworld-og.png', 'social/NOTICE.md'].includes(name)) fail('UNREVIEWED_ASSET_PATH')
   return name
 }
 function inventory(root, prefix = '') {
   const files = []
   for (const e of readdirSync(join(root, prefix), { withFileTypes: true })) {
     const name = prefix + e.name
-    if (!(e.isDirectory() && name === '__world-data')) assetName(e.isDirectory() ? name + '/placeholder' : name)
+    if (!(e.isDirectory() && (name === '__world-data' || name === 'social'))) assetName(e.isDirectory() ? name + '/placeholder' : name)
     if (e.isSymbolicLink()) fail('ASSET_SYMLINK_REFUSED')
     if (e.isDirectory()) files.push(...inventory(root, name + '/'))
     else if (e.isFile()) { safePath(join(root, name), 'file'); files.push(name) }

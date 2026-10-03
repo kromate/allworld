@@ -35,6 +35,15 @@ SECRETS = [
     ('credential-url', re.compile(r'https?://[^\s/:]+:[^\s/@]+@')),
 ]
 NEW_FILES = {
+    'public/social/allworld-og.png': ('asset', 'Apache-2.0', ['LICENSE', 'NOTICE', 'public/social/NOTICE.md']),
+    'public/favicon.png': ('asset', 'Apache-2.0', ['LICENSE', 'NOTICE', 'public/social/NOTICE.md']),
+    'public/apple-touch-icon.png': ('asset', 'Apache-2.0', ['LICENSE', 'NOTICE', 'public/social/NOTICE.md']),
+    'public/social/NOTICE.md': ('documentation', 'Apache-2.0', ['LICENSE', 'NOTICE', 'public/social/NOTICE.md']),
+    'public/robots.txt': ('documentation', 'Apache-2.0', ['LICENSE', 'NOTICE']),
+    'public/sitemap.xml': ('documentation', 'Apache-2.0', ['LICENSE', 'NOTICE']),
+    'scripts/seo/allworld-og.svg': ('tooling', 'Apache-2.0', ['LICENSE', 'NOTICE', 'public/social/NOTICE.md']),
+    'scripts/seo/favicon.svg': ('tooling', 'Apache-2.0', ['LICENSE', 'NOTICE', 'public/social/NOTICE.md']),
+    'scripts/verify-seo.ts': ('tooling', 'Apache-2.0', ['LICENSE', 'NOTICE']),
     'scripts/build-private-playtest.mjs': ('tooling', 'Apache-2.0', ['LICENSE', 'NOTICE']),
     'scripts/guard-release-package.mjs': ('tooling', 'Apache-2.0', ['LICENSE', 'NOTICE']),
     'scripts/probe-release-package-guard.mjs': ('tooling', 'Apache-2.0', ['LICENSE', 'NOTICE']),
@@ -201,7 +210,7 @@ def main():
             if len(check) > 64 * 1024 * 1024:
                 issues.append({'path': path, 'reason': 'decompressed-file-too-large'})
                 continue
-        text = check.decode('utf-8', errors='ignore') if Path(path).suffix in TEXT_SUFFIX or path.endswith('.gz') else ''
+        text = check.decode('utf-8', errors='ignore') if Path(path).suffix in TEXT_SUFFIX or path in ('public/sitemap.xml', 'scripts/seo/allworld-og.svg', 'scripts/seo/favicon.svg') or path.endswith('.gz') else ''
         findings = []
         for label, pattern in SECRETS:
             for match in pattern.finditer(text):
