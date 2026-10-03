@@ -1,0 +1,4834 @@
+{
+  "files": {
+    ".github/ISSUE_TEMPLATE/asset_contribution.md": {
+      "kind": "documentation",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "da8c59781a684c673b408122f6748a3294d48e04cbf45bf7b0ac96549574e37e"
+    },
+    ".github/ISSUE_TEMPLATE/bug_report.md": {
+      "kind": "documentation",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "b0b63ff452282c74064f568015508eadd429f808e877016a2b45e72641a733ca"
+    },
+    ".github/ISSUE_TEMPLATE/change_proposal.md": {
+      "kind": "documentation",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "c4a7e30253bd4dc905f92976d68e44a3de7ea623bd6f48293b48ef3c05a066a3"
+    },
+    ".github/PULL_REQUEST_TEMPLATE.md": {
+      "kind": "documentation",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "7b45a103a5a46215368dbecfc4ba79b9028a5f7a7a1f3bb936ab4411c39d1536"
+    },
+    ".gitignore": {
+      "kind": "documentation",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "30e5f2fd900c865f600d1bbb113de96ec0dc05a4a03a411b6f42414bcab21d0d"
+    },
+    "AGENTS.md": {
+      "kind": "documentation",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "ce778a77b098b35848c5ac482440f8c44bb3b9d0ef290efcd53b590de4d1dab9"
+    },
+    "App.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "92263393b5927374783b17c34911ba6796f576815f6f6fda9f739bdd745cdc62"
+    },
+    "CONTRIBUTING.md": {
+      "kind": "documentation",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "29eec8544cdab08cf4bb6048fc7ac6f9c99e91eaa6f58a84bc1a9d8559d3ee13"
+    },
+    "LICENSE": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    "NOTICE": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "70c2a1f6c8bfbb5458b429757b7030020837bdf52e97fa60da5d3a9821602f0d"
+    },
+    "README.md": {
+      "kind": "documentation",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "6f85a06df9f0cb1175049d2443695ba6d9413af72470d61d096db180d29f39b4"
+    },
+    "SECURITY.md": {
+      "kind": "documentation",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "fd4d4b62bfbb5f869130c4fbe0ee8565fa823aafaf61bd8e153aa2f72084e18e"
+    },
+    "docs/ARCHITECTURE.md": {
+      "kind": "documentation",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "20639ca275e33b4583e1eccf3467a0b620dbe383b8adf4a612e689d38316fa7e"
+    },
+    "docs/ASSETS-LICENSES.md": {
+      "kind": "documentation",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "33675a2d695b7992ee7f0c137070aa320ad0f3a788e9feae0eace78e3da496e1"
+    },
+    "docs/CONTRIBUTOR-MAP.md": {
+      "kind": "documentation",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "14eb74b6a1cffcc6881b9b99365c8978be8618c32dca44c03cc7180e9a9a5a35"
+    },
+    "docs/CURRENT-SOURCE.md": {
+      "kind": "documentation",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "68b48767c3114e2675b6f98a941c188be95d437e214750f5bffb765c103a813b"
+    },
+    "docs/GOOD-FIRST-CONTRIBUTIONS.md": {
+      "kind": "documentation",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "dec5d3e4f31a2fb3dd9c5e54d15074d5a3e2862799cd57cfb43929380b700ac4"
+    },
+    "docs/HOSTING.md": {
+      "kind": "documentation",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "6c97416d6d5ad7152b32fb00a53b6afe71480fa94ee749cac250bfff0714b71d"
+    },
+    "docs/SOURCE-EXPORT.md": {
+      "kind": "documentation",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "9651d68308bf3bdbc2fa87d5c86bd9ecbf60bcd75943f6517b262214c54a5178"
+    },
+    "env.d.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "be66396afbd9b14594443cbed12149c9dff2ecc30d827e1d6bca3eb3c83c274f"
+    },
+    "index.html": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "14c1a9e49ec9415d9468bf4a1100b4212fffba81f2ae5e3f8e52593cad1b880c"
+    },
+    "main.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "5a12913da515d599a53883d1a7e79e0bb98911c9bccddaaec6f0a5aafd5d9a65"
+    },
+    "package-lock.json": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "234f0c45715c4208583d88e8f410c45bd603ffbbb0ade4d213724b1a1488305b"
+    },
+    "package.json": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "363f96dae47676e75f99522570fcfbae692c25662dc1b8dd14604699d10888ac"
+    },
+    "public/avatars/LICENSE.md": {
+      "kind": "notice-or-metadata",
+      "license": "MIT",
+      "notices": [
+        "public/avatars/LICENSE.md"
+      ],
+      "sha256": "17474e386e0b9e1a700cc3d06b2b0882a2c376d9c6b49c7f8274409b8f8d2352"
+    },
+    "public/avatars/clips-f.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/avatars/LICENSE.md"
+      ],
+      "sha256": "3c20987b2895cc807dc38f3ad7e0819694248afd6837510ef2292623befe006d"
+    },
+    "public/avatars/clips-m.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/avatars/LICENSE.md"
+      ],
+      "sha256": "aee7616827019a36292191639958a86a375a8385bb2e88f861d8a525bf6bfffc"
+    },
+    "public/avatars/f01.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/avatars/LICENSE.md"
+      ],
+      "sha256": "c6dad4a9b32b8ba5e3008c136ba7106e16a757f682208707aa247eaec1034f5d"
+    },
+    "public/avatars/f01.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/avatars/LICENSE.md"
+      ],
+      "sha256": "60bfb58cfc37ad051f5b2dfc5a71472d1e41003ef5ed6b32b413a4ac7873d690"
+    },
+    "public/avatars/f03.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/avatars/LICENSE.md"
+      ],
+      "sha256": "4a4047efa41925dc74709533643bedbe60135997515dcb4c73e6838b6db5c8c0"
+    },
+    "public/avatars/f03.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/avatars/LICENSE.md"
+      ],
+      "sha256": "6ded8fbeac8363c41d9a23e18a96a4614f85b2de26325cef4954122b7db87122"
+    },
+    "public/avatars/f06.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/avatars/LICENSE.md"
+      ],
+      "sha256": "cde0e34907ae530df63411e123e0d84eae1ebc03214e22721b49ae40ca65269a"
+    },
+    "public/avatars/f06.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/avatars/LICENSE.md"
+      ],
+      "sha256": "c86e385ed2840eb258626b08f5b130f08337936f08ec1a7de06c8af18205e5da"
+    },
+    "public/avatars/f08.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/avatars/LICENSE.md"
+      ],
+      "sha256": "03d0530cc075aa133b480a9a241357a71c8d7e9d0be4e0b63c90944e8cba052f"
+    },
+    "public/avatars/f08.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/avatars/LICENSE.md"
+      ],
+      "sha256": "92c4926bcc39d3e495daa4655846602e06103cbf5200e548bb3e02b210a496f9"
+    },
+    "public/avatars/f11.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/avatars/LICENSE.md"
+      ],
+      "sha256": "52c19e58d25e928060c8166dd9bd9dd36c15176463fcbb82c798a549ee827bd4"
+    },
+    "public/avatars/f11.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/avatars/LICENSE.md"
+      ],
+      "sha256": "6b855ec10b2347f9ef3afa03ee67e355ed0877ae1e51623bf298b22f7bad8068"
+    },
+    "public/avatars/f12.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/avatars/LICENSE.md"
+      ],
+      "sha256": "324a75c25b614555a1eb115157b62ab8d2630ad17c3e2d1848eaf5c318cea0bd"
+    },
+    "public/avatars/f12.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/avatars/LICENSE.md"
+      ],
+      "sha256": "d721782f58bdee46d57f5b471c7e70e8a83e5228c2c0a6484dca3cc3cff43ec1"
+    },
+    "public/avatars/f17.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/avatars/LICENSE.md"
+      ],
+      "sha256": "31c0537cd6bb6d80add86648cbf4af384d5216c3e066e98089804d0d4b241ecb"
+    },
+    "public/avatars/f17.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/avatars/LICENSE.md"
+      ],
+      "sha256": "dd762e2c828ccd1627fbf5330b661b9697166bf3cbdd9208a268ad0f242d527b"
+    },
+    "public/avatars/hair-analysis/Apache-2.0-MediaPipe.txt": {
+      "kind": "notice-or-metadata",
+      "license": "Apache-2.0",
+      "notices": [
+        "public/avatars/hair-analysis/README.md",
+        "public/avatars/hair-analysis/Apache-2.0-MediaPipe.txt"
+      ],
+      "sha256": "8707eef0533987efc5b155d64761eeb6e20793f50b9bd1a68dad1cf4719d0ed8"
+    },
+    "public/avatars/hair-analysis/README.md": {
+      "kind": "notice-or-metadata",
+      "license": "Apache-2.0",
+      "notices": [
+        "public/avatars/hair-analysis/README.md",
+        "public/avatars/hair-analysis/Apache-2.0-MediaPipe.txt"
+      ],
+      "sha256": "f981dfc8113176fb71b818e579f28aaa84a5178b720fb7e54a882720c9618e80"
+    },
+    "public/avatars/hair-analysis/hair-segmenter.pack.gz": {
+      "kind": "asset",
+      "license": "Apache-2.0",
+      "notices": [
+        "public/avatars/hair-analysis/README.md",
+        "public/avatars/hair-analysis/Apache-2.0-MediaPipe.txt"
+      ],
+      "sha256": "b10fa4df3962272029b2dff8f882aee0fb1160f26dec0db6c5fc3791c01d7af5"
+    },
+    "public/avatars/hair/LICENSE.md": {
+      "kind": "notice-or-metadata",
+      "license": "CC0-1.0",
+      "notices": [
+        "public/avatars/hair/LICENSE.md"
+      ],
+      "sha256": "03bc6f885a08a3e879725353935fb71676986e817f15a19a74f471b1b26f2bfd"
+    },
+    "public/avatars/hair/afro01.pack.gz": {
+      "kind": "asset",
+      "license": "CC0-1.0",
+      "notices": [
+        "public/avatars/hair/LICENSE.md"
+      ],
+      "sha256": "762e10eb52017e53215dbc6268cb9fda901e0bf093be103bd01b4702d3ffd28e"
+    },
+    "public/avatars/hair/braid01.pack.gz": {
+      "kind": "asset",
+      "license": "CC0-1.0",
+      "notices": [
+        "public/avatars/hair/LICENSE.md"
+      ],
+      "sha256": "7e491f43de6889425cde138bbd121cc363a515ef16aa54a15cd253d12cfb9855"
+    },
+    "public/avatars/hair/long01.pack.gz": {
+      "kind": "asset",
+      "license": "CC0-1.0",
+      "notices": [
+        "public/avatars/hair/LICENSE.md"
+      ],
+      "sha256": "32a7bb00c31ff860a5fd4b1252d72537091f6b565c98e953c918af435593c6f3"
+    },
+    "public/avatars/identity/Apache-2.0-GNM-Webcam-Puppet.txt": {
+      "kind": "notice-or-metadata",
+      "license": "Apache-2.0",
+      "notices": [
+        "public/avatars/identity/README.md",
+        "public/avatars/identity/Apache-2.0-Google-GNM.txt",
+        "public/avatars/identity/Apache-2.0-XRBlocks.txt",
+        "public/avatars/identity/Apache-2.0-assets-gnm.txt",
+        "public/avatars/identity/Apache-2.0-GNM-Webcam-Puppet.txt"
+      ],
+      "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd"
+    },
+    "public/avatars/identity/Apache-2.0-Google-GNM.txt": {
+      "kind": "notice-or-metadata",
+      "license": "Apache-2.0",
+      "notices": [
+        "public/avatars/identity/README.md",
+        "public/avatars/identity/Apache-2.0-Google-GNM.txt",
+        "public/avatars/identity/Apache-2.0-XRBlocks.txt",
+        "public/avatars/identity/Apache-2.0-assets-gnm.txt",
+        "public/avatars/identity/Apache-2.0-GNM-Webcam-Puppet.txt"
+      ],
+      "sha256": "ba12fffb7f905c67daa3e0d9656e8638d3a0d0eee70862ec17da7db429be19f0"
+    },
+    "public/avatars/identity/Apache-2.0-XRBlocks.txt": {
+      "kind": "notice-or-metadata",
+      "license": "Apache-2.0",
+      "notices": [
+        "public/avatars/identity/README.md",
+        "public/avatars/identity/Apache-2.0-Google-GNM.txt",
+        "public/avatars/identity/Apache-2.0-XRBlocks.txt",
+        "public/avatars/identity/Apache-2.0-assets-gnm.txt",
+        "public/avatars/identity/Apache-2.0-GNM-Webcam-Puppet.txt"
+      ],
+      "sha256": "33eef1d0689b439ecb31fe3eb3e14cc5a0c31c5d1489087fe45fb2d2ad13f084"
+    },
+    "public/avatars/identity/Apache-2.0-assets-gnm.txt": {
+      "kind": "notice-or-metadata",
+      "license": "Apache-2.0",
+      "notices": [
+        "public/avatars/identity/README.md",
+        "public/avatars/identity/Apache-2.0-Google-GNM.txt",
+        "public/avatars/identity/Apache-2.0-XRBlocks.txt",
+        "public/avatars/identity/Apache-2.0-assets-gnm.txt",
+        "public/avatars/identity/Apache-2.0-GNM-Webcam-Puppet.txt"
+      ],
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    "public/avatars/identity/README.md": {
+      "kind": "notice-or-metadata",
+      "license": "Apache-2.0",
+      "notices": [
+        "public/avatars/identity/README.md",
+        "public/avatars/identity/Apache-2.0-Google-GNM.txt",
+        "public/avatars/identity/Apache-2.0-XRBlocks.txt",
+        "public/avatars/identity/Apache-2.0-assets-gnm.txt",
+        "public/avatars/identity/Apache-2.0-GNM-Webcam-Puppet.txt"
+      ],
+      "sha256": "fe6e4cdb90839ab046107e70761a55034e35efc63a0e8d36013dc3386a868a36"
+    },
+    "public/avatars/identity/gnm-identity24.pack.gz": {
+      "kind": "asset",
+      "license": "Apache-2.0",
+      "notices": [
+        "public/avatars/identity/README.md",
+        "public/avatars/identity/Apache-2.0-Google-GNM.txt",
+        "public/avatars/identity/Apache-2.0-XRBlocks.txt",
+        "public/avatars/identity/Apache-2.0-assets-gnm.txt",
+        "public/avatars/identity/Apache-2.0-GNM-Webcam-Puppet.txt"
+      ],
+      "sha256": "0009540d59e066602b40328fd2518619f07876bc0e49c9c35762413a6cef7959"
+    },
+    "public/avatars/m01.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/avatars/LICENSE.md"
+      ],
+      "sha256": "8d198c33848e7761c9a72896c6f0f87d8fd6c21d137257de08bd005029cbc8b2"
+    },
+    "public/avatars/m01.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/avatars/LICENSE.md"
+      ],
+      "sha256": "53386da27230e975290f4a6504425dafb1866611d7d9baabd756e15c2e31889e"
+    },
+    "public/avatars/m04.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/avatars/LICENSE.md"
+      ],
+      "sha256": "6d56dd49e08c7662fe9eecf3759b7fd234cab86a0c48ef2ca260733251750ee1"
+    },
+    "public/avatars/m04.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/avatars/LICENSE.md"
+      ],
+      "sha256": "694e5cdc0ae01818cc13c0e43859ea80a322501015b0c5446f49c96bbe37b39a"
+    },
+    "public/avatars/m08.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/avatars/LICENSE.md"
+      ],
+      "sha256": "a954b90af397b5e3e9bb55dd393643d3d67784b994cd0a9a270dc428f1ef0b28"
+    },
+    "public/avatars/m08.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/avatars/LICENSE.md"
+      ],
+      "sha256": "25322d9044f424f527377c39946eb6549dc0f34307759d7f799b05a6ba760b30"
+    },
+    "public/avatars/m10.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/avatars/LICENSE.md"
+      ],
+      "sha256": "0a94f9a4e97e048086b8eb951525e8a06cb88e42bef4b7dbe24f5f31a60776a2"
+    },
+    "public/avatars/m10.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/avatars/LICENSE.md"
+      ],
+      "sha256": "06dcaf1010fe1a83fff7e95205ccb844b0f68cbfcbc0b7eac8b38ab0b317c52a"
+    },
+    "public/avatars/m12.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/avatars/LICENSE.md"
+      ],
+      "sha256": "8c743827d8a17d06a0d4115efc0c25241938a01c18e54b35e62d253f77d2d893"
+    },
+    "public/avatars/m12.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/avatars/LICENSE.md"
+      ],
+      "sha256": "d3dc72cc5071f3d512e80d8612bc295955b2272ae36b9b9b29af06f2450b5c35"
+    },
+    "public/avatars/m15.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/avatars/LICENSE.md"
+      ],
+      "sha256": "c10dd52bdd849858cd9779840da6bcd28c39d24ecb12259ed828f66b665d3612"
+    },
+    "public/avatars/m15.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/avatars/LICENSE.md"
+      ],
+      "sha256": "f4cb959c7134ed0e2d184e516d2033b53387bad1022e27af3ce9ad396980cb8a"
+    },
+    "public/avatars/m18.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/avatars/LICENSE.md"
+      ],
+      "sha256": "918e945ebbb2e50cf2d3ba8af356a6ef31333f6f8345b92a81e6ad721a0d1b86"
+    },
+    "public/avatars/m18.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/avatars/LICENSE.md"
+      ],
+      "sha256": "d6d1f0ddfc1c8d1c695dff87eefc3539ef121261ec94a7066ded86c342fa9729"
+    },
+    "public/packs/NOTICE.md": {
+      "kind": "notice-or-metadata",
+      "license": "CC0-1.0",
+      "notices": [
+        "public/packs/NOTICE.md"
+      ],
+      "sha256": "e4f06ed7e5808da6203c07c4294efc03595dc4d820f27b86fc937c9c9ad29183"
+    },
+    "public/packs/furniture.pack.gz": {
+      "kind": "asset",
+      "license": "CC0-1.0",
+      "notices": [
+        "public/packs/NOTICE.md"
+      ],
+      "sha256": "4cb29cd648cfa74f444a8ceeb01d137a316b52c07e917315df53f2abdef0f35e"
+    },
+    "public/packs/interior-bedroom.pack.gz": {
+      "kind": "asset",
+      "license": "CC0-1.0",
+      "notices": [
+        "public/packs/NOTICE.md"
+      ],
+      "sha256": "ea5a76705cead74f2a49962fe2f40cf5ca6b0a499838c2bf9761af47638b6643"
+    },
+    "public/packs/interior-kitchen.pack.gz": {
+      "kind": "asset",
+      "license": "CC0-1.0",
+      "notices": [
+        "public/packs/NOTICE.md"
+      ],
+      "sha256": "772e3a96756456d3b78413b6bb3924af6736e44c173dc66f122e74edbd809232"
+    },
+    "public/packs/interior-props.pack.gz": {
+      "kind": "asset",
+      "license": "CC0-1.0",
+      "notices": [
+        "public/packs/NOTICE.md"
+      ],
+      "sha256": "fbf3700804dc208b3df2f07d3b000d563ee57015c74125a4142f24af5549acac"
+    },
+    "public/packs/interior-seating.pack.gz": {
+      "kind": "asset",
+      "license": "CC0-1.0",
+      "notices": [
+        "public/packs/NOTICE.md"
+      ],
+      "sha256": "47a4afae0f56ea0517010b464e3eedc19f79fdb897975ba2cd946eb98245c0f2"
+    },
+    "public/packs/interior-tables.pack.gz": {
+      "kind": "asset",
+      "license": "CC0-1.0",
+      "notices": [
+        "public/packs/NOTICE.md"
+      ],
+      "sha256": "a11f1824cfa7a7f99ea4b49669566d67d204b0791a1459f56c887806f2791bbb"
+    },
+    "public/packs/surface-sources.json": {
+      "kind": "notice-or-metadata",
+      "license": "CC0-1.0",
+      "notices": [
+        "public/packs/NOTICE.md"
+      ],
+      "sha256": "2c8fdeb25b998a6fc4a2ee13f4624c59158fcdd0f4d85372a11327b439ff40d2"
+    },
+    "public/packs/surfaces-low.pack.gz": {
+      "kind": "asset",
+      "license": "CC0-1.0",
+      "notices": [
+        "public/packs/NOTICE.md"
+      ],
+      "sha256": "13fbfb0f88fce5154dd2b608d54bdbcabe90bf9c5466afdcf8cce0ee2384e0c3"
+    },
+    "public/packs/surfaces-standard.pack.gz": {
+      "kind": "asset",
+      "license": "CC0-1.0",
+      "notices": [
+        "public/packs/NOTICE.md"
+      ],
+      "sha256": "49d5ed02ac2d6dcc057707d5c157ca49b22411451971a2a14e0579d3bb08d60a"
+    },
+    "public/packs/vegetation.pack.gz": {
+      "kind": "asset",
+      "license": "CC0-1.0",
+      "notices": [
+        "public/packs/NOTICE.md"
+      ],
+      "sha256": "88f179dbb55d9459d2260423c674637a7c189527c819247533fb48eb1e845b4b"
+    },
+    "public/regions/LICENSE.md": {
+      "kind": "notice-or-metadata",
+      "license": "CC0-1.0",
+      "notices": [
+        "public/regions/LICENSE.md"
+      ],
+      "sha256": "ca5d9680ca5ca127b7db9124625738165ec14237b75dada7fe729808184c7c9a"
+    },
+    "public/regions/manchester.pack.gz": {
+      "kind": "asset",
+      "license": "CC0-1.0",
+      "notices": [
+        "public/regions/LICENSE.md"
+      ],
+      "sha256": "d307d6deca1c8276fa71d7f5584b24ac327b31118edd2860bc72b053a447582f"
+    },
+    "public/regions/manifest.json": {
+      "kind": "notice-or-metadata",
+      "license": "CC0-1.0",
+      "notices": [
+        "public/regions/LICENSE.md"
+      ],
+      "sha256": "9572ccb563b8694f0eed2442b1ca6c0883a7dff3cfbddbd59f4179f107918790"
+    },
+    "public/regions/nigeria.pack.gz": {
+      "kind": "asset",
+      "license": "CC0-1.0",
+      "notices": [
+        "public/regions/LICENSE.md"
+      ],
+      "sha256": "d8dc04d209921d5206ce3bff4faf56bd965b1bdd2a24577b22c60c54524c028d"
+    },
+    "public/wardrobe/LICENSE.md": {
+      "kind": "notice-or-metadata",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "ac4b72316c8019d2c727c771b479026a309149b18ae897b455832b3adcaf4832"
+    },
+    "public/wardrobe/ROCKETBOX-LICENSE.md": {
+      "kind": "notice-or-metadata",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "17474e386e0b9e1a700cc3d06b2b0882a2c376d9c6b49c7f8274409b8f8d2352"
+    },
+    "public/wardrobe/basis-f01.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "bde33d5625f31ea93752a9fd5cc981b87fe32b92750e4581b126abe16aa098fa"
+    },
+    "public/wardrobe/basis-f03.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "a32d34532daecf1ee87b3b7365abb5e80942bb86d6615def2eefba191e7835df"
+    },
+    "public/wardrobe/basis-f06.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "8ed8902841cf18b23bd3c7174fae13750309e9a4f6138c58b36086577ac56da8"
+    },
+    "public/wardrobe/basis-f08.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "ad4707f1becd002d9241930675a59d8edfc799fd1d9f904b9476a951a6de5470"
+    },
+    "public/wardrobe/basis-f11.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "0fb8e064a4119027484c7fc9e060b61cde1b8e285560e0bf5a72fce16fa3ca6f"
+    },
+    "public/wardrobe/basis-f12.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "c2749b20aebb877a8019ed3de443f96251d305c01406c77d663abb4df052ee00"
+    },
+    "public/wardrobe/basis-f17.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "5d9f7195cb947abe219aebf7233a2da6c07aaf09567a955ddf8ba8dbe1b5d3d2"
+    },
+    "public/wardrobe/basis-m01.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "db6443c327e87d96465ff42bdc6f89d704832d1407438e23b1d4daab866ecb5c"
+    },
+    "public/wardrobe/basis-m04.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "0c306011dcd74177f7d9f3cc1af6b50673cb760d1a330150bd232e605d33e5c5"
+    },
+    "public/wardrobe/basis-m08.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "9ddcf8bb8c7c0c413a250cd12adde81aadb27e893fff9d1ae11cb3ff42adadbe"
+    },
+    "public/wardrobe/basis-m10.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "879f1972a7057774a40a413287111003ee634b508001a5d7747d7d0b313a2980"
+    },
+    "public/wardrobe/basis-m12.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "da9883c98956de09b2814a2ae76925e2ed739f48dfec506dd8e00ce298fb31fc"
+    },
+    "public/wardrobe/basis-m15.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "5869507b1e031774ab1951cc41b248790f3d598d1b2a6c26e6c571f786bd00b4"
+    },
+    "public/wardrobe/basis-m18.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "097e27435876e623d591d491dd026842b547dbf6b1bb126bd03ffa1f727c7beb"
+    },
+    "public/wardrobe/city-navy-swatch.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "cd1824f918174eb1c9a2f00570e091185a89a851364ad6831972e65a82c9c1a5"
+    },
+    "public/wardrobe/city-navy.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "0da594fa5856721445812592ec7119d33488a46e3e09cffd5b64cd6cabc190c3"
+    },
+    "public/wardrobe/coastal-linen-swatch.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "343c82edcbdfdbe80bd6170c97b3bf398466cd2d07419279420ec54bfb8378bf"
+    },
+    "public/wardrobe/coastal-linen.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "09de8d0a17e4d0de5aacd6441919781d92d6a5fdf16e34d2171c1d252280917f"
+    },
+    "public/wardrobe/denim-weekend-swatch.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "961b700a528a1b7a7e375f13d3a6ff649c1292503d328e2cf7bf4493dc66c0b9"
+    },
+    "public/wardrobe/denim-weekend.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "a9d3d63cdc6d9574f5b701723a3c3a8d41f9dc1bdab9ff6990e5ec9d2d48a866"
+    },
+    "public/wardrobe/donor-f01.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "81b575b0a29f19c4a265ae84a1a85128976e36d124cea87710acbe8edfaa39f1"
+    },
+    "public/wardrobe/donor-m15.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "7e7949e859fb4c9baa1a08d03e3ffeba92e18e9a94e5b70123729b54e04c7021"
+    },
+    "public/wardrobe/everyday-cream-swatch.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "9de91895cabc803e13ba2f779fbad8c2ec4122d5760aa987a96bd2e6ae1273ce"
+    },
+    "public/wardrobe/everyday-cream.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "7013f80ddfd350989a30636a691d3294e53b3da8e180050178c58575e79e13ac"
+    },
+    "public/wardrobe/fabric-city-navy.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "4bd60f6b9c479467f272668e3cb5cd1efc0163bd60d208bf2d2578ee7dd354d6"
+    },
+    "public/wardrobe/fabric-coastal-linen.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "8473d55674c06356dbb4b834327cbc69066a73d3469054ce081460e8775d1b12"
+    },
+    "public/wardrobe/fabric-denim-weekend.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "d87a560d2ba439d75f8f6fa9726b60841d8ccd04fd6f3c4200d5d0155203076d"
+    },
+    "public/wardrobe/fabric-everyday-cream.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "58256917c4987135a11088ad5a09dc4d7555696abdfb78df3bb118c8cfd3e7ba"
+    },
+    "public/wardrobe/fabric-indigo-dash.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "12b91965b6364b130998be8cc01a7232bfb09f1e8551b24c676d570a2a69c85a"
+    },
+    "public/wardrobe/fabric-marigold-cotton.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "bd4b497ba002baeba8f7bd312f29194121141f8864d6233f18afec6cc388e40b"
+    },
+    "public/wardrobe/fabric-olive-casual.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "2c1c2ee6fb06b5e167f808947a2f3b4fe2e7cc6be74da6630dbbd03284adc1d8"
+    },
+    "public/wardrobe/fabric-wax-coral.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "e2e5ccaad923166594072c196fe04e4747d6363073506d4dfb5cde4572d4c51c"
+    },
+    "public/wardrobe/fabric-wax-indigo.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "62f7edb3c15dfe5db2e395e63e820531f70c26a0590ce7c59708cc5a3f8b713b"
+    },
+    "public/wardrobe/fabric-wax-ochre.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "3a497c032df64ce1824fd36ac807c887eaba1ad91980e064f3aef76c0828efdb"
+    },
+    "public/wardrobe/fabric-wax-river.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "96d2d34c4caef124f7a6216358a3d79427cdccb75423784a729b1e6ed7c6b293"
+    },
+    "public/wardrobe/fabric-wax-sunrise.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "58513612ad188f0089b53f877ebbfb850349b5e44d08f34aacae46de6b5d8c4a"
+    },
+    "public/wardrobe/headwear-cloth.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "2687e47516af602e25c0442e489f2e745659c2406ce818f4bcf288255ff5e010"
+    },
+    "public/wardrobe/headwear-fila-m08.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "be9166f553c24cd9917a070784c5ea4b78345960bcc80b2f51f775659caa143a"
+    },
+    "public/wardrobe/headwear-fila-m12.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "bf1bd88a2058ffa91a41fd8cfa12fbbedf8b1b13bdad02d21072f74efedaaa5a"
+    },
+    "public/wardrobe/headwear-kufi-m08.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "ded5c81ceba6c69cf094b909f72d825bb491f48e22a992e5b44f03b952e0a19a"
+    },
+    "public/wardrobe/headwear-kufi-m12.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "bea9e7ac29e6a6042740cf7bcf873e095156e328b0a47349a170eef038291a39"
+    },
+    "public/wardrobe/indigo-dash-swatch.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "cb949b18b7824929425799bc8f80bb94d03f059962d711d0009af0ad89149a2e"
+    },
+    "public/wardrobe/indigo-dash.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "db28dcbe7067af476e284ed9fa9f7b85b083a2746514ec395c80368bc76bb10e"
+    },
+    "public/wardrobe/kaftan-kufi.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "6e4880578e7553b027821bfaa1874a7f5d2d4850932456ea618e025b9195634f"
+    },
+    "public/wardrobe/kaftan-sand.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "ab6f17c2174b284ccf2fdf28c1fb2546597ba0edbd49ff5cbacb646c8828de3a"
+    },
+    "public/wardrobe/kitenge-sunrise.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "b43c8dfc9ed01651a4e28f73833340a100feeefaf5e8166284ceebd5291365b6"
+    },
+    "public/wardrobe/manifest.json": {
+      "kind": "notice-or-metadata",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "24393c4ba3993eadfed00e695546419b3200574852f7a9736fece28c7f62aa8e"
+    },
+    "public/wardrobe/marigold-cotton-swatch.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "9658cbad5c53800a0789dda6efcf2ffa17e4315445be87c5536d0f99c8d26393"
+    },
+    "public/wardrobe/marigold-cotton.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "713e678a704505b823b5001a11aaa544d934f51b619be552dc5a373b767abaf3"
+    },
+    "public/wardrobe/masks.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "9e711eb7f75ab43a9a7645629bd3bf753feba1f5fcd64807a777b487af39e283"
+    },
+    "public/wardrobe/meshes/kaftan-fila-m08.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "f3529754b24503381c233b8bc3fd0e03a6ff2251bdf7f40f3cef223efd420a2a"
+    },
+    "public/wardrobe/meshes/kaftan-fila-m12.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "470bf1d303ce1bb06fb0834b0b3f6048e795d9a7c8f9ec9137a9e59c220063f0"
+    },
+    "public/wardrobe/meshes/kitenge-shirt-f03.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "7a35e1d024c92811be6c0ba175b20214689e0bc7e8acee69f5eae1b8991ab042"
+    },
+    "public/wardrobe/meshes/kitenge-shirt-f17.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "cb460592b166f3fc87759dcb007fd65f3cb2547220c5f849b6409d9afe80d89c"
+    },
+    "public/wardrobe/meshes/kitenge-shirt-m01.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "c8c693d363115e39504f99e4ffd64b0266d3e70da667afb77fd06b6d30120c00"
+    },
+    "public/wardrobe/meshes/kitenge-shirt-m08.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "775f433fa8642b3ba3689d9fc79a477b5ff63e5a7a66d4ddfbbcf3246cd13268"
+    },
+    "public/wardrobe/occlusion-kaftan-fila-m08.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "e0ac0ad0f976f0858e6614b4de7d454c5d5aca0dc64ddb3fffad1fa4d8e52285"
+    },
+    "public/wardrobe/occlusion-kaftan-fila-m12.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "9c38388ebb154232028cb8c821f019970660954c7c67567515e5c4a9e8d48df2"
+    },
+    "public/wardrobe/occlusion-kitenge-shirt-f03.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "a213828e76d663069b0ea2d21d5201b315970a449e5256e31bd076bcf18f712a"
+    },
+    "public/wardrobe/occlusion-kitenge-shirt-f17.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "8619c0f8b9cf6e3029ed33f5907bf0f3cff03c27258cc2e7df115d1e3bb37e54"
+    },
+    "public/wardrobe/occlusion-kitenge-shirt-m01.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "a5a7d4d9a76937c0b68ed5c2eb154f5db5b7cf6d74c9c350999697137e79935b"
+    },
+    "public/wardrobe/occlusion-kitenge-shirt-m08.pack.gz": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "1f9df97cdbf33f3eb5f9c189d6dfb14d13a48414112198cd0b014009cb579094"
+    },
+    "public/wardrobe/olive-casual-swatch.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "9313b0bad4e72524cef66d776d099e68ab3ca7dec2038a9c915839791d8b3668"
+    },
+    "public/wardrobe/olive-casual.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "0074a7e5a6c7978c20a0e0837a48abd0b65ffebbc5e26d7681fe06183841ba19"
+    },
+    "public/wardrobe/round2-manifest.json": {
+      "kind": "notice-or-metadata",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "4251d172afa806160786d59b8124236c3ace092548331a9392f0f2a16d53a764"
+    },
+    "public/wardrobe/sources.json": {
+      "kind": "notice-or-metadata",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "c7f1dc5c8b8fbb7321a12964c83edb1570929f0a5affd92734ce6390c5e40d23"
+    },
+    "public/wardrobe/wax-coral-swatch.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "ade8bf51abf00c54a1a77cd640ec5b759b0957abfd41212fefb147d74a0166fc"
+    },
+    "public/wardrobe/wax-coral.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "2a71f5214cdb75917a632822d3e4a64b949851144dae15ceed1a4ba5aa9ad9d0"
+    },
+    "public/wardrobe/wax-indigo-swatch.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "1966897acc63d9f558e145c9814a6abd26ac1da881b23b212b91857510143234"
+    },
+    "public/wardrobe/wax-indigo.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "311192fee0193072b13a6d8e0abf29b75c76f5603a7f53849c9a0c94b5b23165"
+    },
+    "public/wardrobe/wax-ochre-swatch.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "99097fd6d26125015aed284d4ca00a1e073bfd7647d487b935c41b91ebefc07b"
+    },
+    "public/wardrobe/wax-ochre.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "a8aa0ba5d9aa792a9e4f2965a228a4089481ec770fd7cef1e1db56c48830c7aa"
+    },
+    "public/wardrobe/wax-river-swatch.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "d4d551d57637893a244fd972c93b7a1551bb4908bfa276f2a4ff7742396fe405"
+    },
+    "public/wardrobe/wax-river.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "22671295ea4036a9e49529904998c54809f3f7f1652198fbee15837f8dfca5c1"
+    },
+    "public/wardrobe/wax-sunrise-swatch.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "9c9cd8c08858d99dc91cf87519d3b2cfb50f6d48e5a0771e8073e8cbd475dc0e"
+    },
+    "public/wardrobe/wax-sunrise.jpg": {
+      "kind": "asset",
+      "license": "MIT",
+      "notices": [
+        "public/wardrobe/LICENSE.md",
+        "public/wardrobe/ROCKETBOX-LICENSE.md"
+      ],
+      "sha256": "987792ec9acdd8adc3c3dd4a80d67c2444d6787636a38f8f469a2c5f77007e5b"
+    },
+    "scripts/README.md": {
+      "kind": "documentation",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "93903d1101bcba323efad833988889addefc5d659320ab0ffb53e0321e56dba0"
+    },
+    "scripts/build-asset-manifest.mjs": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "187c709b5cf508235bb00b170efa695d65d829fc3b2088750fd03152b0b943eb"
+    },
+    "scripts/build-asset-packs.mjs": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "a8aada432e0e116caa2117b41b7b4f86090f49aacf7eefbb8540149d416c73e5"
+    },
+    "scripts/build-avatars.mjs": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "a5728c31098b6fe2aa0012b0a02e238965d2447aac6ac58c29523a1cd5bb086d"
+    },
+    "scripts/build-regions.mjs": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "a5d788a05e9d739b7fda258957cd1e1c49afabd1cc6fab00a207b81bc94d706b"
+    },
+    "scripts/build-vehicle-road-data.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "4fbe469869b832483ac0ef56798ed699402712a312e80184ef8488df58164582"
+    },
+    "scripts/build-wardrobe.mjs": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "c10441cccf8d3b05c3d9e0507647efa8e85f2020f1b24c86d33fd570904bb702"
+    },
+    "scripts/check-structure.mjs": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "bed81ecc47691cdddcd0840c4be5e26b1db65a5a33fb7c10214f519b124d885d"
+    },
+    "scripts/export-opensource.mjs": {
+      "kind": "tooling",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "f51d881d97b977dc2bb5b22ef0bb15193b3bcaea896fe83950d325c3fdef2713"
+    },
+    "scripts/preview/build-info.mjs": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "9245bd493fc6fd47c7f42b02e59c3d55c58366359df01f900a137e01b1713c66"
+    },
+    "scripts/regions/models.mjs": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "c95ff5b2ce874ba33849c5181c7196a2f255c8d86546b5aaa32656a7bc2de8dc"
+    },
+    "scripts/verify-arena.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "21d38f7b56178216e6a73e525aea6530658e66f280822883c85acc0265fd4f30"
+    },
+    "scripts/verify-assets.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "47d3219fa6ea7c8e1df96a83819429655ad7534c01f2d4b34a9c5d1104136900"
+    },
+    "scripts/verify-comeback.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "80df38ca9ba0cebc9f9522d34b96c033396284b8fd4ce91faa5a08f0d6cb93fd"
+    },
+    "scripts/verify-creator.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "bfce772519fa017b5f388ad09a52c2f8e4ce68bf1634284e8b0305d28362679a"
+    },
+    "scripts/verify-direct.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "b3a030652a3f1fddb87731852c47bf75a95ac4ac474e1f181a816fc2a055a969"
+    },
+    "scripts/verify-game-chess.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "cd2c5af3e506b186c1ea5affa62bedec496167c4c5e0ff4b80f95573120a6870"
+    },
+    "scripts/verify-game-walls.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "f5d317291af7a65f697c9e07b0a6834a25c785763de6efce3d95cf4ef00ea5e0"
+    },
+    "scripts/verify-game-words.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "17e1fe11a4165280297d0033cd17c2ce0d39174d6300dc4c47a634f7bab4d17c"
+    },
+    "scripts/verify-geo.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "c16209d32299d06964259a734acc69f724a1ef4d2d3bf7f9fcc6ed12c574558b"
+    },
+    "scripts/verify-guest.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "521d5dc22743bfe463c1811f4315a5984b4ceafebd7c1e6419983270c37bbf39"
+    },
+    "scripts/verify-life.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "c0e1b47714f32e103b1d28134fc71861625a7209ae1bb7d865db4baf7602d59b"
+    },
+    "scripts/verify-market.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "85c0a8d159932fab5ac7f3d1648f561c9955652c1debab81ba61f5dbd0c78df3"
+    },
+    "scripts/verify-persist.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "6e371f81ea6d27fce33a2f3138ff65e4ee61b3c9e65dfb47347ff1624e6907ae"
+    },
+    "scripts/verify-play.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "fcbf7a88c2d0b74aceda85ed72f468943310b823de42578fdde226a8248ddc28"
+    },
+    "scripts/verify-social.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "a2ed43ac56de6e49d156140a6c7386ee3e0791c6c74e305f900fd67f63048819"
+    },
+    "scripts/verify-travel.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "b9794605f0e4b345b11520c557abf520a19bd0ece69d74603ebfe89de14c1a01"
+    },
+    "service/README.md": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "f882c34a8ca839e879ded673fd07009771e0c40bee6f57149fcc9faceac95299"
+    },
+    "service/arena/index.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "30a62f02699f4eca642257a0d9bcb836d08aa4cc6018b7a04115358ad233df43"
+    },
+    "service/arena/registry.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "1c97381657f9b70c8d7a24ee4a30daf61bbd1eabb24b2121ba346cdb3761be50"
+    },
+    "service/arena/standings.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "85d8c5a7dfaa8f4e191cb783d6c775c18a4528f17e9506a9d9dfa8743e66176e"
+    },
+    "service/arena/state.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "abb49ec21e12eaf2378ae75dfb693f1e0c9e0c67aa2cacb9ba8211a1c880d12f"
+    },
+    "service/arena/words/SOURCES.txt": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "ae6a6351a71a13e7ee6f5879b7819989832d74cc022dfd004916e69fc6dc6ea3"
+    },
+    "service/arena/words/blocklist.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "b762874c5fa51b4f9cd23dbd0f940ad9bf8f568b40be83fe9b94fbc432ec1497"
+    },
+    "service/arena/words/build.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "c1bb488022e6b737a56bbc91112f7f755a443b36c985f1e324ab01377bedd37f"
+    },
+    "service/arena/words/enable.txt.gz": {
+      "kind": "asset",
+      "license": "Public-domain-ENABLE",
+      "notices": [
+        "service/arena/words/SOURCES.txt"
+      ],
+      "sha256": "3305aae21e3e7ca68cc60030bb5b1899829a36ad2f5b80478d2402c69bcaa477"
+    },
+    "service/arena/words/everyday.txt.gz": {
+      "kind": "asset",
+      "license": "SCOWL-permissive",
+      "notices": [
+        "service/arena/words/SOURCES.txt"
+      ],
+      "sha256": "4077da987535dac6e3f4d7a54bf6df1f0771289bae4a7936d82ae3db1da660b5"
+    },
+    "service/arena/words/index.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "3da081f24e9516badabb386dfc2c90d27e3035ea74870fd2e2312bc45eb3da23"
+    },
+    "service/arena/words/tiles.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "99fabee13735c3b6374497f691a760a23ce43e5e0f86c0d633560e9f3a30b9dc"
+    },
+    "service/cluster-edge.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "842b0c4c4fca4cbfad2054b07d419dfac031aeec3516b962ab78f2091d240aef"
+    },
+    "service/cluster-shard.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "654609008ac34878dd6708913879d6b5afec466f16740d8b86e747ba68abc066"
+    },
+    "service/cluster-state.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "0fe62959937acd0bf9329eaeb5b6bfcbe6c9ecef9cc54b73d83ba04e895205a8"
+    },
+    "service/cluster-wire.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "5c82f5ca9638d708c5a325604a3ba238cb5afeadb38356b2ab646115b83ff346"
+    },
+    "service/cluster.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "1fbbe177167896f217048dc59d3b4d2895ff6c3a84494164b0b7a89ef515c7c5"
+    },
+    "service/comeback.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "ffbfc684faa6b886ec48c349e7113d794290a0115203867a762482a8fe983bf5"
+    },
+    "service/creator.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "bb2d60dae58da56243b0e62fad4340aa058ca317dd47b398ae71ad47776bb968"
+    },
+    "service/data/transport/NOTICE.md": {
+      "kind": "notice-or-metadata",
+      "license": "ODbL-1.0",
+      "notices": [
+        "service/data/transport/NOTICE.md"
+      ],
+      "sha256": "88fe4f73ca2c0d7ebf97bafcea5a2d006ca59da06ef987dcb3a129fc051e843c"
+    },
+    "service/data/transport/source/14-8345-7895.pbf": {
+      "kind": "asset",
+      "license": "ODbL-1.0",
+      "notices": [
+        "service/data/transport/NOTICE.md"
+      ],
+      "sha256": "ec8e05a13e150aebf4e8f36a045e1ec8cfe23cadc092961c55c49f1e19809aa9"
+    },
+    "service/data/transport/source/14-8345-7896.pbf": {
+      "kind": "asset",
+      "license": "ODbL-1.0",
+      "notices": [
+        "service/data/transport/NOTICE.md"
+      ],
+      "sha256": "fe4873312294b08dbde2b84061728b6e0d26acf6fe26b143a887aa7f08f47e8f"
+    },
+    "service/data/transport/source/14-8346-7895.pbf": {
+      "kind": "asset",
+      "license": "ODbL-1.0",
+      "notices": [
+        "service/data/transport/NOTICE.md"
+      ],
+      "sha256": "18bd90f00d68eef399dacdf4c93399b7663db6fafe7628a54af24e812413becc"
+    },
+    "service/data/transport/source/14-8346-7896.pbf": {
+      "kind": "asset",
+      "license": "ODbL-1.0",
+      "notices": [
+        "service/data/transport/NOTICE.md"
+      ],
+      "sha256": "8ae6126db29530baae56ecec708322a8f98513fb26c142cc7e05bb030ce8af88"
+    },
+    "service/data/transport/source/14-8532-7777.pbf": {
+      "kind": "asset",
+      "license": "ODbL-1.0",
+      "notices": [
+        "service/data/transport/NOTICE.md"
+      ],
+      "sha256": "a1a76a2dd2d67cc418f022e7dd219fd850f61a9a2dfcce8b3dd35828383041a6"
+    },
+    "service/data/transport/yaba-vehicles.json": {
+      "kind": "asset",
+      "license": "ODbL-1.0",
+      "notices": [
+        "service/data/transport/NOTICE.md"
+      ],
+      "sha256": "44cf0458af265d8ceb5ad84216dc722e0df6e289e29b0acfcaf92b78127919e2"
+    },
+    "service/diagnostics.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "047f75e3b504171009d803bd40914fa3c27e887c1525b7be0e88769ea4fcc2fe"
+    },
+    "service/direct.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "ccdba6e5d2eae456e4ae9fc168b2692ad1a51a8896f4fc0d8a9dc2f93a891eca"
+    },
+    "service/games.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "77e2cd8563dfe0445a3abe2b63b0511563a799d3ab72d87665de0d0a326d7af8"
+    },
+    "service/guests.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "3a4197331108003cf9fc0fa21132bfe211ea5c0fa92bddf67960cb72310ca515"
+    },
+    "service/homes.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "71a0b3601f6deb22c75ff32f74f5b18bbfbc004171c47f76d43b4893a7b5a550"
+    },
+    "service/hostedFiles.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "08ec8acf8518d734ca08c5994d628aed31be6c41dbcbf78323faa7c37e85592e"
+    },
+    "service/hostedIdentity.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "827c9b5e5e6f02718c110425d53ee78d89043252a0c91aa50fe9f945386d9a7c"
+    },
+    "service/hostedServer.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "e175eef0f861911a397a17cb4336a6def0d90b58fe23c01ff8d05e993023de70"
+    },
+    "service/hostedStandalone.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "4681107f005cc9dfa87da47320c0cb121e8001d2051e32f27d05310f25ec5273"
+    },
+    "service/identity.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "38d43a64c1acdd8e9a650db9bc49fa29719f2542d76f0dd5a7901ea253ffc6bf"
+    },
+    "service/index.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "7435cf8d30353fa164378ef866392f6212fd23c70f0b7f92b8fdcf29d96d81cf"
+    },
+    "service/jobs.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "8439af7f44fe946c0948b0d5967daf6f8d4b4d4a72dd084ef80cec420af17743"
+    },
+    "service/kernel.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "61184bc5a880760d3385c1c6d40dec7f7c1e0b2de8d3ef3ed857a225a118f0e9"
+    },
+    "service/life.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "1f0060f1dc7878afd02c6de3b63153c23f342382320258c58fe3b79f81d95d79"
+    },
+    "service/liveCounts.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "6bdf4c233eaab55d70a603c64944514cc00b52709d3447b0dbc3f9d1d420d2c5"
+    },
+    "service/market.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "06dbe606117ae24dbf27ea43268abbf664435b86b687afa0816750a956bdd3f2"
+    },
+    "service/members.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "7b22f0f46dbe5c101d1132e02ad324c0153b383da53bc427038585d6973a9310"
+    },
+    "service/notify.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "a283d7cce8875c10288eeddd0286dd76366e134d7de0fe118962dabbf35dc12d"
+    },
+    "service/parse.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "71864f6bd07b5bce58596f435cac061dc8f996903a791f9bd6a5f54674f6c191"
+    },
+    "service/persist.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "16fea74b27dc6c72d12a6da58e57000b703a7657b66dd537381a46b062029f6a"
+    },
+    "service/rooms.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "ab291bbd3f2019b8700e662f95b2657459c3e5a585d831627900360057067ce2"
+    },
+    "service/server.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "2b7d1cd5638aca1dc96877cbd810db0d2701ca24743436b24bca6ef8ac038bb9"
+    },
+    "service/social.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "3212c36a277f2a8956d4cc59b888f99c534efde560c1fe954368180e7aff1261"
+    },
+    "service/standalone.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "c8c6fe4edde7ae72fdc58cb8d2a56d0b333a717c8e6622717127e64b9f62bfb0"
+    },
+    "service/transport.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "6c7802b2fae10db05c53cf1bbf85ec21f803041fdc59061db6e4dd28c790ac1d"
+    },
+    "service/travel.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "d687a4ef2ff167f0b7e7006e4ba8fc5b5339524ac2503cf8735e7fd2bb3c02ae"
+    },
+    "service/vehicleRoutes.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "f566210229b4ca5e11e9f96402f2f99c1c1ee564c5f4608590f30c137ff786b6"
+    },
+    "service/vehicles.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "575b4a879f7bf3c0bf334922a4f69609a43916d801f54c52fcfca3e62bcbb537"
+    },
+    "service/work.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "8302578e2bfdc8d8bdabe73fb5ffe73efbcfb32540282eb72b616a288cca2134"
+    },
+    "src/assets/assetDownloads.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "7f8d2615c8420c8b5e96c8f1db160c8c3b96b6e0ac2d9006c4b25e5f0d90f980"
+    },
+    "src/assets/assetProgress.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "93a9a5b8265ab0e5d98bb251b6da8607852a137f42f719bd72ddd52c729a4cf5"
+    },
+    "src/assets/assetStore.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "aed5460a2b4267ec154c898a3989d44f6420c69b3a2c775f4c1545a15e8418d4"
+    },
+    "src/assets/cast.index.json": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "1e3e8586c6f346f5f303ac6309fde4bf8c928135257d5abb5b412281156cb19b"
+    },
+    "src/assets/characters.index.json": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "21407b58ea980faf9261bcf2badae3c6d4347862479a82be860b8640db16860f"
+    },
+    "src/assets/face-topology.json": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "f7ff49f2f39593f93224e5f1069541059e4a02a53734adabbdbc7395fb1a2236"
+    },
+    "src/assets/furniture.index.json": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "b94b4a89f28ee811660093aeb5c0f212d6cd576aef607bcef077e535d01b420b"
+    },
+    "src/assets/public-assets.index.json": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "c6b1c953736c50db46ffce95de2248a6976f5d4fae09bbdd0b2fda614db1b617"
+    },
+    "src/assets/publicAssets.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "4a43559fce48552da67711d5f7afa251b12ddfc8f140d6f4c614d2ece1b5d4f8"
+    },
+    "src/assets/transport/yaba-vehicle-scene.json": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "b8f1207f17327c3370b4ab8da6c0b955fe52537c78fb9ee34aaac54052e59a40"
+    },
+    "src/brand.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "8a0daef2d6e7f6be93c1c9820cf9ad2937d70a51f3f7f9a78a524162d9e50d9d"
+    },
+    "src/config/feedback.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "f876cc4ad5b6e66493c125ea4dea6ae05504d31eaf6b46789fedeb7798432448"
+    },
+    "src/config/providers.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "a97b584278ebb40c0955aa2d1831a2f9889074392b18cf6289e7f01e7a97ece9"
+    },
+    "src/config/wardrobe.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "f29e07ddee1895de182103aff5072e5cf03930b31da743e8071e9ad12de63005"
+    },
+    "src/features/arena/ArenaChat.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "b9a8f86766aa7296451b526c6ffface0ffe41cf959a86086c9f2da85565f2b3e"
+    },
+    "src/features/arena/ArenaHowTo.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "90c4f7c3c02ed40f9c95837be53e4b275747460d58c02928cb97ad4d97d0f082"
+    },
+    "src/features/arena/ArenaLab.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "8aeffc53a367a6d8c2d8188012a4c3ca62f1b81299c46bba436a9f0912b68785"
+    },
+    "src/features/arena/ArenaMatch.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "873a36fc921cb9a0bda8a96234390a2414db64dcd09d4d645699497040220031"
+    },
+    "src/features/arena/ArenaMatchRow.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "e8aa7b0495b01fdae71fadc77249f48d60c70e84274fefd4674017cce5679344"
+    },
+    "src/features/arena/ArenaNewMatch.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "37a736116cd450898f33cf7bc76db3ef4031705630f1f4e56ee7b47de736b2a1"
+    },
+    "src/features/arena/ArenaPage.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "0d956601c67e52e0f31ba5be62434d50bfc0ee7f31afbf6eb8627b04e44c286d"
+    },
+    "src/features/arena/ArenaPlayerBar.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "d008482d4c60b52299585ec132b3d7c448376fd199018e7481d2d4c285de94cd"
+    },
+    "src/features/arena/ArenaPrivacy.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "ad51ff312b3b0ff37f6f50ee5afeb9514d8b8d70438cbd49ed76860bc849d9e9"
+    },
+    "src/features/arena/ArenaSheet.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "a151fc3ac9ef00f821c786f13760f8126cf9a6adeb257fea3526fe6c68b50e9b"
+    },
+    "src/features/arena/ArenaStandings.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "be38407897553062e688850ce16af27c17d2ee67652fd2c72348d82113466c96"
+    },
+    "src/features/arena/README.md": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "e37567e4171712df5f4b7de37925a2a71fe9f81f9bb6491f642539d672844532"
+    },
+    "src/features/arena/arenaGames.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "5ae4ea365157302733158997c571c86a4558f4e88e69e911b4c46c4cbe326fb8"
+    },
+    "src/features/arena/arenaSound.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "4284f8359530895c23a28759a85a7582e19061a64d06627948d8e5b80e2e3549"
+    },
+    "src/features/arena/arenaText.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "98d672f8765027aa5e258f48995052b7c601a9d1630f16ea26e95c34421e41d5"
+    },
+    "src/features/arena/games/chess/Board.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "00667d6849f8aeda135140cce3cc06fb0f33d3b8abc6f2dac0d4fb4ebf7a3606"
+    },
+    "src/features/arena/games/chess/ChessPiece.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "af90806b000d260a36128dbbeeb0977534ebfe361a1d1fd886bbc888f6b0f31c"
+    },
+    "src/features/arena/games/chess/HowTo.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "d91331e4f6cdf434aa4ab6b64dd147cc2c8cee5439290d4b2111222d01e5f180"
+    },
+    "src/features/arena/games/chess/MiniBoard.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "92472d4ee7ab6690c65477b33beb970e8c266a06008c7498c4d4d1b4ed56765d"
+    },
+    "src/features/arena/games/chess/sound.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "7aadcc9d9e9e71844c813fe7b0f05e13b8156795bc18671fdced3069d357c80e"
+    },
+    "src/features/arena/games/walls/Board.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "e7ef053d342d1b3f1a427af97cd8203d09532a661bdf57516aa95dcda113be05"
+    },
+    "src/features/arena/games/walls/HowTo.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "3144422b5bcca10c9e8d83b8479ef62b5e7f64c1c8e082ec1273021355919eed"
+    },
+    "src/features/arena/games/walls/MiniBoard.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "0564a4b2b1c2cdf57f50e32e5257d62ff2327a17deaceffdf1ad6117676caa43"
+    },
+    "src/features/arena/games/walls/sound.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "6a1d3c29b9a13a9c125178bb03ad697d4a76a1b340ccc698d3a8a59d703a9dd0"
+    },
+    "src/features/arena/games/words/Board.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "4003f09358935471657366d13110d63d856c9a6a2217df39124e9a5b2e69216f"
+    },
+    "src/features/arena/games/words/HowTo.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "280ca078aa20cce9741c95ba32868dfb4a77f7e709ec849a7780e8888bc8efa3"
+    },
+    "src/features/arena/games/words/WordTile.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "7b650402be593bf9069d796c5ede245ba6854282d234f17eb37ff1f2d17f966c"
+    },
+    "src/features/arena/games/words/sound.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "e21edb4b5d0fe7655fe2d3ef071171890baf1dd4901ff99977831abc239cee3d"
+    },
+    "src/features/avatar/AppearanceControls.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "50a17667d1e59514efee0a0e09a24b12c7176be7de6b665b325431e30e3c77d3"
+    },
+    "src/features/avatar/AvatarEditor.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "70a94dd028bda55ce116741517ab4562e1f1f622abd2614114fd26074847e69c"
+    },
+    "src/features/avatar/AvatarPortrait.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "d2cfed2ac9a98a8f53e7b311f01253b0d893bc3bf97a97d98c97c14c7cf3ce24"
+    },
+    "src/features/avatar/AvatarPreview.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "3b9344b5b32897e85ccd18f41d3d5c2cda4a86168a3480272d01042ecc74bb2b"
+    },
+    "src/features/avatar/FaceCapture.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "4d0d927ffb80bcbf7dd9bbb75a29078429fc99cb998e7df5f9001d018d97d6cf"
+    },
+    "src/features/avatar/README.md": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "d983caa78ed2a43db0f1f0a4370cdd67c65d87f284ecf367dddf1569a2a5323e"
+    },
+    "src/features/avatar/SkinTonePicker.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "03811a7b86b22599942a50730088fe9a14db43ee05ae5ec538dbac4350fa191e"
+    },
+    "src/features/avatar/faceScan.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "4512c8450bcab0bba5cb60010ec7cbd228f526c4b2db6ce95e4af6a9cb9dc6dd"
+    },
+    "src/features/avatar/hairAnalysis.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "524b4cbcee3eb9ad8952ca7ffa855c6db5df66c06b673aec572f28c2adbacbbd"
+    },
+    "src/features/avatar/identity/gnm/FaceCorrespondence.js": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "3bd94536a5aa1b470b5f41c1e32035684f72eed36fa3e4bc99aa47da9266fac9"
+    },
+    "src/features/avatar/identity/gnm/FaceFit.d.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "abafa150ce8133c955b7c5b840428410e852e6c32f75d1c94e4c5ddca0ffe45a"
+    },
+    "src/features/avatar/identity/gnm/FaceFit.js": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "53dc93910d72e0f8bf495532b907f726ea67aeaeedc568ed81e6e998bf85b048"
+    },
+    "src/features/avatar/identity/gnm/GNMModel.d.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "016d32f7085ca77319d5d77dc269c3a2608d85f2850ea53bc84a440662c8b120"
+    },
+    "src/features/avatar/identity/gnm/GNMModel.js": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "e9619714dc5a975f66fc8c9cef76220441fd8e644cf9d14e43022b4705579c5f"
+    },
+    "src/features/avatar/identityFit.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "ce64f22d05367377a259bed6a66681ae478d1e4d0c3a718c3e31165be42bb424"
+    },
+    "src/features/avatar/identityWorker.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "e1bba868375431d16f758490d45dcf5e097451f27405f82587b429251be3dc22"
+    },
+    "src/features/avatar/memberPortraits.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "4357043c9f139df25cf423c3fc475d34166dd87cfa5601c52659497617a65dcb"
+    },
+    "src/features/avatar/skinTones.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "c39fdae4e288b18fe31542419ebfa54950a8eef7f46e2ff41c775a28f0a3d3e3"
+    },
+    "src/features/avatar/useFace.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "e4601b4df0b0857e0c53af69bb2c1ac218f1cc8f9b65b268bcb3a1f4111b8b1b"
+    },
+    "src/features/creator/CreatorBadge.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "eb410cc0f07417570e1a847479ac6c9bf9aa4528dcaf7f49762af47f7c7970f0"
+    },
+    "src/features/creator/CreatorConnection.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "7bb66e3f8f657380e49b34313907fd400660a13c2edccc8dbece723188a836cb"
+    },
+    "src/features/creator/CreatorDisclosure.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "d99c7507f6c7991917e11b5d05840c7dade4559eded195cce4935f8d1f81a58b"
+    },
+    "src/features/creator/CreatorPage.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "1d4bef2e6a9371d6bbc7ddac73985b9e4f4e441d80466035eb775b70787f0607"
+    },
+    "src/features/creator/CreatorThread.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "47529c1be0aa20bce70dc589446e99ceb5c10dfb7cd9d08501d3e8e684923abf"
+    },
+    "src/features/creator/creatorView.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "d3137ecbafa4770fb452d842a2dfc3b6e5be6cf8005ca91272e18d1e3b0ec640"
+    },
+    "src/features/creator/useCreatorCard.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "a2aab35e0eefe254f226412f8ddfd4ee67fffe68b19a7c21956ca114ea51df55"
+    },
+    "src/features/feedback/FeedbackEntry.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "b569187025ee6282d42ec4a4f4e18d8b177b29e0eb61db42832102846e305a0f"
+    },
+    "src/features/feedback/FeedbackPage.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "fac3c6a14dddd6057a7fdd41b360f0860fb0325cc2c71ddbf0badaf2740b14d8"
+    },
+    "src/features/feedback/feedbackText.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "0a0e8e976bd3c7df13406fb03c24f873565baf6d9bccb0ab448e10036c66c463"
+    },
+    "src/features/guest/GuestChip.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "9c9707ff62eafe98f06e46e9adab57741b70cc6652de76c102b5152f9fcfc672"
+    },
+    "src/features/guest/GuestClaim.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "8da25589f49f3ce41d65f86bcd74eed21edf5546fa8f394c90dc17c05ec6406c"
+    },
+    "src/features/guest/GuestConflict.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "c1bc0e1816835ab71b638381cc6f03e604d4d98a3c0fcdac91e4fdc50f4da2f8"
+    },
+    "src/features/guest/GuestGate.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "5310ccf4d837873fa24e96e58d24300ed826066150c59064c75ae3fd1baff605"
+    },
+    "src/features/guest/GuestGatePage.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "1b9e3615fcd46a14a6c8750823358583a49c7ed7ba6f446b232167962df7c5bd"
+    },
+    "src/features/guest/GuestKeeps.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "72cb95f263f5996a901ef7a08dfb18b2d33559882ac2edd223cfeb053b5d9cc6"
+    },
+    "src/features/guest/GuestSavePage.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "634f36fef4007c5bd5ffc561d1abc2230fb0bed60b644b67a78e1e2750a2ab47"
+    },
+    "src/features/guest/GuestWelcome.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "a7c7c836ea1be2c34368a4a1eb23ce9d6972a9054053ffe65a0aca98862256a6"
+    },
+    "src/features/guest/guestControl.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "adc04f7c46a2de1839bc27addf0af0a70ac908548e260e862bd8606b1c010b83"
+    },
+    "src/features/guest/guestHooks.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "a1b535fa2d49e97587fa25b485bc83a972a443984f7a9e90dd851adbb639f8e7"
+    },
+    "src/features/guest/guestMay.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "8c093b0691fe7e699eda560a291cf2d98115a46be2b1fe2835762a3c640376a6"
+    },
+    "src/features/guest/guestView.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "f0a52529fd60678a60bb3a5703007ce88133b4b30b95f0817c1720a3019d00d8"
+    },
+    "src/features/guest/playtestInvite.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "4c9c182e100e48a5b8a6dfdd7fd1f8052c239464a07c2074954e37acf0531698"
+    },
+    "src/features/inbox/InboxOpen.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "9b22220647f99f9c2083a252175e8816fbab0b86ac2e3e4fc69edfff87aa061e"
+    },
+    "src/features/inbox/InboxPage.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "8b2a17f61e9fd6028a0d903dd3ae74a98e7998a7de20656f75106e693b74ebe6"
+    },
+    "src/features/life/LifeActions.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "6e14ba5d1c7430ae5da1d3e4e7ff16c2c33a6b81f66781928efc8b9c57a9e9aa"
+    },
+    "src/features/life/NeedMeter.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "5acbb5648affe1de8df782b5a77364a54d434c6b80c1770058dca9e8b45d7dd9"
+    },
+    "src/features/life/NeedsHud.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "6b1e94c0de5ad425fa462a6048a5e00a5daba1d109e754b2fd5b8623a3d3006c"
+    },
+    "src/features/life/WorkTrip.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "c83fb6d148cbf6f76bb046c9ae917257125f5a2fd3af81a019053468be401669"
+    },
+    "src/features/life/stations.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "68e05701fb0091424fadf9c74667032ceead08a2aac53083a9751043c8451422"
+    },
+    "src/features/life/workTrip.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "27494a8785990b4e5b1e27a0174c94a3655ff8db4e84d4388372e0dd06e5a46d"
+    },
+    "src/features/map/MapPage.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "f99d97f41e86c1680a1c827b8c2ac870bfc42f8c7d1d85746f698de737c1c709"
+    },
+    "src/features/map/StreetMap.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "08b82b9dd1051ee6158c4d046aa449e052d4b6a52894a3184260ed17bad04cb9"
+    },
+    "src/features/map/geometry.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "81898578858b299e37fb881f8c8dc2286b467acdf08fd2c263fcc34309cb8e28"
+    },
+    "src/features/market/JobPage.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "db27cb2b5e7b214d4606dbd13e07f748b30a239c4fbed910aafed2a74a13ad2e"
+    },
+    "src/features/market/JobsPage.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "c8bc7339a09b1d40a356ca968b70822d2d641dc7f1c4e612c180241b6b650a0e"
+    },
+    "src/features/market/ListingForm.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "0530cf360dde42ab92721b6fc5793819b6e18e0aca4bb7b2743c8b9554bc7dcd"
+    },
+    "src/features/market/MarketPage.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "4cac9532e1cce115e965f73126826d4288c96fd5aa587c2fc33ae05109f1617e"
+    },
+    "src/features/market/ModelPreview.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "7e2d19e7d72e9e6d9812f1abcd79dd0f00f62847a74cfda3388dae47faecbcbf"
+    },
+    "src/features/market/ProductCard.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "0fa9933dcdb86b4d82439e3b8dafe19e09179a5d9be2218e8fc862b2941c6d94"
+    },
+    "src/features/market/ProductEditor.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "0e51203bbf8a9f1e2dad3025cd8ad358b739c6367c7af64ef807ac746153f0b4"
+    },
+    "src/features/market/ProductPage.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "2a1b2dbcf2c11c80142bf40df8a79ef1294577c5f843c87d1959afaebe4c17ac"
+    },
+    "src/features/market/QuotePage.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "40cdbeb6298add917899b3d87c15cf37eef4583a225a60790fc0e18fbb02b70c"
+    },
+    "src/features/market/QuotesPage.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "77a20c0b618639ce717e6ffd38ce3ba453d18ee7abdfd6d17d2af43b2f502656"
+    },
+    "src/features/market/SellPage.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "245681cefc321c7ee39572b0d23542cdaf897e807a06dfc5399d8d634b6eead3"
+    },
+    "src/features/market/VariantEditor.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "95c1eb806b35f45a8fdd7342ac2ad275cb4f8f7d21bb95dd959887d174678ff3"
+    },
+    "src/features/market/drafts.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "813fea12e7c52a8d1ecc557bb2a040a5164f7667a53c682f68c80784ff3dc33c"
+    },
+    "src/features/market/labels.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "fa20a4c110840d609392638dd178af0d1b681704f399d089c1058988f5412239"
+    },
+    "src/features/market/scroll.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "7e2a5bbd0d38d10f7d85de5f92a024c3f136c8192c0d8f344349db12ff3cebc8"
+    },
+    "src/features/people/CommunitiesPage.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "856c6ff1bd2c50fe5d5f8d8a659be737158a0b49aa2c1f0d31f8a49eb603f6c4"
+    },
+    "src/features/people/CommunityBoard.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "b983ce491a6f243db1e758620aa9564e43eaf275ae30e2908911a1bb2c113c7c"
+    },
+    "src/features/people/CommunityCard.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "5b22a63136d53e64de0f88a3656a88f02fec073286be6af5af04f386fa960b21"
+    },
+    "src/features/people/CommunityMembers.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "b029fca374033b2f4139704c6c8a422ab18e9548ef0f739386ddfab31117ce17"
+    },
+    "src/features/people/CommunityPage.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "4fd6bd7da04ee8112519c9de0c7c477c326b9de11380c0e7d101f6196584f745"
+    },
+    "src/features/people/CommunityPosts.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "ab5bddfb098d92667e7c3d38db15279984a871bf5896984b513ccb4c2a8d2e60"
+    },
+    "src/features/people/ConfirmAction.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "9e5cd1799e1ead56a8df2047e3b5dec190a9c81704c009c338806008bcec85d2"
+    },
+    "src/features/people/FriendPicker.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "20287e87cad71452f012a1707519bbde1d8749a409962f6a5f853b4201c0e55f"
+    },
+    "src/features/people/MeetupForm.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "8c709d2d47f05c90c2aeecaf714262e0009ec79355cce936049030ed54dac35d"
+    },
+    "src/features/people/MeetupPage.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "19bf559027372b3364ad01a71f8e0003dfdda02ab411bdde18b61bcae0d60bb8"
+    },
+    "src/features/people/MeetupRow.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "8842d1a3c33b038e0d6edc08fafe4a57ee1cdbf743378a6cfc1f32fa68b15d0a"
+    },
+    "src/features/people/MemberCard.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "e465a150d774c58e5c4ede985e7acd27b863307f9144dfd7073c95132bdf7a6a"
+    },
+    "src/features/people/PeopleFriends.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "8a35321170b0cc3923ca9a56978a9a9abd393c657db095c15be1efbf18b9d535"
+    },
+    "src/features/people/PeopleMeetups.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "c355971bbe1b17bd4ece3818401f70c7e19ad72951ec89e7005434fff4592a75"
+    },
+    "src/features/people/PeopleNearby.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "b125822baf91af3e3ce09457900b48af4f92ecd7cbfc5fa2792323a0b7353f0b"
+    },
+    "src/features/people/PeoplePage.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "d9307f055e66bab5c9b57835629b5345825434c6ca865987322244b9d50bf299"
+    },
+    "src/features/people/PeopleRequests.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "11d89a4110aec05bcc6f33a682dd13cd142329e3b2d8d91ee0f0bba25b64963c"
+    },
+    "src/features/people/PersonRow.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "0bcedb62309e67b1649b23e244a2b966924101b5c4a1ddc23a9b6b8f9905abb5"
+    },
+    "src/features/people/TabStrip.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "76f390b712ccbe206b8080b0394901a1aa736db57c5b534ea19aa8768dd94739"
+    },
+    "src/features/people/labels.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "b8d119e9085f2aa73378881e148cbec652ca07a2c211ebf6ba7945491fdaf2ec"
+    },
+    "src/features/people/window.css": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "7a05a328074502b5a1b217454933321a513e1b549b335856434b33964b6e1189"
+    },
+    "src/features/people/zonedTime.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "c8e04a7b56ecace4febde5bc8102bd1e819a70895ba346090a554c2d35f10073"
+    },
+    "src/features/play/BoardList.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "287a754ff178fd1b104813d53a3f3af55c42346b52e05003f68b0ca8d6061019"
+    },
+    "src/features/play/DashGame.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "4b9681b14288c814ca1fe689d712494dde951ca2cd8b554a124b722f47812814"
+    },
+    "src/features/play/EightsTable.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "57ae0c1f29e9e4aa47910bbb391a29c57a1873a8fb2e13924855e388653a4c47"
+    },
+    "src/features/play/GamesPage.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "6a19bc7624111bd59eb26cc8d95432b93cea40347b2aebff32b3216d1ea95901"
+    },
+    "src/features/play/MatchPage.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "110c50c1e714804756238fccbd05d3641f83424827b755223e95528b493c27fc"
+    },
+    "src/features/play/MatchRow.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "bc76bfb5c07f760a9641b1ea030aaf15e25aaf52f4e319d0d1517aebc4948418"
+    },
+    "src/features/play/PlayingCard.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "68cf8ae8d14ada70c1220c8475b5c06cc89f80b80150a5bcecfd262b29b513c4"
+    },
+    "src/features/play/ShiftGame.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "5a9b9e3c82490d0a793f255b491132b86e7938cdb70842fb9af32da48ce2ed2b"
+    },
+    "src/features/play/WorkPage.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "f31a685a8dc296009de44e9e5cd1bb045b4e7d802d4be63b47c3aa89b5f43217"
+    },
+    "src/features/play/dashRun.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "9a4ad54aadcb61ab3f1ed0d15c90ff96c7b769e3e4618a9155a0c9a0fc13370b"
+    },
+    "src/features/play/keys.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "eaec606365d16065927d4472fa74c2b383f4ccecec8f53ad98b8afba495e5419"
+    },
+    "src/features/play/playText.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "5cf26e51387e0233e08968565cf56858e7651395b79f7ac83a63c388aef7b9d0"
+    },
+    "src/features/settings/AssetStoragePanel.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "8d5eaf2d0add66e728f6e956e51047f9450190ac913ee06c50a6b0cd1d5b3c05"
+    },
+    "src/features/settings/ComebackPanel.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "5170470aa4fb0698b4f2cd40cda5f2affaa0202ba2648ad54a287e8ce83d5006"
+    },
+    "src/features/settings/CountsHistoryPanel.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "baf266f2148925921b03d060cbe1c7ecd8881fd9d4a039201cdece502919b958"
+    },
+    "src/features/settings/DownloadsPage.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "fca8f9baf21b4a9551d6e92454df224512ebc02f0f31dfd363111804ccb91813"
+    },
+    "src/features/settings/SettingsPage.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "b56a54ca99f2621b2735ac57d0e49a77ce9dd1163e5248764b7efa6e8c495f91"
+    },
+    "src/features/social/AroundView.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "38665dcc4929b2e7ea502d4fd239aaf2dfb849c963e2686e30ace16c020769c1"
+    },
+    "src/features/social/ConversationThread.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "1b03cf7963ea58afd8e87ab48183aa4fb0df76bf43dedeecc7fe319a6316a1b5"
+    },
+    "src/features/social/Hangouts.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "2f21d5bf3ba60d012719d4b35968db10562350b7e682cb9494cd516e3281a6a4"
+    },
+    "src/features/social/InviteCard.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "375546f47c2b00928021778ce8039a8ec45fd8552fd98b16f8df419f0509a55b"
+    },
+    "src/features/social/InvitePeople.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "d93826372409e660332a7108ebf101ea9a34d8da7126940921620d9d98f15bff"
+    },
+    "src/features/social/MessageText.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "b290ff04e08317a4e4063b3e7a15559353df68875281309730e9efdc9903003c"
+    },
+    "src/features/social/MessagesPage.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "a95e038f277e287fef826e2ea2f2788f42c92dd184298ddb6a7fbaf36abe7130"
+    },
+    "src/features/social/SocialHud.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "d95629c433b2293e2c7c6ffd4be5539951737ca0123f54031ffc33a79b6b5b4f"
+    },
+    "src/features/social/WaveCard.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "bea70ba0824229340bc51229ca936ebc6bffae8aa33b6a8e8eb6f1a16000c3a8"
+    },
+    "src/features/social/conversations.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "71c9710f8a9a754b66b32eff88d29d808046d769031294aa63de58e47be2f099"
+    },
+    "src/features/social/messageLinks.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "a01aa7d6588e71575dfdad4fa56aa985c7c8e703f5fda2f8a75f68eb00f58300"
+    },
+    "src/features/transport/DriverControls.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "ec313f8ecb26dce37a2a59efea9541bc824e77bf43ed407f38654964e054c316"
+    },
+    "src/features/transport/TransportHud.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "31f0026ce4d4ca92b918c82e4ed4e1a681986ec5e3007563019d46be2f3d798f"
+    },
+    "src/features/transport/TransportPanel.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "f3ae8efc92fcc5e763998e81e9dad0c23a4dd5a2a89946314347f40bb41d23f0"
+    },
+    "src/features/transport/transportView.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "3fa4e794001a4d5082e76209dd13bfd25e993d815944b3e44f343020502a23aa"
+    },
+    "src/features/travel/CostPreview.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "7face26e5c4b7e99db2e9e9073c809435298fcace9cc82dcdbefbfab570cf853"
+    },
+    "src/features/travel/TravelMap.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "2bae06aefc32b09cf0ea4a6f381f0eaf4ca46243069ea1de3a4b007627b0beec"
+    },
+    "src/features/travel/TravelPage.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "4f0c4ad28d74b81731b928d35e29ef6d74a9e10e0823b981c443dd5a8c90ba2f"
+    },
+    "src/features/travel/TripPass.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "8e488262aee1ae55cde852dc562c33061ab20bfdee00d9ea068730785d9f7a57"
+    },
+    "src/features/travel/hubs.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "32116f982f984d23d9552aad564872300bb9bfc9a30341aa74cd934226b47118"
+    },
+    "src/features/travel/journey.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "b9cd871472b5b887520711fe3a95b7722ecc066a40114e3c487662d117711068"
+    },
+    "src/features/travel/mapRoute.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "03adbab594f7b292e846e1c9ed7da818f4030ebba1cebf7989099d0b2f444ab4"
+    },
+    "src/features/world/AreaPicker.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "cdfe405702f5663865433f51f71e2a35aa33fadd2bd53493b5e8ecb716965ce0"
+    },
+    "src/features/world/HomePage.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "cab298217fd8a5fc79187af7384b6277e40247bce6b429be085620e6900749f3"
+    },
+    "src/features/world/Onboarding.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "097229e25176914439f72ed67d78fd0a5c3b55cd260adf75ecfff7ae93719502"
+    },
+    "src/features/world/TouchStick.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "d6aa2caeb74f51690ab6eef0f28a5e221320d397ddccd22b4cd21f4c681b1135"
+    },
+    "src/features/world/WorldRoute.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "1712ca9486f4d2aeedffb37a02f0f76f60b65d3f3d6d6f256d3d45ccfb8577f3"
+    },
+    "src/features/world/WorldStage.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "0864eabeefef75720d623e5fe542456b6c20ed1a0ccb4844eec83814761b9ea4"
+    },
+    "src/features/world/touchStick.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "6de036f70a951987688222e292d16895c4faadd4ee722fb28998c6c530679e60"
+    },
+    "src/geo/areas.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "80fd2ba0aeb16b7d4650ca44f6e9e8a43c2da2dc36fbbdec1ee23e78ed94300c"
+    },
+    "src/geo/categoryStyle.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "ab8f22410f6c3a4245e2dbf7d00d3a062bb630c3dd7d0001bae24562bd934509"
+    },
+    "src/geo/district.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "f569858d2f4f12f5d9e6d42c82ac82d1df9a0cfab73967f3dc3812384c57603e"
+    },
+    "src/geo/geocode.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "5cb9d6a50607d998ef32cf0550b8919360591514183002d9ce81b9054d9443a8"
+    },
+    "src/geo/mvt.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "0441cef7de60dfaea9260321bb68b0af7f19803c87e1e7dce37da1b97ac76394"
+    },
+    "src/platform/buildInfo.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "2f3cf468a178be27302c0bf13b18519fec1b1d02f6832a37941dbdf47544e344"
+    },
+    "src/platform/gateway.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "9b6c330894edc5e5bd1a1b939393643f9d86cc36247c31df4211775adcb4d4f9"
+    },
+    "src/platform/guestService.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "7eef0362c18d9f620f3ce256512b1fc0c79c0904da9ba57ad48e3712c29fbdb6"
+    },
+    "src/platform/hostedService.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "5f536d9bd731c030e18ae7d352a1228ed0965f6f21629b3bd1abaf59928fe6cb"
+    },
+    "src/platform/runtime.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "4aec1b1febf9b87b6c02f03f4c7ae02e1dce32860257f139da2a7744dc401ff7"
+    },
+    "src/platform/voice.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "f7a63ce1b75305273eb56f592da60daadf61df99ec59932e912c060d3dca22df"
+    },
+    "src/shared/README.md": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "11b115c6e6007b9201e291e7a4ea2a426e15692b36ed4960f2689dc61df4c5a4"
+    },
+    "src/shared/appearance.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "e279859f74d93d56f0bc86110b0a066d4a91734673d9cd2e7fa0f6c432f9e0f4"
+    },
+    "src/shared/arena.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "93fdcc56c4089c57435e1feaa9bb3638cb35f11b679e4607a702998e10135e96"
+    },
+    "src/shared/comeback.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "4b48f96f1ce4dd36763e51dae9c71d2889447fe0db5cedd359b7dee2bc5fbac4"
+    },
+    "src/shared/creator.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "93141be2596ff837b59ef394ddc741c8bed0113b42251ef610588fc5187b9fd9"
+    },
+    "src/shared/direct.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "1cd319fa920408bb9572bf4d17b6498274a1841c7817c87b6a0e7c7c9880ec04"
+    },
+    "src/shared/games/chess.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "9755d64c54f13af86cda058782593d80bb4633ab0e861fa671241ad957289072"
+    },
+    "src/shared/games/walls.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "2025707b6fd7e28a53219278dbfda5ed0e3a6bd227f46b31f27281a841c18f0f"
+    },
+    "src/shared/games/words-practice.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "9499baf605197387225c266c8a74cc2821735b1a16caafd40b699ae7cb1a0691"
+    },
+    "src/shared/games/words.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "f0d5b8731b36c18018c1d6766637f3b441455205c3d84ce8a6dd78c8dfcb78a2"
+    },
+    "src/shared/geo.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "bcfa3a12eb8abab079a59caab2aa9b3af79802fd472a8dc0bd50a724d556605f"
+    },
+    "src/shared/guest.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "f4877d0b679eb91ad12ada0086109f8830250a8134853988a2fb9aa444536473"
+    },
+    "src/shared/ids.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "dab26ad41100be31bde29fada152c7da5437d125f459d62e73b949af0c3d05d8"
+    },
+    "src/shared/life.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "015cede85a0b8a73111c5d569513c624a85d713df64549bbb8440731d44af41e"
+    },
+    "src/shared/liveCounts.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "eed168488ac690feebeba1e152bcf93248438783d849645e89df81e2c64638ea"
+    },
+    "src/shared/market.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "6d6b885bb656e33f392892559cb8391cd090b85e67dcddef19c6b5c704c43c95"
+    },
+    "src/shared/model.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "8ac0268d1df7fc662b72507903eda20474d295ccfe560567295cf98f2acc6e78"
+    },
+    "src/shared/notify.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "a2f17c102e7edddcd5a7968b10d48a6092bea04a2f88369d97a93eede2eaf835"
+    },
+    "src/shared/places.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "e2a9cd286c7f06eebcc1cf8f2072f6ed25b766fe38d898e8d4aea2b871fda1b6"
+    },
+    "src/shared/play.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "0db95a26920b2a5f00de5f7dd013b2d35c63fba2b79dacbe3bde2b905145316b"
+    },
+    "src/shared/protocol.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "963a4862ad3aa123d33f272251a7af30655d5a4acfb221a822858e11ac770854"
+    },
+    "src/shared/social.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "b026ceb478d567d39c2f05c66c9ff24504056ae26eeaeebcb3eba6cea9a5bb78"
+    },
+    "src/shared/travel.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "f748be17e9bd80548e6de9e4d9d127312795c1bb904a504b4b3caaa05f0f72db"
+    },
+    "src/shared/vehicleRoadData.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "ad1f9634e0dcf512df85ebdd51ce15d46320296e9cea4843d083d24f4a3e81ed"
+    },
+    "src/shared/vehicles.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "7fab12862c89172ea9e2e2c1a895a175732e7245e5738621388eb28b1c2a957b"
+    },
+    "src/shared/worldCollision.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "d8cd6609d0787af7643e6f8e9618766b1e77ab0b8e58f8d7f872a5ae7080f5c3"
+    },
+    "src/state/app.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "1f5d9496d0df7b176bf001f19e5f0ead22caa1883826f1600ff803781c5867dd"
+    },
+    "src/state/arena.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "40cc876c7d4d5e028fe773d550fd4b036d08d32479a3898243eb521dd17351fd"
+    },
+    "src/state/life.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "0c4a1d980bcb2fdd050812a2039e34ef41da35bc846e76d454ed21d6ff0b47c5"
+    },
+    "src/state/liveCounts.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "0dc82ac02acd0ba65dc7b0b742d8f629f7e3041000a6d9600b38e2b6340a0d4c"
+    },
+    "src/state/social.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "5beb959d8b7ef75f998d10e31c4dcdf250ef188321f2bd4f199259aafb555ad0"
+    },
+    "src/state/sound.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "bc1b3c1844da27149a64126ce49edb445929b419dbda3d9763d92061647da915"
+    },
+    "src/state/travel.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "9cc0e626f8decf1c1e46c10c81b1dff0bd93db3b91e9d16e90ebbfe6ee6ca9ca"
+    },
+    "src/state/vehicles.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "ca1bf2b5ac152d9b3cdf47b4d7c4d963d2728889cf18c45e859563d0f0a79acf"
+    },
+    "src/state/world.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "d3a847353f85bcfbec86a79b4be9f526e212a5ff6e14126da245fb1e30d1f465"
+    },
+    "src/ui/AssetProgress.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "fcd4eb5f8881131fcf6346ffc33d1acf4df72e194c70af554888a18d65e96f1f"
+    },
+    "src/ui/BrandMark.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "26022587de0c9a52f67f48bd5ed5f17b7e73d4d4b5ccacc9a4665a07adf4eff9"
+    },
+    "src/ui/BuildInfo.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "f986a572b9b141479cae87b4044c08add17fbede875e8812c774df3b52da96a9"
+    },
+    "src/ui/GameMenu.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "1ba95eba407033727add96c4c0c3c107b8f53c1658caeb11e2f4ede97826bde4"
+    },
+    "src/ui/HudIcon.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "0f6be1934be849c5ab19e814fe5651b08747eab34fe804533167853b4d2da670"
+    },
+    "src/ui/LiveCounts.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "0642e7e5fcd5fbeb6d7a64ba810f5b159512b24ecd9ca6a653bde28457af9aad"
+    },
+    "src/ui/MemberBadge.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "996eb4586b47a62ba175773a6f8fbdced1e35b8e54d6a6d539b39d3055a98373"
+    },
+    "src/ui/NotFound.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "7c12ac8bca579a8a78bd8770a751b15a2b6a4b674a0bc1e6a2fdb4b3d17eef7b"
+    },
+    "src/ui/PanelPage.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "1bce43c228b7f939e6cd6e6db86f8b87155bdbec5916d52a649e6cece2d28829"
+    },
+    "src/ui/ShellNav.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "459924153aafc2b032e0fed279a54f35470532ce212dd39c8c4c3cc6ec89b413"
+    },
+    "src/ui/StateView.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "c144b5db86a42187df80f758f04714aecfc4e396f63bf51d12b0578b4a134d1f"
+    },
+    "src/ui/ToastStack.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "c0986847b378fa0f58a75e703ed6befc764eeae5707f840dd9e0cc445a0ea254"
+    },
+    "src/ui/UpdateNotice.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "5b0090e742f17509a3cb1fa846ae83572d298b657438a934c2cf6bd2e149cb5a"
+    },
+    "src/ui/base.css": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "981e1c1a524b258b0fd88b3b9b8a4f2d1db418fdf7ef67381f864476f7405b6b"
+    },
+    "src/ui/format.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "367da69ffe28dcf763f6eb42963a0b4884eaa4307608817cde8db0f6bff76120"
+    },
+    "src/ui/gameInput.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "c8d65ce78ba439ed2f5fc2148a9908a95a874537f9fb6c3f795b357ccabac604"
+    },
+    "src/ui/hudDevice.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "f6ea30b7b8d0d140aea4d371dbcd392563c284c7251af07acd346f9907ed1e6c"
+    },
+    "src/ui/hudIcons.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "f522be4d6e562b08126a2b1061242e6ebf2bc09274f2ed1f552ec974a80cc51f"
+    },
+    "src/ui/hudKeys.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "5d38999a274e56d0bddf6bf38f3b751ec1f1d73660133c95a4583f851617b946"
+    },
+    "src/ui/interaction.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "b4bf32d4fee8c16f4ee21cc57c874001c3d4acedf5731f810c597dfe8de4d6aa"
+    },
+    "src/ui/shell.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "880f3ada777cf89bdcd5e946e1dfe9e172031a960571e658edf119392a65fb3f"
+    },
+    "src/ui/useLoad.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "b0ae40c305fa9a81a5e0af02b30f1b8c799a41f6ea96178b0f59525329a5d6ac"
+    },
+    "src/world/README.md": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "57c6c51ff91d0527c9f246968b485637dcfb359f7bc4a6d5bc513bf3834a924a"
+    },
+    "src/world/ambience.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "ebe9dab51ebe738d70fe52f82f770930fc10951dd8a852dbd79564e1e5162d84"
+    },
+    "src/world/avatarIdentity.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "7dd021eaf546f814e817fd4e7273aac071412cf687503c4a8de3cddca221dc0c"
+    },
+    "src/world/avatarVehiclePose.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "df0e851912ba4525dc9e3b76128a11939e191dc6682516f31dfbc4b83eefc088"
+    },
+    "src/world/avatars.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "3a804b027d18d2b1f0185a535005d9e0784af0c0dc5f1206b2e8dd73deb90c69"
+    },
+    "src/world/cameraCollision.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "23d8da981af7d1afabbe85a970d5afd3bc94bbf470942847d0b03ad9e291b76b"
+    },
+    "src/world/districtScene.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "33eab7f6f23eeb04406f193bec5b2e3622a01484ca5833096e4d1ccd5dd5f946"
+    },
+    "src/world/engine.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "b65f84bc89f9e145744f21e978a513e5f5a228ba5a3a47c78d93a0883cf38696"
+    },
+    "src/world/facadeDetails.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "c53cce744ffeaae91c95bf0ebf2e4e90e9b0e98e252c368239c01f1d9ffe7189"
+    },
+    "src/world/facadeStyles.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "b43d66819cca0065321a60d0a3eec62bc8467f9a7c76474bdfabbe6440a51c74"
+    },
+    "src/world/faces.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "a9bba7e01110a6c97bfdd681cef9ab45f93fa421e987e9760cc034cc1e14cecc"
+    },
+    "src/world/governor.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "86c6e80cdd4387fe954966dd3bf93d7f28ee43230af161e57d244151a2f3f23e"
+    },
+    "src/world/gpuBudget.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "8cd06be9a6141ffe692e3b1f236fd694ae34dd0834a0e47ec1b446f445057e85"
+    },
+    "src/world/interior.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "8e9ca2c50d68eccc295dbff3fb8eb7e378691613b7fbf13773a61bf09e215804"
+    },
+    "src/world/minimap.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "65e03832d592b908438f38b3c4090721c8525e85b44fa758ccba46e30e1cd6d9"
+    },
+    "src/world/nav.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "12adb2c15411cf0eb16ee96b886d33a652288624f16a3ba2ed347ccd35b3d108"
+    },
+    "src/world/newinteriorFurniture.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "76bd779c37a94d469779adae0f8cea9cd4508ddd6fbec3a5bf06588d1e5045cb"
+    },
+    "src/world/packs.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "3702aa85c5e6c788feaff23dd29e495e87ab74ae5572f70a8c8d1b2f6255269b"
+    },
+    "src/world/regionMount.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "f688ae53cda5c5c0bc083a605dd0e661ce9db9e33b3df1903c30c0d8ed48b99f"
+    },
+    "src/world/regions/frontages.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "afc91e07d295ed50572423e146b35cb341b26f14925e0ad10ad0be63365a3f9b"
+    },
+    "src/world/regions/index.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "4dba341eb670da74d6d58142908c1716f1c50801efc405ee30c2a392d33d3349"
+    },
+    "src/world/regions/kits.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "00dfe981002a81c1a18c05b23ed22536f14425aa1e3d9b7f5b93a94b97c4cd3e"
+    },
+    "src/world/regions/placement.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "a906b2b686c06756e5c26cbf4a8ae985cee00ea1f229c42a5a91b374a7a55d27"
+    },
+    "src/world/regions/streetLife.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "97bcd749f98aa53cf9e20bd85bb20c80410f6c5b68ffbe887ce906e754b69508"
+    },
+    "src/world/regions/traffic.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "ba3e156f205a8e01e69a48da98b796c598a7db1bdec68e2294f77ba2560b18e4"
+    },
+    "src/world/sky.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "474fcf29feee32de92cdce3ea5ea4f070a0e0fc4e79c9d7f7c08d468f19da202"
+    },
+    "src/world/streetDetail.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "fa2ffffb68b994226a2bf454629f72b1a75bce17dbf4640b9abf41fe457ea6cf"
+    },
+    "src/world/surfaceAlbedo.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "c412e2ef0106a42caffde749272f84e1f2e4d83905de9bb3f385bbb2360c69e5"
+    },
+    "src/world/surfaceBuild.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "58cc730b722e448a9dc11ebbc8799bfa83e49e562c3058d5f26297cc84e98fe8"
+    },
+    "src/world/surfaceContact.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "46b750a00ae8de5473c0a511dd1fc34829cc1291db211a774ebdb3d341e4709e"
+    },
+    "src/world/surfaceHair.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "1dc5394a09611b4c708fec44bf7ea8fc0a0b2840ad59822f2d7be873686c1c00"
+    },
+    "src/world/surfaceIdentityWrap.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "706ad36b4ce25715ffd187e89a662bde38b57f4d6c5b15a07061341ea206ff71"
+    },
+    "src/world/surfaceLighting.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "8f13e4ffa05a10e976eda48ed3c9508a6400174cbe1db7a99ae337e4e074e4ca"
+    },
+    "src/world/surfaceMaterials.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "9059b163b2474185a35dc9f3f8796c1b0cc562ea4fb9d23f87e7da11cbe213f0"
+    },
+    "src/world/surfaceMemory.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "c13e1f64d5819b4ac809f866fa56fe368d1071e3af5e4a71813ed0ece7804a80"
+    },
+    "src/world/surfacePortrait.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "c6474990c26cefa611dd35fd198c36563f14ba210d21bf878b0eef16549172b9"
+    },
+    "src/world/surfaceScalp.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "e09b68fed6897cdda33e2aadcb776e49e1b176655b00da29d7d46a4414e07bb4"
+    },
+    "src/world/vegetationStyles.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "5dbcad2cd59e3bbb3e536cffbe7a97a35a7c7a5c0c13a790cf8ce4de47cafa82"
+    },
+    "src/world/vehicles/model/builder.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "48a1d81023f16cbc9ee4f23345dce8569df7d3631977468c46c4ce4f3d4d9129"
+    },
+    "src/world/vehicles/model/car.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "e3facbcb0a9633027cdbf3f87f3ee0df902cc50eb50e007d85e635311af5f138"
+    },
+    "src/world/vehicles/model/danfo.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "f5d9f6abb7ec00b032c1b65734c6d36f7ac559935f556c403f1350f77eb8aa5e"
+    },
+    "src/world/vehicles/model/keke.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "026d263cd2908aa2fa95124cec69fb1b2d5899872414deddbef3a5c78f67e579"
+    },
+    "src/world/vehicles/model/materials.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "1ad2bcd8b2effc1e9ebbac9f001385d378ab1b0393cf30a80ce3fdf4477ccab2"
+    },
+    "src/world/vehicles/model/parts.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "ff0c2bee62fe8f5c8c4b9a708fec99328e8348ba6ca8159efb8668ce0908f70c"
+    },
+    "src/world/vehicles/model/types.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "5f79bb0708a7160ebe07333091d9b0357ea80cb16b78914a73981a93bba06df7"
+    },
+    "src/world/vehicles/models.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "60dc251e1b9a578b822e9ccc823c652429a4583222272b4431353b2e3c977bef"
+    },
+    "src/world/vehicles/provenance.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "5b40e58b59a64a6c3ab870ff33b7ab4b2faa915a385fe1bee436bf7824af1d5d"
+    },
+    "src/world/vehicles/scene.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "2720c40f34701699f9a7db7b76bc46b64b923610cf13f426930053b2c7698fb8"
+    },
+    "src/world/venueInteriors.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "4ef2d7c89f8c5c9c38c8de632eac94d8439f1dcf070ac7e1b4c82bfefe32ea05"
+    },
+    "src/world/wardrobe.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "47f59e3ced0867d643f7f0797168657d6847de8a1a5386c50e1e3ab5b4a6c469"
+    },
+    "tsconfig.json": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "042cf096d318198d13e556ee603f26f51dfe8a0a22ba27d7b5b72ae5233d2561"
+    },
+    "vite.config.mjs": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "64a7eab6777d98854a7fd6f78e050b80cabc3fac2b018f0764c5d66228dbe1c7"
+    }
+  },
+  "priorManifestSha256": "491b4ac1913ba05807f1c5e3eb11f9c84ec293fb9722f5f0e39a13e8f14dab4b",
+  "schema": 1
+}

@@ -1,0 +1,298 @@
+[
+ {
+  "name": "character-female-a",
+  "defaults": {
+   "skin": "#a95e41",
+   "hair": "#43434c",
+   "top": "#648ad5",
+   "bottom": "#648ad5",
+   "shoes": "#ecb690",
+   "accent": "#9c6ee1",
+   "eyes": "#43434c",
+   "sole": "#f4f4f8"
+  },
+  "faceMount": {
+   "y": 0.159,
+   "z": 0.16,
+   "width": 0.4535,
+   "height": 0.3181
+  },
+  "rig": true
+ },
+ {
+  "name": "character-female-b",
+  "defaults": {
+   "skin": "#ecb690",
+   "hair": "#e78f65",
+   "top": "#ffcb5d",
+   "bottom": "#9c6ee1",
+   "shoes": "#43434c",
+   "accent": "#ffcb5d",
+   "eyes": "#43434c",
+   "sole": "#f4f4f8"
+  },
+  "faceMount": {
+   "y": 0.159,
+   "z": 0.16,
+   "width": 0.4535,
+   "height": 0.3181
+  },
+  "rig": false
+ },
+ {
+  "name": "character-female-c",
+  "defaults": {
+   "skin": "#e78f65",
+   "hair": "#7c8199",
+   "top": "#648ad5",
+   "bottom": "#7c8199",
+   "shoes": "#f4f4f8",
+   "accent": "#f4f4f8",
+   "eyes": "#43434c",
+   "sole": "#ecb690"
+  },
+  "faceMount": {
+   "y": 0.159,
+   "z": 0.16,
+   "width": 0.4535,
+   "height": 0.3181
+  },
+  "rig": false
+ },
+ {
+  "name": "character-female-d",
+  "defaults": {
+   "skin": "#ecb690",
+   "hair": "#e78f65",
+   "top": "#7c8199",
+   "bottom": "#7c8199",
+   "shoes": "#43434c",
+   "accent": "#f4f4f8",
+   "eyes": "#43434c",
+   "sole": "#43434c"
+  },
+  "faceMount": {
+   "y": 0.159,
+   "z": 0.16,
+   "width": 0.4535,
+   "height": 0.3181
+  },
+  "rig": false
+ },
+ {
+  "name": "character-female-e",
+  "defaults": {
+   "skin": "#ecb690",
+   "hair": "#43434c",
+   "top": "#f4f4f8",
+   "bottom": "#43434c",
+   "shoes": "#f4f4f8",
+   "accent": "#648ad5",
+   "eyes": "#43434c",
+   "sole": "#b8c1e7"
+  },
+  "faceMount": {
+   "y": 0.159,
+   "z": 0.16,
+   "width": 0.4535,
+   "height": 0.3181
+  },
+  "rig": false
+ },
+ {
+  "name": "character-female-f",
+  "defaults": {
+   "skin": "#ecb690",
+   "hair": "#a95e41",
+   "top": "#43434c",
+   "bottom": "#648ad5",
+   "shoes": "#9c6ee1",
+   "accent": "#ffcb5d",
+   "eyes": "#43434c",
+   "sole": "#f4f4f8"
+  },
+  "faceMount": {
+   "y": 0.159,
+   "z": 0.16,
+   "width": 0.4335,
+   "height": 0.3181
+  },
+  "rig": false
+ },
+ {
+  "name": "character-male-a",
+  "defaults": {
+   "skin": "#a95e41",
+   "hair": "#43434c",
+   "top": "#55c085",
+   "bottom": "#648ad5",
+   "shoes": "#ffcb5d",
+   "accent": "#b8c1e7",
+   "eyes": "#43434c",
+   "sole": "#f4f4f8"
+  },
+  "faceMount": {
+   "y": 0.159,
+   "z": 0.16,
+   "width": 0.4535,
+   "height": 0.3181
+  },
+  "rig": false
+ },
+ {
+  "name": "character-male-b",
+  "defaults": {
+   "skin": "#ecb690",
+   "hair": "#e78f65",
+   "top": "#f56843",
+   "bottom": "#648ad5",
+   "shoes": "#e78f65",
+   "accent": "#e78f65",
+   "eyes": "#43434c",
+   "sole": "#f4f4f8"
+  },
+  "faceMount": {
+   "y": 0.159,
+   "z": 0.16,
+   "width": 0.4535,
+   "height": 0.3181
+  },
+  "rig": false
+ },
+ {
+  "name": "character-male-c",
+  "defaults": {
+   "skin": "#ecb690",
+   "hair": "#e78f65",
+   "top": "#648ad5",
+   "bottom": "#43434c",
+   "shoes": "#43434c",
+   "accent": "#43434c",
+   "eyes": "#43434c",
+   "sole": "#7c8199"
+  },
+  "faceMount": {
+   "y": 0.159,
+   "z": 0.16,
+   "width": 0.4535,
+   "height": 0.3181
+  },
+  "rig": false
+ },
+ {
+  "name": "character-male-d",
+  "defaults": {
+   "skin": "#ecb690",
+   "hair": "#e78f65",
+   "top": "#43434c",
+   "bottom": "#43434c",
+   "shoes": "#43434c",
+   "accent": "#f4f4f8",
+   "eyes": "#43434c",
+   "sole": "#43434c"
+  },
+  "faceMount": {
+   "y": 0.159,
+   "z": 0.16,
+   "width": 0.4535,
+   "height": 0.3181
+  },
+  "rig": false
+ },
+ {
+  "name": "character-male-e",
+  "defaults": {
+   "skin": "#ecb690",
+   "hair": "#a95e41",
+   "top": "#f4f4f8",
+   "bottom": "#ffcb5d",
+   "shoes": "#43434c",
+   "accent": "#43434c",
+   "eyes": "#43434c",
+   "sole": "#7c8199"
+  },
+  "faceMount": {
+   "y": 0.159,
+   "z": 0.16,
+   "width": 0.4535,
+   "height": 0.3181
+  },
+  "rig": false
+ },
+ {
+  "name": "character-male-f",
+  "defaults": {
+   "skin": "#e78f65",
+   "hair": "#43434c",
+   "top": "#55c085",
+   "bottom": "#ecb690",
+   "shoes": "#ecb690",
+   "accent": "#ecb690",
+   "eyes": "#43434c",
+   "sole": "#7c8199"
+  },
+  "faceMount": {
+   "y": 0.159,
+   "z": 0.16,
+   "width": 0.4535,
+   "height": 0.3181
+  },
+  "rig": false
+ },
+ {
+  "name": "aid-cane-blind",
+  "aid": true
+ },
+ {
+  "name": "aid-cane-low-vision",
+  "aid": true
+ },
+ {
+  "name": "aid-cane",
+  "aid": true
+ },
+ {
+  "name": "aid-crutch",
+  "aid": true
+ },
+ {
+  "name": "aid-defibrillator-green",
+  "aid": true
+ },
+ {
+  "name": "aid-defibrillator-red",
+  "aid": true
+ },
+ {
+  "name": "aid-glasses",
+  "aid": true
+ },
+ {
+  "name": "aid-mask",
+  "aid": true
+ },
+ {
+  "name": "aid-sunglasses",
+  "aid": true
+ },
+ {
+  "name": "aid-hearing",
+  "aid": true
+ },
+ {
+  "name": "wheelchair-deluxe",
+  "aid": true
+ },
+ {
+  "name": "wheelchair-power-deluxe",
+  "aid": true
+ },
+ {
+  "name": "wheelchair-power",
+  "aid": true
+ },
+ {
+  "name": "wheelchair",
+  "aid": true
+ }
+]

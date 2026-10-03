@@ -1,0 +1,34 @@
+# Dependencies and build output
+node_modules/
+dist/
+*.tgz
+
+# Secrets and machine settings
+.env
+.env.*
+!.env.example
+
+# The local world: saved state, its backups, lock and log. One per machine, never shared.
+.goalmatic/local/
+
+# Caches and editor leftovers
+__pycache__/
+*.pyc
+.DS_Store
+.vite/
+*.blend1
+
+# Recorded local evidence: screenshots, videos, traces and rejected packs (about 940 MB, and some
+# images show faces). Kept on disk and listed in the reports; not published until the owner has
+# reviewed it. See docs/OPEN-SOURCE-TAKEOVER.md, "Publication hygiene".
+docs/3d/evidence/
+docs/evidence/
+docs/playtest/round-*/
+
+# Runtime/account configuration and local operational evidence are never contributor source.
+.goalmatic/
+diagnostics/
+*.tar.gz
+# Unreviewed asset source archives and experimental cast remain outside the export allowlist.
+assets-src/
+public/cast/

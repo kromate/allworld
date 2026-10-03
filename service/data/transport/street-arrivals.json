@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "roadDataVersion": "faa561cc10785242ae6b2e8993d78a8d7aa5f9742a2d81b9f1a6d81d69ae4847",
+  "sceneHash": "e070af555d2de30376853262c9c2ac5cb17ba6bb412b6f0c2731e9e8a187eab4",
+  "districts": [
+    {
+      "districtId": "d:14/8345/7895",
+      "span": 2430.257415604122,
+      "tileSha256": "ec8e05a13e150aebf4e8f36a045e1ec8cfe23cadc092961c55c49f1e19809aa9",
+      "pos": {
+        "x": 119.81773444566007,
+        "z": -598.9002044255045
+      },
+      "heading": 1.940129984468524,
+      "label": "Domino"
+    },
+    {
+      "districtId": "d:14/8345/7896",
+      "span": 2430.362760492171,
+      "tileSha256": "fe4873312294b08dbde2b84061728b6e0d26acf6fe26b143a887aa7f08f47e8f",
+      "pos": {
+        "x": -437.2991588092603,
+        "z": 477.05362779192035
+      },
+      "heading": 0,
+      "label": "National Theatre"
+    },
+    {
+      "districtId": "d:14/8346/7895",
+      "span": 2430.257415604122,
+      "tileSha256": "18bd90f00d68eef399dacdf4c93399b7663db6fafe7628a54af24e812413becc",
+      "pos": {
+        "x": -74.16557054455939,
+        "z": -97.3052285544619
+      },
+      "heading": 0,
+      "label": "Iyaomole Street"
+    },
+    {
+      "districtId": "d:14/8346/7896",
+      "span": 2430.362760492171,
+      "tileSha256": "8ae6126db29530baae56ecec708322a8f98513fb26c142cc7e05bb030ce8af88",
+      "pos": {
+        "x": -428.9922548427343,
+        "z": -462.21987070883824
+      },
+      "heading": 0,
+      "label": "Kadara Street"
+    },
+    {
+      "districtId": "d:14/8532/7777",
+      "span": 2415.4045103470617,
+      "tileSha256": "a1a76a2dd2d67cc418f022e7dd219fd850f61a9a2dfcce8b3dd35828383041a6",
+      "pos": {
+        "x": -655.5927988791823,
+        "z": -305.7205047120427
+      },
+      "heading": -2.325326410562601,
+      "label": "The Nail Lab"
+    }
+  ],
+  "dataVersion": "636541e385254959622c19c0907168d963e057b3c30209d622d17cac3263de1d"
+}

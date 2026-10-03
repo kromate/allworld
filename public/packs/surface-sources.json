@@ -1,0 +1,452 @@
+[
+  {
+    "name": "asphalt",
+    "asset": "clean_asphalt",
+    "source": "https://polyhaven.com/a/clean_asphalt",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "adaptation": "Resized only",
+    "authors": {
+      "Dimitrios Savva": "All"
+    },
+    "metresPerTile": 2.0999999046325684,
+    "files": [
+      {
+        "kind": "albedo",
+        "tier": "standard",
+        "width": 512,
+        "height": 512,
+        "bytes": 32130,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/clean_asphalt/clean_asphalt_diff_1k.jpg",
+        "sourceBytes": 697630
+      },
+      {
+        "kind": "albedo",
+        "tier": "low",
+        "width": 256,
+        "height": 256,
+        "bytes": 5470,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/clean_asphalt/clean_asphalt_diff_1k.jpg",
+        "sourceBytes": 697630
+      },
+      {
+        "kind": "normal",
+        "tier": "standard",
+        "width": 512,
+        "height": 512,
+        "bytes": 17987,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/clean_asphalt/clean_asphalt_nor_gl_1k.jpg",
+        "sourceBytes": 776360
+      },
+      {
+        "kind": "roughness",
+        "tier": "standard",
+        "width": 512,
+        "height": 512,
+        "bytes": 33176,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/clean_asphalt/clean_asphalt_rough_1k.jpg",
+        "sourceBytes": 641634
+      }
+    ]
+  },
+  {
+    "name": "paving",
+    "asset": "concrete_pavement",
+    "source": "https://polyhaven.com/a/concrete_pavement",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "adaptation": "Resized only",
+    "authors": {
+      "Charlotte Baglioni": "All"
+    },
+    "metresPerTile": 1.8000000715255737,
+    "files": [
+      {
+        "kind": "albedo",
+        "tier": "standard",
+        "width": 512,
+        "height": 512,
+        "bytes": 67126,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/concrete_pavement/concrete_pavement_diff_1k.jpg",
+        "sourceBytes": 926197
+      },
+      {
+        "kind": "albedo",
+        "tier": "low",
+        "width": 256,
+        "height": 256,
+        "bytes": 13144,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/concrete_pavement/concrete_pavement_diff_1k.jpg",
+        "sourceBytes": 926197
+      },
+      {
+        "kind": "normal",
+        "tier": "standard",
+        "width": 512,
+        "height": 512,
+        "bytes": 60870,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/concrete_pavement/concrete_pavement_nor_gl_1k.jpg",
+        "sourceBytes": 1184345
+      },
+      {
+        "kind": "roughness",
+        "tier": "standard",
+        "width": 512,
+        "height": 512,
+        "bytes": 19843,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/concrete_pavement/concrete_pavement_rough_1k.jpg",
+        "sourceBytes": 475799
+      }
+    ]
+  },
+  {
+    "name": "concrete",
+    "asset": "concrete_floor_01",
+    "source": "https://polyhaven.com/a/concrete_floor_01",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "adaptation": "Albedo contrast reduced to 45%; normals and roughness retained",
+    "authors": {
+      "Rob Tuytel": "All"
+    },
+    "metresPerTile": 2,
+    "files": [
+      {
+        "kind": "albedo",
+        "tier": "standard",
+        "width": 512,
+        "height": 512,
+        "bytes": 63497,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/concrete_floor_01/concrete_floor_01_diff_1k.jpg",
+        "sourceBytes": 755740
+      },
+      {
+        "kind": "albedo",
+        "tier": "low",
+        "width": 256,
+        "height": 256,
+        "bytes": 15722,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/concrete_floor_01/concrete_floor_01_diff_1k.jpg",
+        "sourceBytes": 755740
+      },
+      {
+        "kind": "normal",
+        "tier": "standard",
+        "width": 512,
+        "height": 512,
+        "bytes": 52683,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/concrete_floor_01/concrete_floor_01_nor_gl_1k.jpg",
+        "sourceBytes": 909898
+      },
+      {
+        "kind": "roughness",
+        "tier": "standard",
+        "width": 512,
+        "height": 512,
+        "bytes": 55846,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/concrete_floor_01/concrete_floor_01_rough_1k.jpg",
+        "sourceBytes": 354529
+      }
+    ]
+  },
+  {
+    "name": "brick",
+    "asset": "brown_brick_02",
+    "source": "https://polyhaven.com/a/brown_brick_02",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "adaptation": "Resized only",
+    "authors": {
+      "Rob Tuytel": "All"
+    },
+    "metresPerTile": 1,
+    "files": [
+      {
+        "kind": "albedo",
+        "tier": "standard",
+        "width": 512,
+        "height": 512,
+        "bytes": 116463,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/brown_brick_02/brown_brick_02_diff_1k.jpg",
+        "sourceBytes": 425513
+      },
+      {
+        "kind": "albedo",
+        "tier": "low",
+        "width": 256,
+        "height": 256,
+        "bytes": 28885,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/brown_brick_02/brown_brick_02_diff_1k.jpg",
+        "sourceBytes": 425513
+      },
+      {
+        "kind": "normal",
+        "tier": "standard",
+        "width": 512,
+        "height": 512,
+        "bytes": 45481,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/brown_brick_02/brown_brick_02_nor_gl_1k.jpg",
+        "sourceBytes": 226347
+      },
+      {
+        "kind": "roughness",
+        "tier": "standard",
+        "width": 512,
+        "height": 512,
+        "bytes": 57591,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/brown_brick_02/brown_brick_02_rough_1k.jpg",
+        "sourceBytes": 225461
+      }
+    ]
+  },
+  {
+    "name": "plaster",
+    "asset": "white_plaster_02",
+    "source": "https://polyhaven.com/a/white_plaster_02",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "adaptation": "Resized only",
+    "authors": {
+      "Rob Tuytel": "All"
+    },
+    "metresPerTile": 1,
+    "files": [
+      {
+        "kind": "albedo",
+        "tier": "standard",
+        "width": 512,
+        "height": 512,
+        "bytes": 58921,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/white_plaster_02/white_plaster_02_diff_1k.jpg",
+        "sourceBytes": 527219
+      },
+      {
+        "kind": "albedo",
+        "tier": "low",
+        "width": 256,
+        "height": 256,
+        "bytes": 10789,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/white_plaster_02/white_plaster_02_diff_1k.jpg",
+        "sourceBytes": 527219
+      },
+      {
+        "kind": "normal",
+        "tier": "standard",
+        "width": 512,
+        "height": 512,
+        "bytes": 31557,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/white_plaster_02/white_plaster_02_nor_gl_1k.jpg",
+        "sourceBytes": 652310
+      },
+      {
+        "kind": "roughness",
+        "tier": "standard",
+        "width": 512,
+        "height": 512,
+        "bytes": 29953,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/white_plaster_02/white_plaster_02_rough_1k.jpg",
+        "sourceBytes": 295900
+      }
+    ]
+  },
+  {
+    "name": "grass",
+    "asset": "grass_ground",
+    "source": "https://polyhaven.com/a/grass_ground",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "adaptation": "Resized only",
+    "authors": {
+      "Charlotte Baglioni": "All"
+    },
+    "metresPerTile": 2.509999990463257,
+    "files": [
+      {
+        "kind": "albedo",
+        "tier": "standard",
+        "width": 512,
+        "height": 512,
+        "bytes": 60030,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/grass_ground/grass_ground_diff_1k.jpg",
+        "sourceBytes": 876584
+      },
+      {
+        "kind": "albedo",
+        "tier": "low",
+        "width": 256,
+        "height": 256,
+        "bytes": 13452,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/grass_ground/grass_ground_diff_1k.jpg",
+        "sourceBytes": 876584
+      },
+      {
+        "kind": "normal",
+        "tier": "standard",
+        "width": 512,
+        "height": 512,
+        "bytes": 81427,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/grass_ground/grass_ground_nor_gl_1k.jpg",
+        "sourceBytes": 1310516
+      },
+      {
+        "kind": "roughness",
+        "tier": "standard",
+        "width": 512,
+        "height": 512,
+        "bytes": 10990,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/grass_ground/grass_ground_rough_1k.jpg",
+        "sourceBytes": 328190
+      }
+    ]
+  },
+  {
+    "name": "soil",
+    "asset": "brown_mud_dry",
+    "source": "https://polyhaven.com/a/brown_mud_dry",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "adaptation": "Resized only",
+    "authors": {
+      "Rob Tuytel": "All"
+    },
+    "metresPerTile": 1.299996018409729,
+    "files": [
+      {
+        "kind": "albedo",
+        "tier": "standard",
+        "width": 512,
+        "height": 512,
+        "bytes": 125837,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/brown_mud_dry/brown_mud_dry_diff_1k.jpg",
+        "sourceBytes": 920456
+      },
+      {
+        "kind": "albedo",
+        "tier": "low",
+        "width": 256,
+        "height": 256,
+        "bytes": 29366,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/brown_mud_dry/brown_mud_dry_diff_1k.jpg",
+        "sourceBytes": 920456
+      },
+      {
+        "kind": "normal",
+        "tier": "standard",
+        "width": 512,
+        "height": 512,
+        "bytes": 145188,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/brown_mud_dry/brown_mud_dry_nor_gl_1k.jpg",
+        "sourceBytes": 1539092
+      },
+      {
+        "kind": "roughness",
+        "tier": "standard",
+        "width": 512,
+        "height": 512,
+        "bytes": 64651,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/brown_mud_dry/brown_mud_dry_rough_1k.jpg",
+        "sourceBytes": 390385
+      }
+    ]
+  },
+  {
+    "name": "wood",
+    "asset": "wood_floor",
+    "source": "https://polyhaven.com/a/wood_floor",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "adaptation": "Resized only",
+    "authors": {
+      "Dimitrios Savva": "All"
+    },
+    "metresPerTile": 1.6999996900558472,
+    "files": [
+      {
+        "kind": "albedo",
+        "tier": "standard",
+        "width": 512,
+        "height": 512,
+        "bytes": 47604,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/wood_floor/wood_floor_diff_1k.jpg",
+        "sourceBytes": 734493
+      },
+      {
+        "kind": "albedo",
+        "tier": "low",
+        "width": 256,
+        "height": 256,
+        "bytes": 10760,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/wood_floor/wood_floor_diff_1k.jpg",
+        "sourceBytes": 734493
+      },
+      {
+        "kind": "normal",
+        "tier": "standard",
+        "width": 512,
+        "height": 512,
+        "bytes": 7198,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/wood_floor/wood_floor_nor_gl_1k.jpg",
+        "sourceBytes": 423303
+      },
+      {
+        "kind": "roughness",
+        "tier": "standard",
+        "width": 512,
+        "height": 512,
+        "bytes": 31453,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/wood_floor/wood_floor_rough_1k.jpg",
+        "sourceBytes": 527754
+      }
+    ]
+  },
+  {
+    "name": "roof",
+    "asset": "grey_roof_01",
+    "source": "https://polyhaven.com/a/grey_roof_01",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "adaptation": "Resized only",
+    "authors": {
+      "Rob Tuytel": "All"
+    },
+    "metresPerTile": 8,
+    "files": [
+      {
+        "kind": "albedo",
+        "tier": "standard",
+        "width": 512,
+        "height": 512,
+        "bytes": 81333,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/grey_roof_01/grey_roof_01_diff_1k.jpg",
+        "sourceBytes": 419760
+      },
+      {
+        "kind": "albedo",
+        "tier": "low",
+        "width": 256,
+        "height": 256,
+        "bytes": 25517,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/grey_roof_01/grey_roof_01_diff_1k.jpg",
+        "sourceBytes": 419760
+      },
+      {
+        "kind": "normal",
+        "tier": "standard",
+        "width": 512,
+        "height": 512,
+        "bytes": 78361,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/grey_roof_01/grey_roof_01_nor_gl_1k.jpg",
+        "sourceBytes": 623013
+      },
+      {
+        "kind": "roughness",
+        "tier": "standard",
+        "width": 512,
+        "height": 512,
+        "bytes": 89634,
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/grey_roof_01/grey_roof_01_rough_1k.jpg",
+        "sourceBytes": 404455
+      }
+    ]
+  }
+]

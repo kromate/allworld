@@ -1,0 +1,834 @@
+{
+  "format": "NWPK",
+  "version": 1,
+  "units": "metres",
+  "ground": "y=0",
+  "forward": "+Z",
+  "licence": "CC0-1.0",
+  "licenceUrl": "https://creativecommons.org/publicdomain/zero/1.0/legalcode",
+  "source": "scripts/regions/models.mjs",
+  "builder": "scripts/regions/build-round2.mjs",
+  "packs": [
+    {
+      "region": "nigeria",
+      "url": "/regions/nigeria.pack.gz",
+      "bytes": 297737,
+      "uncompressedGlbBytes": 3732604,
+      "entries": [
+        {
+          "name": "danfo",
+          "type": "transport",
+          "min": [
+            -1.1,
+            0,
+            -2.14
+          ],
+          "max": [
+            1.1,
+            2.31,
+            2.14
+          ],
+          "dimensions": [
+            2.2,
+            2.31,
+            4.28
+          ],
+          "triangles": 3620,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 392148
+        },
+        {
+          "name": "keke",
+          "type": "transport",
+          "min": [
+            -0.803,
+            0,
+            -1.12
+          ],
+          "max": [
+            0.803,
+            2.03,
+            1.47
+          ],
+          "dimensions": [
+            1.605,
+            2.03,
+            2.59
+          ],
+          "triangles": 480,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 53024
+        },
+        {
+          "name": "okada",
+          "type": "transport",
+          "min": [
+            -0.42,
+            0,
+            -1.31
+          ],
+          "max": [
+            0.42,
+            1.25,
+            1.36
+          ],
+          "dimensions": [
+            0.84,
+            1.25,
+            2.67
+          ],
+          "triangles": 376,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 41796
+        },
+        {
+          "name": "bus",
+          "type": "transport",
+          "min": [
+            -1.378,
+            0,
+            -3.71
+          ],
+          "max": [
+            1.378,
+            2.925,
+            3.84
+          ],
+          "dimensions": [
+            2.755,
+            2.925,
+            7.55
+          ],
+          "triangles": 628,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 69004
+        },
+        {
+          "name": "car",
+          "type": "transport",
+          "min": [
+            -1.049,
+            0,
+            -2.05
+          ],
+          "max": [
+            1.049,
+            1.485,
+            2.04
+          ],
+          "dimensions": [
+            2.099,
+            1.485,
+            4.09
+          ],
+          "triangles": 2380,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 258224
+        },
+        {
+          "name": "stall",
+          "type": "commerce",
+          "min": [
+            -1.7,
+            0,
+            -1.7
+          ],
+          "max": [
+            1.7,
+            3.25,
+            1.7
+          ],
+          "dimensions": [
+            3.4,
+            3.25,
+            3.4
+          ],
+          "triangles": 2040,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 221496
+        },
+        {
+          "name": "stall-red",
+          "type": "commerce",
+          "min": [
+            -1.7,
+            0,
+            -1.7
+          ],
+          "max": [
+            1.7,
+            3.25,
+            1.7
+          ],
+          "dimensions": [
+            3.4,
+            3.25,
+            3.4
+          ],
+          "triangles": 2040,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 221504
+        },
+        {
+          "name": "stall-green",
+          "type": "commerce",
+          "min": [
+            -1.7,
+            0,
+            -1.7
+          ],
+          "max": [
+            1.7,
+            3.25,
+            1.7
+          ],
+          "dimensions": [
+            3.4,
+            3.25,
+            3.4
+          ],
+          "triangles": 2040,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 221508
+        },
+        {
+          "name": "produce-goods",
+          "type": "commerce",
+          "min": [
+            -1.355,
+            0,
+            -0.455
+          ],
+          "max": [
+            1.355,
+            0.878,
+            0.693
+          ],
+          "dimensions": [
+            2.71,
+            0.878,
+            1.148
+          ],
+          "triangles": 2084,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 226308
+        },
+        {
+          "name": "shop-goods",
+          "type": "commerce",
+          "min": [
+            -1.54,
+            0,
+            -0.46
+          ],
+          "max": [
+            1.55,
+            0.795,
+            0.46
+          ],
+          "dimensions": [
+            3.09,
+            0.795,
+            0.92
+          ],
+          "triangles": 1300,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 141596
+        },
+        {
+          "name": "tyres",
+          "type": "commerce",
+          "min": [
+            -1.03,
+            0,
+            -0.536
+          ],
+          "max": [
+            1.239,
+            1.272,
+            0.536
+          ],
+          "dimensions": [
+            2.269,
+            1.272,
+            1.072
+          ],
+          "triangles": 1264,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 137732
+        },
+        {
+          "name": "container-shop",
+          "type": "commerce",
+          "min": [
+            -1.95,
+            0,
+            -1.175
+          ],
+          "max": [
+            1.95,
+            2.654,
+            2.194
+          ],
+          "dimensions": [
+            3.9,
+            2.654,
+            3.369
+          ],
+          "triangles": 1128,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 123028
+        },
+        {
+          "name": "pos-kiosk",
+          "type": "commerce",
+          "min": [
+            -0.76,
+            0,
+            -0.625
+          ],
+          "max": [
+            0.76,
+            2.15,
+            1.03
+          ],
+          "dimensions": [
+            1.52,
+            2.15,
+            1.655
+          ],
+          "triangles": 1056,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 115228
+        },
+        {
+          "name": "vulcanizer",
+          "type": "commerce",
+          "min": [
+            -1.525,
+            0,
+            -0.877
+          ],
+          "max": [
+            1.525,
+            2.431,
+            0.946
+          ],
+          "dimensions": [
+            3.05,
+            2.431,
+            1.823
+          ],
+          "triangles": 1900,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 206396
+        },
+        {
+          "name": "billboard",
+          "type": "commerce",
+          "min": [
+            -1.45,
+            0,
+            -0.21
+          ],
+          "max": [
+            1.45,
+            3.53,
+            0.215
+          ],
+          "dimensions": [
+            2.9,
+            3.53,
+            0.425
+          ],
+          "triangles": 1872,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 203372
+        },
+        {
+          "name": "kiosk",
+          "type": "commerce",
+          "min": [
+            -1.525,
+            0,
+            -0.977
+          ],
+          "max": [
+            1.525,
+            2.562,
+            1.25
+          ],
+          "dimensions": [
+            3.05,
+            2.562,
+            2.227
+          ],
+          "triangles": 2088,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 226676
+        },
+        {
+          "name": "food",
+          "type": "commerce",
+          "min": [
+            -1.075,
+            0,
+            -0.425
+          ],
+          "max": [
+            1.075,
+            2.45,
+            0.425
+          ],
+          "dimensions": [
+            2.15,
+            2.45,
+            0.85
+          ],
+          "triangles": 1752,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 190404
+        },
+        {
+          "name": "generator",
+          "type": "utility",
+          "min": [
+            -0.75,
+            0,
+            -0.505
+          ],
+          "max": [
+            0.75,
+            1.33,
+            0.505
+          ],
+          "dimensions": [
+            1.501,
+            1.33,
+            1.01
+          ],
+          "triangles": 288,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 32296
+        },
+        {
+          "name": "water-tank",
+          "type": "utility",
+          "min": [
+            -1.04,
+            0,
+            -1.04
+          ],
+          "max": [
+            1.239,
+            4.06,
+            1.04
+          ],
+          "dimensions": [
+            2.279,
+            4.06,
+            2.08
+          ],
+          "triangles": 1152,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 125612
+        },
+        {
+          "name": "rubbish-bin",
+          "type": "street",
+          "min": [
+            -0.41,
+            0,
+            -0.45
+          ],
+          "max": [
+            0.41,
+            1.062,
+            0.383
+          ],
+          "dimensions": [
+            0.82,
+            1.062,
+            0.833
+          ],
+          "triangles": 480,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 53044
+        },
+        {
+          "name": "lamp",
+          "type": "utility",
+          "min": [
+            -0.209,
+            0,
+            -0.27
+          ],
+          "max": [
+            1.35,
+            4.536,
+            0.27
+          ],
+          "dimensions": [
+            1.559,
+            4.536,
+            0.54
+          ],
+          "triangles": 268,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 30120
+        },
+        {
+          "name": "cart",
+          "type": "street",
+          "min": [
+            -0.581,
+            0,
+            -1.71
+          ],
+          "max": [
+            0.581,
+            1.143,
+            1.14
+          ],
+          "dimensions": [
+            1.163,
+            1.143,
+            2.85
+          ],
+          "triangles": 232,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 26232
+        },
+        {
+          "name": "pole",
+          "type": "utility",
+          "min": [
+            -1.35,
+            0,
+            -0.13
+          ],
+          "max": [
+            1.35,
+            6.2,
+            0.13
+          ],
+          "dimensions": [
+            2.7,
+            6.2,
+            0.26
+          ],
+          "triangles": 304,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 34008
+        },
+        {
+          "name": "drain",
+          "type": "infrastructure",
+          "min": [
+            -0.54,
+            0,
+            -1.5
+          ],
+          "max": [
+            0.54,
+            0.16,
+            1.5
+          ],
+          "dimensions": [
+            1.08,
+            0.16,
+            3
+          ],
+          "triangles": 168,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 19292
+        },
+        {
+          "name": "gate",
+          "type": "architecture",
+          "min": [
+            -3.8,
+            0,
+            -0.276
+          ],
+          "max": [
+            3.8,
+            2.98,
+            0.276
+          ],
+          "dimensions": [
+            7.6,
+            2.98,
+            0.552
+          ],
+          "triangles": 424,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 46976
+        },
+        {
+          "name": "palm",
+          "type": "plant",
+          "min": [
+            -1.179,
+            0,
+            -1.491
+          ],
+          "max": [
+            1.539,
+            3.51,
+            1.56
+          ],
+          "dimensions": [
+            2.718,
+            3.51,
+            3.051
+          ],
+          "triangles": 426,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 47188
+        },
+        {
+          "name": "shelter",
+          "type": "infrastructure",
+          "min": [
+            -1.825,
+            0,
+            -0.675
+          ],
+          "max": [
+            1.825,
+            2.56,
+            0.675
+          ],
+          "dimensions": [
+            3.65,
+            2.56,
+            1.35
+          ],
+          "triangles": 216,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 24508
+        },
+        {
+          "name": "bump",
+          "type": "infrastructure",
+          "min": [
+            -1.5,
+            0,
+            -0.24
+          ],
+          "max": [
+            1.5,
+            0.24,
+            0.24
+          ],
+          "dimensions": [
+            3,
+            0.24,
+            0.48
+          ],
+          "triangles": 240,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 27092
+        },
+        {
+          "name": "canoe",
+          "type": "waterfront",
+          "min": [
+            -0.66,
+            0,
+            -2.335
+          ],
+          "max": [
+            1.094,
+            1.007,
+            2.335
+          ],
+          "dimensions": [
+            1.754,
+            1.007,
+            4.67
+          ],
+          "triangles": 660,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 72464
+        },
+        {
+          "name": "mooring-posts",
+          "type": "waterfront",
+          "min": [
+            -1.177,
+            0,
+            -0.16
+          ],
+          "max": [
+            1.177,
+            1.895,
+            0.17
+          ],
+          "dimensions": [
+            2.353,
+            1.895,
+            0.33
+          ],
+          "triangles": 522,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 57596
+        },
+        {
+          "name": "net-crates",
+          "type": "waterfront",
+          "min": [
+            -1.03,
+            0,
+            -0.38
+          ],
+          "max": [
+            1.03,
+            1.255,
+            0.38
+          ],
+          "dimensions": [
+            2.06,
+            1.255,
+            0.76
+          ],
+          "triangles": 792,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 86732
+        }
+      ]
+    },
+    {
+      "region": "manchester",
+      "url": "/regions/manchester.pack.gz",
+      "bytes": 20140,
+      "uncompressedGlbBytes": 240848,
+      "entries": [
+        {
+          "name": "postbox",
+          "type": "street",
+          "min": [
+            -0.507,
+            0,
+            -0.52
+          ],
+          "max": [
+            0.507,
+            2.02,
+            0.52
+          ],
+          "dimensions": [
+            1.014,
+            2.02,
+            1.04
+          ],
+          "triangles": 358,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 39852
+        },
+        {
+          "name": "bollards",
+          "type": "street",
+          "min": [
+            -1.071,
+            0,
+            -0.18
+          ],
+          "max": [
+            1.071,
+            1.01,
+            0.18
+          ],
+          "dimensions": [
+            2.142,
+            1.01,
+            0.36
+          ],
+          "triangles": 576,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 63400
+        },
+        {
+          "name": "pubsign",
+          "type": "commerce",
+          "min": [
+            -0.17,
+            0,
+            -0.17
+          ],
+          "max": [
+            1.645,
+            2.99,
+            0.17
+          ],
+          "dimensions": [
+            1.815,
+            2.99,
+            0.339
+          ],
+          "triangles": 716,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 78520
+        },
+        {
+          "name": "beacon",
+          "type": "street",
+          "min": [
+            -0.28,
+            0,
+            -0.28
+          ],
+          "max": [
+            0.28,
+            3.06,
+            0.28
+          ],
+          "dimensions": [
+            0.56,
+            3.06,
+            0.56
+          ],
+          "triangles": 536,
+          "source": "scripts/regions/models.mjs",
+          "licence": "CC0-1.0",
+          "glbBytes": 59076
+        }
+      ]
+    }
+  ]
+}

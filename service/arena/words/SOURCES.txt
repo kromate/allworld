@@ -1,0 +1,75 @@
+Word Yard — where the word lists come from, and their terms
+===========================================================
+
+Files built from these sources (by build.ts in this folder):
+  enable.txt.gz                                      the full list the service checks words against
+  everyday.txt.gz                                    everyday words, for the easy computer player
+  src/features/arena/games/words/practice-words.ts   the practice board's short list
+
+
+1. ENABLE — the Enhanced North American Benchmark Lexicon
+---------------------------------------------------------
+Every word in all three files comes from this list.
+
+Originators: Alan Beale and M. Cooper.
+Licence:     public domain.
+List:        http://www.puzzlers.org/pub/wordlists/enable1.txt (National Puzzlers' League), as
+             kept by the Internet Archive:
+             https://web.archive.org/web/20160118193139/http://www.puzzlers.org/pub/wordlists/enable1.txt
+             172,823 entries, 1,743,363 bytes,
+             sha256 3f16130220645692ed49c7134e24a18504c2ca55b3c012f7290e3e77c63b1a89
+Statement:   the list's own readme, published by the same host:
+             https://web.archive.org/web/20170312132958/http://www.puzzlers.org/dokuwiki/doku.php?id=solving:wordlists:about:enable_readme
+             Both pages were fetched and read on 1 October 2026. The same statement is quoted in
+             the Copyright file of SCOWL 2020.12.07 (source 2).
+
+The statement, as written there:
+
+  The ENABLE master word list, WORD.LST, is herewith formally released into the Public Domain.
+  Anyone is free to use it or distribute it in any manner they see fit. No fee or registration
+  is required for its use nor are "contributions" solicited (if you feel you absolutely must
+  contribute something for your own peace of mind, the authors of the ENABLE list ask that you
+  make a donation on their behalf to your favorite charity). This word list is our gift to the
+  Scrabble(TM) community, as an alternate to "official" word lists. Game designers may feel free
+  to incorporate the WORD.LST into their games. Please mention the source and credit us as
+  originators of the list. Note that if you, as a game designer, use the WORD.LST in your
+  product, you may still copyright and protect your product, but you may *not* legally copyright
+  or in any way restrict redistribution of the WORD.LST portion of your product. This *may*
+  under law restrict your rights to restrict your users' rights, but that is only fair.
+
+What that asks of this project: mention the source and credit the originators (the how-to-play
+and docs/ASSETS-LICENSES.md do), and never claim the list itself as ours.
+
+What was changed: words shorter than 2 or longer than 13 letters are left out (they cannot be
+played on a 13 x 13 board), and 147 slurs are removed (blocklist.ts). 160,085 words are shipped.
+
+
+2. SCOWL — Spell Checker Oriented Word Lists, 2020.12.07
+--------------------------------------------------------
+Used only to choose WHICH ENABLE words count as everyday: SCOWL sorts English words into sizes
+by how widely known they are. everyday.txt.gz keeps the ENABLE words that are in SCOWL size 10;
+the practice list keeps sizes 10 and 20, plus every two-letter ENABLE word.
+
+Source:      http://wordlist.aspell.net/ — scowl-2020.12.07.tar.gz from
+             https://sourceforge.net/projects/wordlist/files/SCOWL/2020.12.07/
+             (files final/english-words.10, .20 and final/american-words.10, .20)
+Licence:     as written in the package's Copyright file (read on 1 October 2026):
+
+  The collective work is Copyright 2000-2018 by Kevin Atkinson as well as any of the copyrights
+  mentioned below:
+
+    Copyright 2000-2018 by Kevin Atkinson
+
+    Permission to use, copy, modify, distribute and sell these word lists, the associated
+    scripts, the output created from the scripts, and its documentation for any purpose is
+    hereby granted without fee, provided that the above copyright notice appears in all copies
+    and that both that copyright notice and this permission notice appear in supporting
+    documentation. Kevin Atkinson makes no representations about the suitability of this array
+    for any purpose. It is provided "as is" without express or implied warranty.
+
+The sizes used (10 and 20) draw on these parts of SCOWL, each named in that Copyright file with
+its own terms: the Moby Words II lists (placed in the public domain by Grady Ward), Brian Kelk's
+"UK English Wordlist with Frequency Classification" (public domain by its author's stated
+intention), and, for the spelling variants, the VarCon package (the same permission notice as
+above, Copyright 2000-2016 by Kevin Atkinson). The full Copyright file is in the package and
+must be kept with any redistribution of the package itself.

@@ -1,0 +1,2808 @@
+[
+ {
+  "name": "bathroomCabinet",
+  "materials": [
+   "wood",
+   "woodDark",
+   "metal"
+  ],
+  "min": [
+   0.2,
+   0,
+   -0.21
+  ],
+  "max": [
+   0.43,
+   0.39,
+   -0.08
+  ],
+  "generator": "original-detail",
+  "height": 0.858
+ },
+ {
+  "name": "bathroomCabinetDrawer",
+  "materials": [
+   "wood",
+   "carpetWhite",
+   "metalDark",
+   "metalLight"
+  ],
+  "min": [
+   0,
+   0.058,
+   -0.45
+  ],
+  "max": [
+   0.43,
+   0.53,
+   -0.13
+  ],
+  "generator": "original-detail",
+  "height": 1.0384
+ },
+ {
+  "name": "bathroomMirror",
+  "materials": [
+   "wood",
+   "metal",
+   "glass"
+  ],
+  "min": [
+   0,
+   0,
+   -0.049
+  ],
+  "max": [
+   0.301,
+   0.435,
+   0.096
+  ],
+  "generator": "original-detail",
+  "height": 0.957
+ },
+ {
+  "name": "bathroomSink",
+  "materials": [
+   "_defaultMat",
+   "metalLight",
+   "carpetWhite"
+  ],
+  "min": [
+   0,
+   -0.4,
+   -0.29
+  ],
+  "max": [
+   0.34,
+   0.16,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 1.232
+ },
+ {
+  "name": "bathroomSinkSquare",
+  "materials": [
+   "carpetWhite",
+   "metalDark",
+   "metalLight"
+  ],
+  "min": [
+   0,
+   0.057,
+   -0.45
+  ],
+  "max": [
+   0.43,
+   0.637,
+   -0.15
+  ],
+  "generator": "original-detail",
+  "height": 1.276
+ },
+ {
+  "name": "bathtub",
+  "materials": [
+   "carpetWhite",
+   "metalLight",
+   "metalDark"
+  ],
+  "min": [
+   0,
+   0,
+   -0.56
+  ],
+  "max": [
+   1.19,
+   0.42,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.924
+ },
+ {
+  "name": "bear",
+  "materials": [
+   "fur",
+   "wood",
+   "metalDark"
+  ],
+  "min": [
+   0,
+   0,
+   -0.248
+  ],
+  "max": [
+   0.39,
+   0.45,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.99
+ },
+ {
+  "name": "bedBunk",
+  "materials": [
+   "wood",
+   "carpetWhite",
+   "carpet"
+  ],
+  "min": [
+   0,
+   0,
+   -1.095
+  ],
+  "max": [
+   0.571,
+   0.85,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 1.87
+ },
+ {
+  "name": "bedDouble",
+  "materials": [
+   "carpetWhite",
+   "wood",
+   "metal",
+   "carpet"
+  ],
+  "min": [
+   0,
+   0,
+   -1.125
+  ],
+  "max": [
+   0.956,
+   0.375,
+   0
+  ],
+  "asset": "GothicBed_01",
+  "pack": "/packs/interior-bedroom.pack.gz",
+  "material": "carpet",
+  "height": 0.92
+ },
+ {
+  "name": "bedSingle",
+  "materials": [
+   "carpetWhite",
+   "wood",
+   "metal",
+   "carpet"
+  ],
+  "min": [
+   0.385,
+   0,
+   -1.125
+  ],
+  "max": [
+   0.956,
+   0.375,
+   0
+  ],
+  "asset": "GothicBed_01",
+  "pack": "/packs/interior-bedroom.pack.gz",
+  "material": "carpet",
+  "height": 0.92
+ },
+ {
+  "name": "bench",
+  "materials": [
+   "wood"
+  ],
+  "min": [
+   0,
+   0,
+   -0.2
+  ],
+  "max": [
+   0.4,
+   0.47,
+   0
+  ],
+  "asset": "painted_wooden_bench",
+  "pack": "/packs/interior-seating.pack.gz",
+  "material": "wood",
+  "height": 0.94
+ },
+ {
+  "name": "benchCushion",
+  "materials": [
+   "wood",
+   "carpet"
+  ],
+  "min": [
+   0,
+   0,
+   -0.2
+  ],
+  "max": [
+   0.4,
+   0.46,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 1.012
+ },
+ {
+  "name": "benchCushionLow",
+  "materials": [
+   "wood",
+   "carpet",
+   "_defaultMat"
+  ],
+  "min": [
+   -0.01,
+   0,
+   -0.21
+  ],
+  "max": [
+   0.41,
+   0.2,
+   0.01
+  ],
+  "generator": "original-detail",
+  "height": 0.44
+ },
+ {
+  "name": "bookcaseClosed",
+  "materials": [
+   "wood"
+  ],
+  "min": [
+   0,
+   0,
+   -0.25
+  ],
+  "max": [
+   0.4,
+   0.85,
+   0
+  ],
+  "asset": "Shelf_01",
+  "pack": "/packs/interior-bedroom.pack.gz",
+  "material": "wood",
+  "height": 1.9
+ },
+ {
+  "name": "bookcaseClosedDoors",
+  "materials": [
+   "wood",
+   "metal"
+  ],
+  "min": [
+   0,
+   0,
+   -0.25
+  ],
+  "max": [
+   0.4,
+   0.85,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 1.87
+ },
+ {
+  "name": "bookcaseClosedWide",
+  "materials": [
+   "wood"
+  ],
+  "min": [
+   0,
+   0,
+   -0.25
+  ],
+  "max": [
+   0.8,
+   0.79,
+   0
+  ],
+  "asset": "Shelf_01",
+  "pack": "/packs/interior-bedroom.pack.gz",
+  "material": "wood",
+  "height": 1.9
+ },
+ {
+  "name": "bookcaseOpen",
+  "materials": [
+   "wood"
+  ],
+  "min": [
+   0,
+   0,
+   -0.25
+  ],
+  "max": [
+   0.4,
+   0.88,
+   0
+  ],
+  "asset": "Shelf_01",
+  "pack": "/packs/interior-bedroom.pack.gz",
+  "material": "wood",
+  "height": 1.9
+ },
+ {
+  "name": "bookcaseOpenLow",
+  "materials": [
+   "wood"
+  ],
+  "min": [
+   0,
+   0,
+   -0.25
+  ],
+  "max": [
+   0.4,
+   0.4,
+   0
+  ],
+  "asset": "Shelf_01",
+  "pack": "/packs/interior-bedroom.pack.gz",
+  "material": "wood",
+  "height": 0.92
+ },
+ {
+  "name": "books",
+  "materials": [
+   "carpetDarker",
+   "carpetWhite",
+   "plant",
+   "metal"
+  ],
+  "min": [
+   0,
+   0,
+   -0.094
+  ],
+  "max": [
+   0.15,
+   0.104,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.2288
+ },
+ {
+  "name": "cabinetBed",
+  "materials": [
+   "wood",
+   "metal"
+  ],
+  "min": [
+   -0.01,
+   0,
+   -0.205
+  ],
+  "max": [
+   0.256,
+   0.233,
+   0.01
+  ],
+  "generator": "original-detail",
+  "height": 0.5126
+ },
+ {
+  "name": "cabinetBedDrawer",
+  "materials": [
+   "wood",
+   "_defaultMat",
+   "metal"
+  ],
+  "min": [
+   -0.01,
+   0,
+   -0.205
+  ],
+  "max": [
+   0.256,
+   0.263,
+   0.012
+  ],
+  "generator": "original-detail",
+  "height": 0.5786
+ },
+ {
+  "name": "cabinetBedDrawerTable",
+  "materials": [
+   "wood",
+   "_defaultMat",
+   "metal"
+  ],
+  "min": [
+   -0.01,
+   0,
+   -0.205
+  ],
+  "max": [
+   0.256,
+   0.263,
+   0.012
+  ],
+  "generator": "original-detail",
+  "height": 0.5786
+ },
+ {
+  "name": "cabinetTelevision",
+  "materials": [
+   "wood"
+  ],
+  "min": [
+   0,
+   0,
+   -0.25
+  ],
+  "max": [
+   0.8,
+   0.31,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.682
+ },
+ {
+  "name": "cabinetTelevisionDoors",
+  "materials": [
+   "wood",
+   "metal"
+  ],
+  "min": [
+   0,
+   0,
+   -0.25
+  ],
+  "max": [
+   0.8,
+   0.31,
+   0.01
+  ],
+  "generator": "original-detail",
+  "height": 0.682
+ },
+ {
+  "name": "cardboardBoxClosed",
+  "materials": [
+   "wood",
+   "woodDark"
+  ],
+  "min": [
+   0,
+   0,
+   -0.212
+  ],
+  "max": [
+   0.212,
+   0.281,
+   0
+  ],
+  "asset": "cardboard_box_01",
+  "pack": "/packs/interior-props.pack.gz",
+  "material": "wood",
+  "height": 1
+ },
+ {
+  "name": "cardboardBoxOpen",
+  "materials": [
+   "wood",
+   "woodDark"
+  ],
+  "min": [
+   -0.08,
+   0,
+   -0.212
+  ],
+  "max": [
+   0.292,
+   0.281,
+   0
+  ],
+  "asset": "cardboard_box_01",
+  "pack": "/packs/interior-props.pack.gz",
+  "material": "wood",
+  "height": 1
+ },
+ {
+  "name": "ceilingFan",
+  "materials": [
+   "metalLight",
+   "lamp",
+   "wood"
+  ],
+  "min": [
+   -0.172,
+   -0.134,
+   -0.264
+  ],
+  "max": [
+   0.283,
+   0,
+   0.261
+  ],
+  "generator": "original-detail",
+  "height": 0.2948
+ },
+ {
+  "name": "chair",
+  "materials": [
+   "wood"
+  ],
+  "min": [
+   0,
+   0,
+   -0.2
+  ],
+  "max": [
+   0.2,
+   0.47,
+   0
+  ],
+  "asset": "ArmChair_01",
+  "pack": "/packs/interior-seating.pack.gz",
+  "material": "carpet",
+  "height": 0.94
+ },
+ {
+  "name": "chairCushion",
+  "materials": [
+   "wood",
+   "carpet"
+  ],
+  "min": [
+   0,
+   0,
+   -0.2
+  ],
+  "max": [
+   0.2,
+   0.46,
+   0
+  ],
+  "asset": "ArmChair_01",
+  "pack": "/packs/interior-seating.pack.gz",
+  "material": "carpet",
+  "height": 0.94
+ },
+ {
+  "name": "chairDesk",
+  "materials": [
+   "metalMedium",
+   "carpet"
+  ],
+  "min": [
+   0,
+   0,
+   -0.314
+  ],
+  "max": [
+   0.335,
+   0.608,
+   0
+  ],
+  "asset": "dining_chair_02",
+  "pack": "/packs/interior-seating.pack.gz",
+  "material": "wood",
+  "height": 0.94
+ },
+ {
+  "name": "chairModernCushion",
+  "materials": [
+   "metal",
+   "carpetBlue"
+  ],
+  "min": [
+   0,
+   0,
+   -0.2
+  ],
+  "max": [
+   0.2,
+   0.46,
+   0
+  ],
+  "asset": "ArmChair_01",
+  "pack": "/packs/interior-seating.pack.gz",
+  "material": "carpet",
+  "height": 0.94
+ },
+ {
+  "name": "chairModernFrameCushion",
+  "materials": [
+   "metal",
+   "carpetBlue"
+  ],
+  "min": [
+   0,
+   0,
+   -0.2
+  ],
+  "max": [
+   0.2,
+   0.46,
+   0
+  ],
+  "asset": "ArmChair_01",
+  "pack": "/packs/interior-seating.pack.gz",
+  "material": "carpet",
+  "height": 0.94
+ },
+ {
+  "name": "chairRounded",
+  "materials": [
+   "wood"
+  ],
+  "min": [
+   0,
+   0,
+   -0.2
+  ],
+  "max": [
+   0.2,
+   0.455,
+   0
+  ],
+  "asset": "ArmChair_01",
+  "pack": "/packs/interior-seating.pack.gz",
+  "material": "carpet",
+  "height": 0.94
+ },
+ {
+  "name": "coatRack",
+  "materials": [
+   "metalMedium",
+   "wood"
+  ],
+  "min": [
+   0,
+   0,
+   -0.134
+  ],
+  "max": [
+   0.448,
+   0.28,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.616
+ },
+ {
+  "name": "coatRackStanding",
+  "materials": [
+   "wood"
+  ],
+  "min": [
+   -0.136,
+   0,
+   -0.136
+  ],
+  "max": [
+   0.136,
+   0.77,
+   0.136
+  ],
+  "generator": "original-detail",
+  "height": 1.694
+ },
+ {
+  "name": "computerKeyboard",
+  "materials": [
+   "metalDark",
+   "metalMedium"
+  ],
+  "min": [
+   0,
+   0,
+   -0.118
+  ],
+  "max": [
+   0.282,
+   0.028,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.0616
+ },
+ {
+  "name": "computerMouse",
+  "materials": [
+   "metalDark"
+  ],
+  "min": [
+   -0.025,
+   0,
+   -0.085
+  ],
+  "max": [
+   0.025,
+   0.024,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.0528
+ },
+ {
+  "name": "computerScreen",
+  "materials": [
+   "metalDark",
+   "metal"
+  ],
+  "min": [
+   0,
+   0,
+   -0.104
+  ],
+  "max": [
+   0.393,
+   0.294,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.6468
+ },
+ {
+  "name": "desk",
+  "materials": [
+   "wood",
+   "metal"
+  ],
+  "min": [
+   -0.01,
+   0,
+   -0.38
+  ],
+  "max": [
+   0.724,
+   0.384,
+   0.012
+  ],
+  "generator": "original-detail",
+  "height": 0.8448
+ },
+ {
+  "name": "deskCorner",
+  "materials": [
+   "wood",
+   "metal"
+  ],
+  "min": [
+   0,
+   0,
+   -0.974
+  ],
+  "max": [
+   0.974,
+   0.384,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.8448
+ },
+ {
+  "name": "doorway",
+  "materials": [
+   "wood",
+   "metal"
+  ],
+  "min": [
+   0,
+   0,
+   -0.101
+  ],
+  "max": [
+   0.486,
+   1.01,
+   0.012
+  ],
+  "generator": "original-detail",
+  "height": 2.222
+ },
+ {
+  "name": "doorwayFront",
+  "materials": [
+   "carpetWhite",
+   "metal",
+   "metalDark",
+   "glass"
+  ],
+  "min": [
+   0,
+   0,
+   -0.101
+  ],
+  "max": [
+   0.486,
+   1.01,
+   0.012
+  ],
+  "generator": "original-detail",
+  "height": 2.222
+ },
+ {
+  "name": "doorwayOpen",
+  "materials": [
+   "wood"
+  ],
+  "min": [
+   0,
+   0,
+   -0.089
+  ],
+  "max": [
+   0.486,
+   1.01,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 2.222
+ },
+ {
+  "name": "dryer",
+  "materials": [
+   "metalLight",
+   "metalMedium",
+   "metalDark"
+  ],
+  "min": [
+   0,
+   0,
+   -0.35
+  ],
+  "max": [
+   0.39,
+   0.47,
+   0.03
+  ],
+  "generator": "original-detail",
+  "height": 1.034
+ },
+ {
+  "name": "floorCorner",
+  "materials": [
+   "wood"
+  ],
+  "min": [
+   0,
+   0,
+   -0.55
+  ],
+  "max": [
+   0.55,
+   0.05,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.11
+ },
+ {
+  "name": "floorCornerRound",
+  "materials": [
+   "wood"
+  ],
+  "min": [
+   0,
+   0,
+   -0.55
+  ],
+  "max": [
+   0.55,
+   0.05,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.11
+ },
+ {
+  "name": "floorFull",
+  "materials": [
+   "wood"
+  ],
+  "min": [
+   0,
+   0,
+   -1
+  ],
+  "max": [
+   1,
+   0.05,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.11
+ },
+ {
+  "name": "floorHalf",
+  "materials": [
+   "wood"
+  ],
+  "min": [
+   0,
+   0,
+   -1
+  ],
+  "max": [
+   0.5,
+   0.05,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.11
+ },
+ {
+  "name": "hoodLarge",
+  "materials": [
+   "metalDark",
+   "_defaultMat"
+  ],
+  "min": [
+   0,
+   0,
+   -0.285
+  ],
+  "max": [
+   0.43,
+   0.37,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.814
+ },
+ {
+  "name": "hoodModern",
+  "materials": [
+   "metalMedium",
+   "_defaultMat"
+  ],
+  "min": [
+   0,
+   -0.03,
+   -0.285
+  ],
+  "max": [
+   0.43,
+   0.37,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.88
+ },
+ {
+  "name": "kitchenBar",
+  "materials": [
+   "wood",
+   "metal",
+   "woodDark"
+  ],
+  "min": [
+   0,
+   0,
+   -0.21
+  ],
+  "max": [
+   0.43,
+   0.42,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.924
+ },
+ {
+  "name": "kitchenBarEnd",
+  "materials": [
+   "wood",
+   "metal"
+  ],
+  "min": [
+   0,
+   0,
+   -0.21
+  ],
+  "max": [
+   0.102,
+   0.42,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.924
+ },
+ {
+  "name": "kitchenBlender",
+  "materials": [
+   "metalMedium",
+   "metal",
+   "glass"
+  ],
+  "min": [
+   0,
+   0,
+   -0.109
+  ],
+  "max": [
+   0.136,
+   0.228,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.5016
+ },
+ {
+  "name": "kitchenCabinet",
+  "materials": [
+   "metal",
+   "wood",
+   "woodDark"
+  ],
+  "min": [
+   0,
+   0,
+   -0.45
+  ],
+  "max": [
+   0.43,
+   0.45,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.99
+ },
+ {
+  "name": "kitchenCabinetCornerInner",
+  "materials": [
+   "wood",
+   "metal"
+  ],
+  "min": [
+   0,
+   0,
+   -0.46
+  ],
+  "max": [
+   0.46,
+   0.45,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.99
+ },
+ {
+  "name": "kitchenCabinetCornerRound",
+  "materials": [
+   "metal",
+   "wood"
+  ],
+  "min": [
+   0,
+   0,
+   -0.45
+  ],
+  "max": [
+   0.45,
+   0.45,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.99
+ },
+ {
+  "name": "kitchenCabinetDrawer",
+  "materials": [
+   "metal",
+   "wood",
+   "woodDark"
+  ],
+  "min": [
+   0,
+   0,
+   -0.45
+  ],
+  "max": [
+   0.43,
+   0.45,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.99
+ },
+ {
+  "name": "kitchenCabinetUpper",
+  "materials": [
+   "wood",
+   "woodDark",
+   "metal"
+  ],
+  "min": [
+   0,
+   0,
+   -0.21
+  ],
+  "max": [
+   0.43,
+   0.39,
+   0.01
+  ],
+  "generator": "original-detail",
+  "height": 0.858
+ },
+ {
+  "name": "kitchenCabinetUpperCorner",
+  "materials": [
+   "wood"
+  ],
+  "min": [
+   0,
+   0,
+   -0.21
+  ],
+  "max": [
+   0.215,
+   0.39,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.858
+ },
+ {
+  "name": "kitchenCabinetUpperDouble",
+  "materials": [
+   "wood",
+   "woodDark",
+   "metal"
+  ],
+  "min": [
+   0,
+   0,
+   -0.21
+  ],
+  "max": [
+   0.43,
+   0.39,
+   0.01
+  ],
+  "generator": "original-detail",
+  "height": 0.858
+ },
+ {
+  "name": "kitchenCabinetUpperLow",
+  "materials": [
+   "wood",
+   "woodDark",
+   "metal"
+  ],
+  "min": [
+   0,
+   0,
+   -0.21
+  ],
+  "max": [
+   0.43,
+   0.195,
+   0.01
+  ],
+  "generator": "original-detail",
+  "height": 0.429
+ },
+ {
+  "name": "kitchenCoffeeMachine",
+  "materials": [
+   "metalMedium",
+   "metal",
+   "carpetWhite"
+  ],
+  "min": [
+   0,
+   0,
+   -0.24
+  ],
+  "max": [
+   0.19,
+   0.177,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.3894
+ },
+ {
+  "name": "kitchenFridge",
+  "materials": [
+   "metalLight",
+   "metalDark",
+   "metal",
+   "glass"
+  ],
+  "min": [
+   0,
+   0,
+   -0.282
+  ],
+  "max": [
+   0.43,
+   0.92,
+   0.01
+  ],
+  "generator": "original-detail",
+  "height": 2.024
+ },
+ {
+  "name": "kitchenFridgeBuiltIn",
+  "materials": [
+   "wood",
+   "metalLight",
+   "woodDark",
+   "metal",
+   "glass"
+  ],
+  "min": [
+   0,
+   0,
+   -0.45
+  ],
+  "max": [
+   0.43,
+   0.869,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 1.9118
+ },
+ {
+  "name": "kitchenFridgeLarge",
+  "materials": [
+   "metalLight",
+   "metalMedium"
+  ],
+  "min": [
+   0,
+   0,
+   -0.342
+  ],
+  "max": [
+   0.52,
+   0.92,
+   0.064
+  ],
+  "generator": "original-detail",
+  "height": 2.024
+ },
+ {
+  "name": "kitchenFridgeSmall",
+  "materials": [
+   "metalLight",
+   "metalDark",
+   "glass",
+   "metal"
+  ],
+  "min": [
+   0,
+   0,
+   -0.282
+  ],
+  "max": [
+   0.43,
+   0.6,
+   0.01
+  ],
+  "generator": "original-detail",
+  "height": 1.32
+ },
+ {
+  "name": "kitchenMicrowave",
+  "materials": [
+   "metalMedium",
+   "carpetWhite",
+   "metalDark",
+   "glass"
+  ],
+  "min": [
+   0,
+   0,
+   -0.22
+  ],
+  "max": [
+   0.29,
+   0.18,
+   0.01
+  ],
+  "asset": "vintage_microwave",
+  "pack": "/packs/interior-kitchen.pack.gz",
+  "material": "metalLight",
+  "height": 0.42
+ },
+ {
+  "name": "kitchenSink",
+  "materials": [
+   "wood",
+   "metal",
+   "metalDark",
+   "metalLight",
+   "_defaultMat",
+   "woodDark"
+  ],
+  "min": [
+   0,
+   0,
+   -0.45
+  ],
+  "max": [
+   0.43,
+   0.49,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 1.078
+ },
+ {
+  "name": "kitchenStove",
+  "materials": [
+   "metal",
+   "wood",
+   "metalDark",
+   "carpetWhite",
+   "glass"
+  ],
+  "min": [
+   0,
+   0,
+   -0.45
+  ],
+  "max": [
+   0.43,
+   0.45,
+   0
+  ],
+  "asset": "electric_stove",
+  "pack": "/packs/interior-kitchen.pack.gz",
+  "material": "metalLight",
+  "height": 0.42
+ },
+ {
+  "name": "kitchenStoveElectric",
+  "materials": [
+   "metal",
+   "wood",
+   "metalDark",
+   "carpetWhite",
+   "glass",
+   "metalMedium"
+  ],
+  "min": [
+   0,
+   0,
+   -0.45
+  ],
+  "max": [
+   0.43,
+   0.45,
+   0
+  ],
+  "asset": "electric_stove",
+  "pack": "/packs/interior-kitchen.pack.gz",
+  "material": "metalLight",
+  "height": 0.42
+ },
+ {
+  "name": "lampRoundFloor",
+  "materials": [
+   "metal",
+   "lamp"
+  ],
+  "min": [
+   -0.016,
+   0,
+   -0.148
+  ],
+  "max": [
+   0.136,
+   0.86,
+   0.028
+  ],
+  "generator": "original-detail",
+  "height": 1.892
+ },
+ {
+  "name": "lampRoundTable",
+  "materials": [
+   "metal",
+   "lamp"
+  ],
+  "min": [
+   -0.016,
+   0,
+   -0.148
+  ],
+  "max": [
+   0.136,
+   0.314,
+   0.028
+  ],
+  "asset": "desk_lamp_arm_01",
+  "pack": "/packs/interior-props.pack.gz",
+  "material": "metal",
+  "height": 0.58
+ },
+ {
+  "name": "lampSquareCeiling",
+  "materials": [
+   "lamp",
+   "metal"
+  ],
+  "min": [
+   0,
+   0,
+   -0.12
+  ],
+  "max": [
+   0.12,
+   0.23,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.506
+ },
+ {
+  "name": "lampSquareFloor",
+  "materials": [
+   "lamp",
+   "metal"
+  ],
+  "min": [
+   0,
+   0,
+   -0.12
+  ],
+  "max": [
+   0.12,
+   0.86,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 1.892
+ },
+ {
+  "name": "lampSquareTable",
+  "materials": [
+   "lamp",
+   "metal"
+  ],
+  "min": [
+   0,
+   0,
+   -0.12
+  ],
+  "max": [
+   0.12,
+   0.29,
+   0
+  ],
+  "asset": "desk_lamp_arm_01",
+  "pack": "/packs/interior-props.pack.gz",
+  "material": "metal",
+  "height": 0.58
+ },
+ {
+  "name": "lampWall",
+  "materials": [
+   "metal",
+   "lamp"
+  ],
+  "min": [
+   -0.113,
+   0,
+   0
+  ],
+  "max": [
+   0.113,
+   0.093,
+   0.15
+  ],
+  "generator": "original-detail",
+  "height": 0.2046
+ },
+ {
+  "name": "laptop",
+  "materials": [
+   "metalDark",
+   "metal",
+   "metalMedium"
+  ],
+  "min": [
+   0,
+   0,
+   -0.24
+  ],
+  "max": [
+   0.264,
+   0.162,
+   0
+  ],
+  "asset": "classic_laptop",
+  "pack": "/packs/interior-props.pack.gz",
+  "material": "metalLight",
+  "height": 0.42
+ },
+ {
+  "name": "loungeChair",
+  "materials": [
+   "carpet",
+   "wood"
+  ],
+  "min": [
+   0,
+   0,
+   -0.41
+  ],
+  "max": [
+   0.49,
+   0.46,
+   0
+  ],
+  "asset": "ArmChair_01",
+  "pack": "/packs/interior-seating.pack.gz",
+  "material": "carpet",
+  "height": 0.94
+ },
+ {
+  "name": "loungeChairRelax",
+  "materials": [
+   "metal",
+   "carpet",
+   "wood"
+  ],
+  "min": [
+   0,
+   0,
+   -0.675
+  ],
+  "max": [
+   0.49,
+   0.63,
+   0
+  ],
+  "asset": "ArmChair_01",
+  "pack": "/packs/interior-seating.pack.gz",
+  "material": "carpet",
+  "height": 0.94
+ },
+ {
+  "name": "loungeDesignChair",
+  "materials": [
+   "carpetBlue",
+   "metal"
+  ],
+  "min": [
+   0,
+   0,
+   -0.41
+  ],
+  "max": [
+   0.73,
+   0.4,
+   0
+  ],
+  "asset": "ArmChair_01",
+  "pack": "/packs/interior-seating.pack.gz",
+  "material": "carpet",
+  "height": 0.94
+ },
+ {
+  "name": "loungeDesignSofa",
+  "materials": [
+   "carpetBlue",
+   "metal"
+  ],
+  "min": [
+   0,
+   0,
+   -0.41
+  ],
+  "max": [
+   1.12,
+   0.4,
+   0
+  ],
+  "asset": "Sofa_01",
+  "pack": "/packs/interior-seating.pack.gz",
+  "material": "carpet",
+  "height": 0.94
+ },
+ {
+  "name": "loungeDesignSofaCorner",
+  "materials": [
+   "carpetBlue",
+   "metal"
+  ],
+  "min": [
+   0,
+   0,
+   -1.35
+  ],
+  "max": [
+   1.35,
+   0.4,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.88
+ },
+ {
+  "name": "loungeSofa",
+  "materials": [
+   "carpet",
+   "wood"
+  ],
+  "min": [
+   0,
+   0,
+   -0.41
+  ],
+  "max": [
+   0.98,
+   0.46,
+   0
+  ],
+  "asset": "Sofa_01",
+  "pack": "/packs/interior-seating.pack.gz",
+  "material": "carpet",
+  "height": 0.94
+ },
+ {
+  "name": "loungeSofaCorner",
+  "materials": [
+   "carpet",
+   "wood"
+  ],
+  "min": [
+   0,
+   0,
+   -0.98
+  ],
+  "max": [
+   0.98,
+   0.46,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 1.012
+ },
+ {
+  "name": "loungeSofaLong",
+  "materials": [
+   "carpet",
+   "wood"
+  ],
+  "min": [
+   0,
+   0,
+   -0.41
+  ],
+  "max": [
+   0.98,
+   0.46,
+   0.41
+  ],
+  "asset": "Sofa_01",
+  "pack": "/packs/interior-seating.pack.gz",
+  "material": "carpet",
+  "height": 0.94
+ },
+ {
+  "name": "loungeSofaOttoman",
+  "materials": [
+   "wood",
+   "carpet"
+  ],
+  "min": [
+   0.47,
+   0,
+   -0.04
+  ],
+  "max": [
+   0.91,
+   0.23,
+   0.41
+  ],
+  "asset": "Ottoman_01",
+  "pack": "/packs/interior-seating.pack.gz",
+  "material": "carpet",
+  "height": 0.5
+ },
+ {
+  "name": "paneling",
+  "materials": [
+   "wood"
+  ],
+  "min": [
+   0,
+   0,
+   0
+  ],
+  "max": [
+   0.5,
+   0.595,
+   0.03
+  ],
+  "generator": "original-detail",
+  "height": 1.309
+ },
+ {
+  "name": "pillow",
+  "materials": [
+   "carpet"
+  ],
+  "min": [
+   0,
+   0,
+   -0.088
+  ],
+  "max": [
+   0.23,
+   0.222,
+   0
+  ],
+  "asset": "throw_pillows_01",
+  "pack": "/packs/interior-bedroom.pack.gz",
+  "material": "carpet",
+  "height": 0.42
+ },
+ {
+  "name": "pillowBlue",
+  "materials": [
+   "carpetBlue"
+  ],
+  "min": [
+   0,
+   0,
+   -0.063
+  ],
+  "max": [
+   0.23,
+   0.129,
+   0
+  ],
+  "asset": "throw_pillows_01",
+  "pack": "/packs/interior-bedroom.pack.gz",
+  "material": "carpet",
+  "height": 0.42
+ },
+ {
+  "name": "pillowBlueLong",
+  "materials": [
+   "carpetBlue"
+  ],
+  "min": [
+   -0.13,
+   0,
+   -0.088
+  ],
+  "max": [
+   0.387,
+   0.222,
+   0
+  ],
+  "asset": "throw_pillows_01",
+  "pack": "/packs/interior-bedroom.pack.gz",
+  "material": "carpet",
+  "height": 0.42
+ },
+ {
+  "name": "pillowLong",
+  "materials": [
+   "carpet"
+  ],
+  "min": [
+   0,
+   0,
+   -0.088
+  ],
+  "max": [
+   0.387,
+   0.222,
+   0
+  ],
+  "asset": "throw_pillows_01",
+  "pack": "/packs/interior-bedroom.pack.gz",
+  "material": "carpet",
+  "height": 0.42
+ },
+ {
+  "name": "plantSmall1",
+  "materials": [
+   "wood",
+   "plant"
+  ],
+  "min": [
+   -0.047,
+   0,
+   -0.047
+  ],
+  "max": [
+   0.047,
+   0.14,
+   0.047
+  ],
+  "asset": "potted_plant_04",
+  "pack": "/packs/interior-props.pack.gz",
+  "material": "plant",
+  "height": 0.48
+ },
+ {
+  "name": "plantSmall2",
+  "materials": [
+   "wood",
+   "plant"
+  ],
+  "min": [
+   -0.047,
+   0,
+   -0.047
+  ],
+  "max": [
+   0.047,
+   0.14,
+   0.047
+  ],
+  "asset": "potted_plant_04",
+  "pack": "/packs/interior-props.pack.gz",
+  "material": "plant",
+  "height": 0.48
+ },
+ {
+  "name": "plantSmall3",
+  "materials": [
+   "wood",
+   "plant"
+  ],
+  "min": [
+   -0.049,
+   0,
+   -0.042
+  ],
+  "max": [
+   0.049,
+   0.145,
+   0.042
+  ],
+  "asset": "potted_plant_04",
+  "pack": "/packs/interior-props.pack.gz",
+  "material": "plant",
+  "height": 0.48
+ },
+ {
+  "name": "pottedPlant",
+  "materials": [
+   "wood",
+   "woodDark",
+   "plant"
+  ],
+  "min": [
+   -0.106,
+   0,
+   -0.121
+  ],
+  "max": [
+   0.106,
+   0.654,
+   0.121
+  ],
+  "asset": "potted_plant_04",
+  "pack": "/packs/interior-props.pack.gz",
+  "material": "plant",
+  "height": 1.18
+ },
+ {
+  "name": "radio",
+  "materials": [
+   "metalMedium",
+   "wood",
+   "metal"
+  ],
+  "min": [
+   0,
+   0,
+   -0.098
+  ],
+  "max": [
+   0.315,
+   0.228,
+   0
+  ],
+  "asset": "boombox",
+  "pack": "/packs/interior-props.pack.gz",
+  "material": "metalDark",
+  "height": 0.42
+ },
+ {
+  "name": "rugDoormat",
+  "materials": [
+   "wood"
+  ],
+  "min": [
+   0,
+   0,
+   -0.237
+  ],
+  "max": [
+   0.429,
+   0.01,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.022
+ },
+ {
+  "name": "rugRectangle",
+  "materials": [
+   "carpet",
+   "carpetDarker"
+  ],
+  "min": [
+   0,
+   0,
+   -0.92
+  ],
+  "max": [
+   1.57,
+   0.01,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.022
+ },
+ {
+  "name": "rugRound",
+  "materials": [
+   "carpet",
+   "carpetDarker"
+  ],
+  "min": [
+   0,
+   0,
+   -0.92
+  ],
+  "max": [
+   0.92,
+   0.01,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.022
+ },
+ {
+  "name": "rugRounded",
+  "materials": [
+   "carpetDarker",
+   "carpet"
+  ],
+  "min": [
+   0,
+   0,
+   -0.92
+  ],
+  "max": [
+   1.57,
+   0.01,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.022
+ },
+ {
+  "name": "rugSquare",
+  "materials": [
+   "carpet",
+   "carpetDarker"
+  ],
+  "min": [
+   0,
+   0,
+   -0.92
+  ],
+  "max": [
+   0.904,
+   0.01,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.022
+ },
+ {
+  "name": "shower",
+  "materials": [
+   "carpetWhite",
+   "metalDark",
+   "glass",
+   "metal"
+  ],
+  "min": [
+   -0.562,
+   0,
+   -0.562
+  ],
+  "max": [
+   0,
+   1.094,
+   0.02
+  ],
+  "generator": "original-detail",
+  "height": 2.4068
+ },
+ {
+  "name": "showerRound",
+  "materials": [
+   "_defaultMat",
+   "metalDark",
+   "glass",
+   "carpetWhite"
+  ],
+  "min": [
+   0,
+   0,
+   -0.562
+  ],
+  "max": [
+   0.562,
+   1.094,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 2.4068
+ },
+ {
+  "name": "sideTable",
+  "materials": [
+   "wood",
+   "_defaultMat"
+  ],
+  "min": [
+   -0.01,
+   0,
+   -0.21
+  ],
+  "max": [
+   0.524,
+   0.384,
+   0.01
+  ],
+  "asset": "side_table_01",
+  "pack": "/packs/interior-tables.pack.gz",
+  "material": "wood",
+  "height": 0.48
+ },
+ {
+  "name": "sideTableDrawers",
+  "materials": [
+   "wood",
+   "_defaultMat",
+   "metal"
+  ],
+  "min": [
+   -0.01,
+   0,
+   -0.21
+  ],
+  "max": [
+   0.524,
+   0.384,
+   0.012
+  ],
+  "generator": "original-detail",
+  "height": 0.8448
+ },
+ {
+  "name": "speaker",
+  "materials": [
+   "wood",
+   "metalMedium"
+  ],
+  "min": [
+   0,
+   0,
+   -0.148
+  ],
+  "max": [
+   0.148,
+   0.636,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 1.3992
+ },
+ {
+  "name": "speakerSmall",
+  "materials": [
+   "wood",
+   "metalMedium"
+  ],
+  "min": [
+   0,
+   0,
+   -0.133
+  ],
+  "max": [
+   0.148,
+   0.298,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.6556
+ },
+ {
+  "name": "stairs",
+  "materials": [
+   "wood",
+   "woodDark"
+  ],
+  "min": [
+   0,
+   0,
+   -0.79
+  ],
+  "max": [
+   1.823,
+   1.34,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 2.948
+ },
+ {
+  "name": "stairsCorner",
+  "materials": [
+   "woodDark",
+   "wood"
+  ],
+  "min": [
+   0.164,
+   0,
+   -1.426
+  ],
+  "max": [
+   1.938,
+   1.34,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 2.948
+ },
+ {
+  "name": "stairsOpen",
+  "materials": [
+   "woodDark",
+   "metal",
+   "wood"
+  ],
+  "min": [
+   0,
+   0,
+   -0.79
+  ],
+  "max": [
+   1.823,
+   1.34,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 2.948
+ },
+ {
+  "name": "stairsOpenSingle",
+  "materials": [
+   "metal",
+   "wood"
+  ],
+  "min": [
+   0,
+   0,
+   -0.79
+  ],
+  "max": [
+   1.823,
+   1.34,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 2.948
+ },
+ {
+  "name": "stoolBar",
+  "materials": [
+   "wood",
+   "carpet"
+  ],
+  "min": [
+   0,
+   0,
+   -0.23
+  ],
+  "max": [
+   0.265,
+   0.435,
+   0
+  ],
+  "asset": "bar_chair_round_01",
+  "pack": "/packs/interior-seating.pack.gz",
+  "material": "wood",
+  "height": 1.05
+ },
+ {
+  "name": "stoolBarSquare",
+  "materials": [
+   "wood",
+   "carpet"
+  ],
+  "min": [
+   0.056,
+   0,
+   -0.189
+  ],
+  "max": [
+   0.209,
+   0.405,
+   -0.041
+  ],
+  "asset": "bar_chair_round_01",
+  "pack": "/packs/interior-seating.pack.gz",
+  "material": "wood",
+  "height": 1.05
+ },
+ {
+  "name": "table",
+  "materials": [
+   "wood"
+  ],
+  "min": [
+   0,
+   0,
+   -0.447
+  ],
+  "max": [
+   0.841,
+   0.327,
+   0
+  ],
+  "asset": "dining_table",
+  "pack": "/packs/interior-tables.pack.gz",
+  "material": "wood",
+  "height": 0.76
+ },
+ {
+  "name": "tableCloth",
+  "materials": [
+   "wood",
+   "carpet"
+  ],
+  "min": [
+   0,
+   0,
+   -0.447
+  ],
+  "max": [
+   0.841,
+   0.327,
+   0
+  ],
+  "asset": "dining_table",
+  "pack": "/packs/interior-tables.pack.gz",
+  "material": "wood",
+  "height": 0.76
+ },
+ {
+  "name": "tableCoffee",
+  "materials": [
+   "wood"
+  ],
+  "min": [
+   -0.461,
+   0,
+   -0.3
+  ],
+  "max": [
+   0.2,
+   0.23,
+   0.1
+  ],
+  "asset": "coffee_table_round_01",
+  "pack": "/packs/interior-tables.pack.gz",
+  "material": "wood",
+  "height": 0.48
+ },
+ {
+  "name": "tableCoffeeGlass",
+  "materials": [
+   "metal",
+   "glass"
+  ],
+  "min": [
+   -0.461,
+   0,
+   -0.3
+  ],
+  "max": [
+   0.2,
+   0.23,
+   0.1
+  ],
+  "generator": "original-detail",
+  "height": 0.506
+ },
+ {
+  "name": "tableCoffeeGlassSquare",
+  "materials": [
+   "metal",
+   "glass"
+  ],
+  "min": [
+   -0.461,
+   0,
+   -0.3
+  ],
+  "max": [
+   -0.061,
+   0.23,
+   0.1
+  ],
+  "generator": "original-detail",
+  "height": 0.506
+ },
+ {
+  "name": "tableCoffeeSquare",
+  "materials": [
+   "wood"
+  ],
+  "min": [
+   -0.461,
+   0,
+   -0.3
+  ],
+  "max": [
+   -0.061,
+   0.23,
+   0.1
+  ],
+  "generator": "original-detail",
+  "height": 0.506
+ },
+ {
+  "name": "tableCross",
+  "materials": [
+   "wood"
+  ],
+  "min": [
+   0,
+   0,
+   -0.447
+  ],
+  "max": [
+   0.852,
+   0.347,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.7634
+ },
+ {
+  "name": "tableCrossCloth",
+  "materials": [
+   "wood",
+   "carpet"
+  ],
+  "min": [
+   0,
+   0,
+   -0.447
+  ],
+  "max": [
+   0.852,
+   0.347,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.7634
+ },
+ {
+  "name": "tableGlass",
+  "materials": [
+   "metal",
+   "glass"
+  ],
+  "min": [
+   0,
+   0,
+   -0.447
+  ],
+  "max": [
+   0.841,
+   0.327,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.7194
+ },
+ {
+  "name": "tableRound",
+  "materials": [
+   "wood"
+  ],
+  "min": [
+   0,
+   -0.27,
+   -0.8
+  ],
+  "max": [
+   0.693,
+   0.097,
+   0
+  ],
+  "asset": "coffee_table_round_01",
+  "pack": "/packs/interior-tables.pack.gz",
+  "material": "wood",
+  "height": 0.76
+ },
+ {
+  "name": "televisionAntenna",
+  "materials": [
+   "metalMedium"
+  ],
+  "min": [
+   -0.132,
+   0,
+   -0.08
+  ],
+  "max": [
+   0.132,
+   0.103,
+   0
+  ],
+  "asset": "Television_01",
+  "pack": "/packs/interior-props.pack.gz",
+  "material": "metalDark",
+  "height": 0.72
+ },
+ {
+  "name": "televisionModern",
+  "materials": [
+   "metalDark",
+   "metal"
+  ],
+  "min": [
+   -0.342,
+   0,
+   -0.064
+  ],
+  "max": [
+   0.342,
+   0.455,
+   0.064
+  ],
+  "generator": "original-detail",
+  "height": 1.001
+ },
+ {
+  "name": "televisionVintage",
+  "materials": [
+   "metal",
+   "wood",
+   "metalMedium",
+   "metalDark"
+  ],
+  "min": [
+   0,
+   0,
+   -0.27
+  ],
+  "max": [
+   0.41,
+   0.27,
+   0
+  ],
+  "asset": "Television_01",
+  "pack": "/packs/interior-props.pack.gz",
+  "material": "metalDark",
+  "height": 0.72
+ },
+ {
+  "name": "toaster",
+  "materials": [
+   "metalMedium",
+   "metal"
+  ],
+  "min": [
+   -0.094,
+   0,
+   -0.05
+  ],
+  "max": [
+   0.094,
+   0.13,
+   0.05
+  ],
+  "generator": "original-detail",
+  "height": 0.286
+ },
+ {
+  "name": "toilet",
+  "materials": [
+   "carpetWhite",
+   "metalLight",
+   "metalDark",
+   "_defaultMat"
+  ],
+  "min": [
+   0,
+   0,
+   0
+  ],
+  "max": [
+   0.313,
+   0.451,
+   0.477
+  ],
+  "generator": "original-detail",
+  "height": 0.9922
+ },
+ {
+  "name": "toiletSquare",
+  "materials": [
+   "carpetWhite",
+   "metalLight"
+  ],
+  "min": [
+   0,
+   0,
+   -0.387
+  ],
+  "max": [
+   0.304,
+   0.451,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 0.9922
+ },
+ {
+  "name": "trashcan",
+  "materials": [
+   "metal",
+   "metalDark"
+  ],
+  "min": [
+   -0.104,
+   0,
+   -0.112
+  ],
+  "max": [
+   0.104,
+   0.428,
+   0.122
+  ],
+  "generator": "original-detail",
+  "height": 0.9416
+ },
+ {
+  "name": "wall",
+  "materials": [
+   "wood",
+   "_defaultMat",
+   "metalDark"
+  ],
+  "min": [
+   0,
+   0,
+   -0.05
+  ],
+  "max": [
+   1,
+   1.29,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 2.838
+ },
+ {
+  "name": "wallCorner",
+  "materials": [
+   "metalDark",
+   "_defaultMat",
+   "wood"
+  ],
+  "min": [
+   0,
+   0,
+   -0.55
+  ],
+  "max": [
+   0.55,
+   1.29,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 2.838
+ },
+ {
+  "name": "wallCornerRond",
+  "materials": [
+   "metalDark",
+   "_defaultMat",
+   "wood"
+  ],
+  "min": [
+   0,
+   0,
+   -0.55
+  ],
+  "max": [
+   0.55,
+   1.29,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 2.838
+ },
+ {
+  "name": "wallDoorway",
+  "materials": [
+   "_defaultMat",
+   "wood",
+   "metalDark"
+  ],
+  "min": [
+   0,
+   0,
+   -0.07
+  ],
+  "max": [
+   1,
+   1.29,
+   0.02
+  ],
+  "generator": "original-detail",
+  "height": 2.838
+ },
+ {
+  "name": "wallDoorwayWide",
+  "materials": [
+   "_defaultMat",
+   "wood",
+   "metalDark"
+  ],
+  "min": [
+   0,
+   0,
+   -0.07
+  ],
+  "max": [
+   1,
+   1.29,
+   0.02
+  ],
+  "generator": "original-detail",
+  "height": 2.838
+ },
+ {
+  "name": "wallHalf",
+  "materials": [
+   "wood",
+   "_defaultMat",
+   "metalDark"
+  ],
+  "min": [
+   0,
+   0,
+   -0.05
+  ],
+  "max": [
+   0.5,
+   1.29,
+   0
+  ],
+  "generator": "original-detail",
+  "height": 2.838
+ },
+ {
+  "name": "wallWindow",
+  "materials": [
+   "wood",
+   "metalDark",
+   "_defaultMat",
+   "glass"
+  ],
+  "min": [
+   0,
+   0,
+   -0.07
+  ],
+  "max": [
+   1,
+   1.29,
+   0.02
+  ],
+  "generator": "original-detail",
+  "height": 2.838
+ },
+ {
+  "name": "wallWindowSlide",
+  "materials": [
+   "wood",
+   "metalDark",
+   "_defaultMat",
+   "glass"
+  ],
+  "min": [
+   0,
+   0,
+   -0.07
+  ],
+  "max": [
+   1,
+   1.29,
+   0.02
+  ],
+  "generator": "original-detail",
+  "height": 2.838
+ },
+ {
+  "name": "washer",
+  "materials": [
+   "metalLight",
+   "metalMedium",
+   "metalDark",
+   "metal",
+   "glass",
+   "_defaultMat"
+  ],
+  "min": [
+   0,
+   0,
+   -0.35
+  ],
+  "max": [
+   0.39,
+   0.47,
+   0.04
+  ],
+  "generator": "original-detail",
+  "height": 1.034
+ },
+ {
+  "name": "washerDryerStacked",
+  "materials": [
+   "metalMedium",
+   "metalLight",
+   "metalDark",
+   "metal",
+   "glass",
+   "_defaultMat"
+  ],
+  "min": [
+   0,
+   0,
+   -0.35
+  ],
+  "max": [
+   0.39,
+   0.94,
+   0.04
+  ],
+  "generator": "original-detail",
+  "height": 2.068
+ }
+]

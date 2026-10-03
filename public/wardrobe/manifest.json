@@ -1,0 +1,186 @@
+{
+  "basis-f01.pack.gz": {
+    "bytes": 125560,
+    "sha256": "bde33d5625f31ea93752a9fd5cc981b87fe32b92750e4581b126abe16aa098fa"
+  },
+  "basis-f03.pack.gz": {
+    "bytes": 95396,
+    "sha256": "a32d34532daecf1ee87b3b7365abb5e80942bb86d6615def2eefba191e7835df"
+  },
+  "basis-f06.pack.gz": {
+    "bytes": 118092,
+    "sha256": "8ed8902841cf18b23bd3c7174fae13750309e9a4f6138c58b36086577ac56da8"
+  },
+  "basis-f08.pack.gz": {
+    "bytes": 102753,
+    "sha256": "ad4707f1becd002d9241930675a59d8edfc799fd1d9f904b9476a951a6de5470"
+  },
+  "basis-f11.pack.gz": {
+    "bytes": 112275,
+    "sha256": "0fb8e064a4119027484c7fc9e060b61cde1b8e285560e0bf5a72fce16fa3ca6f"
+  },
+  "basis-f12.pack.gz": {
+    "bytes": 139532,
+    "sha256": "c2749b20aebb877a8019ed3de443f96251d305c01406c77d663abb4df052ee00"
+  },
+  "basis-f17.pack.gz": {
+    "bytes": 107688,
+    "sha256": "5d9f7195cb947abe219aebf7233a2da6c07aaf09567a955ddf8ba8dbe1b5d3d2"
+  },
+  "basis-m01.pack.gz": {
+    "bytes": 95857,
+    "sha256": "db6443c327e87d96465ff42bdc6f89d704832d1407438e23b1d4daab866ecb5c"
+  },
+  "basis-m04.pack.gz": {
+    "bytes": 171538,
+    "sha256": "0c306011dcd74177f7d9f3cc1af6b50673cb760d1a330150bd232e605d33e5c5"
+  },
+  "basis-m08.pack.gz": {
+    "bytes": 137419,
+    "sha256": "9ddcf8bb8c7c0c413a250cd12adde81aadb27e893fff9d1ae11cb3ff42adadbe"
+  },
+  "basis-m10.pack.gz": {
+    "bytes": 146280,
+    "sha256": "879f1972a7057774a40a413287111003ee634b508001a5d7747d7d0b313a2980"
+  },
+  "basis-m12.pack.gz": {
+    "bytes": 162256,
+    "sha256": "da9883c98956de09b2814a2ae76925e2ed739f48dfec506dd8e00ce298fb31fc"
+  },
+  "basis-m15.pack.gz": {
+    "bytes": 138425,
+    "sha256": "5869507b1e031774ab1951cc41b248790f3d598d1b2a6c26e6c571f786bd00b4"
+  },
+  "basis-m18.pack.gz": {
+    "bytes": 156979,
+    "sha256": "097e27435876e623d591d491dd026842b547dbf6b1bb126bd03ffa1f727c7beb"
+  },
+  "donor-f01.pack.gz": {
+    "bytes": 35532,
+    "sha256": "81b575b0a29f19c4a265ae84a1a85128976e36d124cea87710acbe8edfaa39f1"
+  },
+  "donor-m15.pack.gz": {
+    "bytes": 27347,
+    "sha256": "7e7949e859fb4c9baa1a08d03e3ffeba92e18e9a94e5b70123729b54e04c7021"
+  },
+  "fabric-city-navy.pack.gz": {
+    "bytes": 26190,
+    "sha256": "4bd60f6b9c479467f272668e3cb5cd1efc0163bd60d208bf2d2578ee7dd354d6"
+  },
+  "fabric-coastal-linen.pack.gz": {
+    "bytes": 35205,
+    "sha256": "8473d55674c06356dbb4b834327cbc69066a73d3469054ce081460e8775d1b12"
+  },
+  "fabric-denim-weekend.pack.gz": {
+    "bytes": 40993,
+    "sha256": "d87a560d2ba439d75f8f6fa9726b60841d8ccd04fd6f3c4200d5d0155203076d"
+  },
+  "fabric-everyday-cream.pack.gz": {
+    "bytes": 36161,
+    "sha256": "58256917c4987135a11088ad5a09dc4d7555696abdfb78df3bb118c8cfd3e7ba"
+  },
+  "fabric-indigo-dash.pack.gz": {
+    "bytes": 4581,
+    "sha256": "12b91965b6364b130998be8cc01a7232bfb09f1e8551b24c676d570a2a69c85a"
+  },
+  "fabric-marigold-cotton.pack.gz": {
+    "bytes": 28568,
+    "sha256": "bd4b497ba002baeba8f7bd312f29194121141f8864d6233f18afec6cc388e40b"
+  },
+  "fabric-olive-casual.pack.gz": {
+    "bytes": 21748,
+    "sha256": "2c1c2ee6fb06b5e167f808947a2f3b4fe2e7cc6be74da6630dbbd03284adc1d8"
+  },
+  "fabric-wax-coral.pack.gz": {
+    "bytes": 22843,
+    "sha256": "e2e5ccaad923166594072c196fe04e4747d6363073506d4dfb5cde4572d4c51c"
+  },
+  "fabric-wax-indigo.pack.gz": {
+    "bytes": 26320,
+    "sha256": "62f7edb3c15dfe5db2e395e63e820531f70c26a0590ce7c59708cc5a3f8b713b"
+  },
+  "fabric-wax-ochre.pack.gz": {
+    "bytes": 34227,
+    "sha256": "3a497c032df64ce1824fd36ac807c887eaba1ad91980e064f3aef76c0828efdb"
+  },
+  "fabric-wax-river.pack.gz": {
+    "bytes": 10168,
+    "sha256": "96d2d34c4caef124f7a6216358a3d79427cdccb75423784a729b1e6ed7c6b293"
+  },
+  "fabric-wax-sunrise.pack.gz": {
+    "bytes": 7947,
+    "sha256": "58513612ad188f0089b53f877ebbfb850349b5e44d08f34aacae46de6b5d8c4a"
+  },
+  "headwear-cloth.pack.gz": {
+    "bytes": 2919,
+    "sha256": "2687e47516af602e25c0442e489f2e745659c2406ce818f4bcf288255ff5e010"
+  },
+  "headwear-fila-m08.pack.gz": {
+    "bytes": 36039,
+    "sha256": "be9166f553c24cd9917a070784c5ea4b78345960bcc80b2f51f775659caa143a"
+  },
+  "headwear-fila-m12.pack.gz": {
+    "bytes": 36106,
+    "sha256": "bf1bd88a2058ffa91a41fd8cfa12fbbedf8b1b13bdad02d21072f74efedaaa5a"
+  },
+  "headwear-kufi-m08.pack.gz": {
+    "bytes": 35874,
+    "sha256": "ded5c81ceba6c69cf094b909f72d825bb491f48e22a992e5b44f03b952e0a19a"
+  },
+  "headwear-kufi-m12.pack.gz": {
+    "bytes": 35618,
+    "sha256": "bea9e7ac29e6a6042740cf7bcf873e095156e328b0a47349a170eef038291a39"
+  },
+  "masks.pack.gz": {
+    "bytes": 105986,
+    "sha256": "9e711eb7f75ab43a9a7645629bd3bf753feba1f5fcd64807a777b487af39e283"
+  },
+  "meshes/kaftan-fila-m08.pack.gz": {
+    "bytes": 66975,
+    "sha256": "f3529754b24503381c233b8bc3fd0e03a6ff2251bdf7f40f3cef223efd420a2a"
+  },
+  "meshes/kaftan-fila-m12.pack.gz": {
+    "bytes": 67047,
+    "sha256": "470bf1d303ce1bb06fb0834b0b3f6048e795d9a7c8f9ec9137a9e59c220063f0"
+  },
+  "meshes/kitenge-shirt-f03.pack.gz": {
+    "bytes": 57057,
+    "sha256": "7a35e1d024c92811be6c0ba175b20214689e0bc7e8acee69f5eae1b8991ab042"
+  },
+  "meshes/kitenge-shirt-f17.pack.gz": {
+    "bytes": 56970,
+    "sha256": "cb460592b166f3fc87759dcb007fd65f3cb2547220c5f849b6409d9afe80d89c"
+  },
+  "meshes/kitenge-shirt-m01.pack.gz": {
+    "bytes": 42304,
+    "sha256": "c8c693d363115e39504f99e4ffd64b0266d3e70da667afb77fd06b6d30120c00"
+  },
+  "meshes/kitenge-shirt-m08.pack.gz": {
+    "bytes": 43139,
+    "sha256": "775f433fa8642b3ba3689d9fc79a477b5ff63e5a7a66d4ddfbbcf3246cd13268"
+  },
+  "occlusion-kaftan-fila-m08.pack.gz": {
+    "bytes": 4429,
+    "sha256": "e0ac0ad0f976f0858e6614b4de7d454c5d5aca0dc64ddb3fffad1fa4d8e52285"
+  },
+  "occlusion-kaftan-fila-m12.pack.gz": {
+    "bytes": 4024,
+    "sha256": "9c38388ebb154232028cb8c821f019970660954c7c67567515e5c4a9e8d48df2"
+  },
+  "occlusion-kitenge-shirt-f03.pack.gz": {
+    "bytes": 3262,
+    "sha256": "a213828e76d663069b0ea2d21d5201b315970a449e5256e31bd076bcf18f712a"
+  },
+  "occlusion-kitenge-shirt-f17.pack.gz": {
+    "bytes": 2377,
+    "sha256": "8619c0f8b9cf6e3029ed33f5907bf0f3cff03c27258cc2e7df115d1e3bb37e54"
+  },
+  "occlusion-kitenge-shirt-m01.pack.gz": {
+    "bytes": 2678,
+    "sha256": "a5a7d4d9a76937c0b68ed5c2eb154f5db5b7cf6d74c9c350999697137e79935b"
+  },
+  "occlusion-kitenge-shirt-m08.pack.gz": {
+    "bytes": 3647,
+    "sha256": "1f9df97cdbf33f3eb5f9c189d6dfb14d13a48414112198cd0b014009cb579094"
+  }
+}

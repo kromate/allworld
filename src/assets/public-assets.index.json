@@ -1,0 +1,552 @@
+{
+ "schema": 1,
+ "revision": "38f56173d155",
+ "assets": {
+  "/avatars/clips-f.pack.gz": {
+   "bytes": 322569,
+   "unpacked": 479664,
+   "sha256": "d3c14e87952fe87be9ea5f41d37465b7305a72cefe9421a7eef0dd9944dd6638",
+   "format": "nwpk",
+   "group": "movement"
+  },
+  "/avatars/clips-m.pack.gz": {
+   "bytes": 314487,
+   "unpacked": 468818,
+   "sha256": "a88966987d1c72c5c4603bea17ac0a9e7a593b3af20ec867b28dd14577db6f32",
+   "format": "nwpk",
+   "group": "movement"
+  },
+  "/avatars/f01.pack.gz": {
+   "bytes": 1222577,
+   "unpacked": 3039010,
+   "sha256": "f8b49d2899911f1ea304facf6e1ad88b0bd837778e0e0f5f6ac731b2c8ca18a7",
+   "format": "nwpk",
+   "group": "character"
+  },
+  "/avatars/f03.pack.gz": {
+   "bytes": 1293406,
+   "unpacked": 3373624,
+   "sha256": "659dc326bb8192aa9d3158573ac95ffa5b6d1a52a1293824e4682e91e47d25ec",
+   "format": "nwpk",
+   "group": "character"
+  },
+  "/avatars/f06.pack.gz": {
+   "bytes": 1022146,
+   "unpacked": 2519455,
+   "sha256": "a29b3955649ac28f076b54bf01e7f103bf944a7e6234ab9c7ab5ca0993579cb4",
+   "format": "nwpk",
+   "group": "character"
+  },
+  "/avatars/f08.pack.gz": {
+   "bytes": 1148074,
+   "unpacked": 2874132,
+   "sha256": "88d5e987039ebe114662eef366450756ee16a1df882013d16caeecee1b5d689c",
+   "format": "nwpk",
+   "group": "character"
+  },
+  "/avatars/f11.pack.gz": {
+   "bytes": 1120873,
+   "unpacked": 3009721,
+   "sha256": "e497c68a95c9b53d41fa551db7a2bc9f6fd19dad5464620906fa88f1fc7f5933",
+   "format": "nwpk",
+   "group": "character"
+  },
+  "/avatars/f12.pack.gz": {
+   "bytes": 1145582,
+   "unpacked": 2969003,
+   "sha256": "629dc301fbb50aa97238c8d7f9bed0ad7ff5ffc8a8a5136b84d147083f7cffad",
+   "format": "nwpk",
+   "group": "character"
+  },
+  "/avatars/f17.pack.gz": {
+   "bytes": 1220276,
+   "unpacked": 2999280,
+   "sha256": "81d2a9599f513acc0df6f599f6e69bac30cf3913c9d44e1370d145add19b9092",
+   "format": "nwpk",
+   "group": "character"
+  },
+  "/avatars/hair-analysis/hair-segmenter.pack.gz": {
+   "bytes": 695627,
+   "unpacked": 781618,
+   "sha256": "2628cf3ce5f695f604cbea2841e00befcaa3624bf80caf3664bef2656d59bf84",
+   "format": "raw",
+   "group": "photo"
+  },
+  "/avatars/hair/afro01.pack.gz": {
+   "bytes": 323099,
+   "unpacked": 371051,
+   "sha256": "c84baf6fc4b53447ec246e965047b250d263f0d608fb24157585a5dffdf928e7",
+   "format": "nwpk",
+   "group": "hair"
+  },
+  "/avatars/hair/braid01.pack.gz": {
+   "bytes": 201263,
+   "unpacked": 237072,
+   "sha256": "6873408c91ba2a1dc150eaa869ce4ac67b4eb3274a164c665902d0828f6e1acc",
+   "format": "nwpk",
+   "group": "hair"
+  },
+  "/avatars/hair/long01.pack.gz": {
+   "bytes": 186227,
+   "unpacked": 213158,
+   "sha256": "3981bb22e4aaa8b04d5bca5382bb9b9656f36b44bbfedfe7f284ac14db2be292",
+   "format": "nwpk",
+   "group": "hair"
+  },
+  "/avatars/identity/gnm-identity24.pack.gz": {
+   "bytes": 1286019,
+   "unpacked": 2193736,
+   "sha256": "3a8553ee5587bf4a6a6117cf2c7be50a51b925834c5b2dd0c39abdf5039e426a",
+   "format": "gnmw",
+   "group": "photo"
+  },
+  "/avatars/m01.pack.gz": {
+   "bytes": 1080181,
+   "unpacked": 2362244,
+   "sha256": "418d4f8c0b0adf4b69633346afc7b8c986d92f7e9463a0257ddf46f7fc6608a6",
+   "format": "nwpk",
+   "group": "character"
+  },
+  "/avatars/m04.pack.gz": {
+   "bytes": 1190242,
+   "unpacked": 2655286,
+   "sha256": "7b23d2ec2dc788f6bd4d7fb133c234d6b7d2505c28cae4d7c46b67d1d66b8202",
+   "format": "nwpk",
+   "group": "character"
+  },
+  "/avatars/m08.pack.gz": {
+   "bytes": 1036285,
+   "unpacked": 2313625,
+   "sha256": "87f18730ddafaf851ae5af709fc93bea3e90e069122612ea5d628e6542f35a61",
+   "format": "nwpk",
+   "group": "character"
+  },
+  "/avatars/m10.pack.gz": {
+   "bytes": 987112,
+   "unpacked": 2164220,
+   "sha256": "e41a47bacd1b647c55780ef196be6d6c753ca3385ec74bcab708b6347401e759",
+   "format": "nwpk",
+   "group": "character"
+  },
+  "/avatars/m12.pack.gz": {
+   "bytes": 916345,
+   "unpacked": 2075512,
+   "sha256": "1383c37bbd39f3a7793cb3ae7503eee10ee35725f3a0dc5f8ccccbd41885ed02",
+   "format": "nwpk",
+   "group": "character"
+  },
+  "/avatars/m15.pack.gz": {
+   "bytes": 827591,
+   "unpacked": 2378675,
+   "sha256": "7be8b6d9d9fdb7f886d3235b62aa2976106f747b3890068e11c8bdc3f3f05091",
+   "format": "nwpk",
+   "group": "character"
+  },
+  "/avatars/m18.pack.gz": {
+   "bytes": 708407,
+   "unpacked": 1837511,
+   "sha256": "53644e196121b2ac92c687b4622437ca0fca715e9d998806c9d61eb19bae7c35",
+   "format": "nwpk",
+   "group": "character"
+  },
+  "/packs/furniture.pack.gz": {
+   "bytes": 354561,
+   "unpacked": 1981031,
+   "sha256": "ebf20d228446295e3b072e4c7739e1a9758f1d55fae02952d0c81cbe80447d10",
+   "format": "nwpk",
+   "group": "room"
+  },
+  "/packs/interior-bedroom.pack.gz": {
+   "bytes": 1298770,
+   "unpacked": 1944840,
+   "sha256": "596424fd9069b2315eff25b8e669c3bd72581bb46c2d2a4ebbcf096de9826883",
+   "format": "nwpk",
+   "group": "room"
+  },
+  "/packs/interior-kitchen.pack.gz": {
+   "bytes": 532135,
+   "unpacked": 886500,
+   "sha256": "99beea1990275562ee270c67cb19c1bc993153d60201a27072c29eeadefbb558",
+   "format": "nwpk",
+   "group": "room"
+  },
+  "/packs/interior-props.pack.gz": {
+   "bytes": 1788913,
+   "unpacked": 2645685,
+   "sha256": "1961bdf28a70ab7a546f96d5641ca4bb23772cb24cda548bd06468097ab09257",
+   "format": "nwpk",
+   "group": "room"
+  },
+  "/packs/interior-seating.pack.gz": {
+   "bytes": 1787501,
+   "unpacked": 2493098,
+   "sha256": "3f8cca1acab2c00fbf6f367f8230d59628091b3e396e7704ffe3cb690241f94a",
+   "format": "nwpk",
+   "group": "room"
+  },
+  "/packs/interior-tables.pack.gz": {
+   "bytes": 408960,
+   "unpacked": 548266,
+   "sha256": "7ec1d5fb030205ce848467d202ab890976110d115f36a008477d898d455e09ca",
+   "format": "nwpk",
+   "group": "room"
+  },
+  "/packs/surfaces-low.pack.gz": {
+   "bytes": 151748,
+   "unpacked": 154099,
+   "sha256": "dbc23bf60d426ab39f92ef99db1fa8c60c24fe70fdd39231d3bf85b7c9e65963",
+   "format": "nwpk",
+   "group": "street"
+  },
+  "/packs/surfaces-standard.pack.gz": {
+   "bytes": 1564923,
+   "unpacked": 1569838,
+   "sha256": "da39c93b0e62b220b25dbda0b3808acdb7515a264d421e491f59fe60bd321466",
+   "format": "nwpk",
+   "group": "street"
+  },
+  "/packs/vegetation.pack.gz": {
+   "bytes": 303435,
+   "unpacked": 303372,
+   "sha256": "459c8f82648cadb21482e7d3ecd70b59378433537c14c9908e4e89bfb293435a",
+   "format": "nwpk",
+   "group": "street"
+  },
+  "/regions/manchester.pack.gz": {
+   "bytes": 20140,
+   "unpacked": 241782,
+   "sha256": "dbb15b51c8b6ec87e9e613621b380f0fb9937e8720fa3ec3d1d03127a34a5d17",
+   "format": "nwpk",
+   "group": "street"
+  },
+  "/regions/nigeria.pack.gz": {
+   "bytes": 297737,
+   "unpacked": 3739775,
+   "sha256": "9e43795646f39275d392f96a5d515da883859b1173def520e83efbcd4ba8db41",
+   "format": "nwpk",
+   "group": "street"
+  },
+  "/wardrobe/basis-f01.pack.gz": {
+   "bytes": 125560,
+   "unpacked": 126997,
+   "sha256": "8f60010028ffc762a0a5f7d418122d54709c83104850bba737c068deaa79a282",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/basis-f03.pack.gz": {
+   "bytes": 95396,
+   "unpacked": 97864,
+   "sha256": "ad562120f147a315daf09b6de92990af12b895a9972187d508c919cefbab173b",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/basis-f06.pack.gz": {
+   "bytes": 118092,
+   "unpacked": 119271,
+   "sha256": "ab046d146f885c9c95be04b64e8ce673a83c97bb6f37347a8e6958e1f911bd5a",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/basis-f08.pack.gz": {
+   "bytes": 102753,
+   "unpacked": 104669,
+   "sha256": "b9c028e3793228a94c234bbb96c8845f10d2d3a649fd94cd435cc1ad4fa3f235",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/basis-f11.pack.gz": {
+   "bytes": 112275,
+   "unpacked": 114096,
+   "sha256": "2f5ffd18f04d6cf578c324a88b24ad8d17757abdf3b4d881147d2d6890906a72",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/basis-f12.pack.gz": {
+   "bytes": 139532,
+   "unpacked": 140619,
+   "sha256": "600e47116da530bd39b65b3dcc040f3282a835e34d8fe3f73cca409df5c18181",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/basis-f17.pack.gz": {
+   "bytes": 107688,
+   "unpacked": 109311,
+   "sha256": "a78b1bc97dae977b07fd9b7d1ebcbfaf9cb5a50afa71ad230071da89890dcfdb",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/basis-m01.pack.gz": {
+   "bytes": 95857,
+   "unpacked": 97753,
+   "sha256": "b6fc09e4351850786e1f72eaf10788183ff0a232125a8b3a15c0a37d5ea31974",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/basis-m04.pack.gz": {
+   "bytes": 171538,
+   "unpacked": 172105,
+   "sha256": "f5f29792f72a49f384567e8611a941011bc8ce5e87da3a2ae2f47d0a9bc5aabf",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/basis-m08.pack.gz": {
+   "bytes": 137419,
+   "unpacked": 138350,
+   "sha256": "c97eb76e79464ee156fbe4642ffb9d4ac0eae8d8c38b6c76d2b0e72b3d2ba012",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/basis-m10.pack.gz": {
+   "bytes": 146280,
+   "unpacked": 147328,
+   "sha256": "5bffb3cfffa109eba43dda6271cb50bd10c90a27aded2618ddf131c58dfcc1fb",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/basis-m12.pack.gz": {
+   "bytes": 162256,
+   "unpacked": 163357,
+   "sha256": "94e4a9e2fd378857a0a7ffcbde87a44b127d2f143a39e6ed8697c5a600c7f44e",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/basis-m15.pack.gz": {
+   "bytes": 138425,
+   "unpacked": 139283,
+   "sha256": "8dfab3c66966985991c8b240aea8c1f78c91a13f4522bd8544752415e083ffdf",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/basis-m18.pack.gz": {
+   "bytes": 156979,
+   "unpacked": 157745,
+   "sha256": "18fc54395e6f522e4a19b942d7003a3d07b4369de397732e79d95dd5145eeccc",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/donor-f01.pack.gz": {
+   "bytes": 35532,
+   "unpacked": 40111,
+   "sha256": "9130172c33d88b59e6125f4dafc0c51d53de2efde0e7cd8faef16ccf7a26e0cb",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/donor-m15.pack.gz": {
+   "bytes": 27347,
+   "unpacked": 30839,
+   "sha256": "5fd27da929431ccb97ba6fa8e44322a63249cc436b0092c971ffeadda548bf24",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/fabric-city-navy.pack.gz": {
+   "bytes": 26190,
+   "unpacked": 27100,
+   "sha256": "ac744b66c8af0e37f4dd91efa96f9da05f5108eee3f9e15f45ea5011b4a9c48e",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/fabric-coastal-linen.pack.gz": {
+   "bytes": 35205,
+   "unpacked": 36330,
+   "sha256": "56376d59b0bc2fe8f1d676533380afb84b480d2464a420b1f2a4a804a592c1b9",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/fabric-denim-weekend.pack.gz": {
+   "bytes": 40993,
+   "unpacked": 41974,
+   "sha256": "ee24b05247abf6787363e152c28b89b94c08c9e1001bbda4c01a98191a76d8e9",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/fabric-everyday-cream.pack.gz": {
+   "bytes": 36161,
+   "unpacked": 37276,
+   "sha256": "fca46ff86e038b93e6fba2bac900b45a1df1f9223b00e28c9040071c1a5afdc1",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/fabric-indigo-dash.pack.gz": {
+   "bytes": 4581,
+   "unpacked": 5484,
+   "sha256": "cea4e7f46d9eca09608f19bfa7f8e9a9ce1087a1c36b3537f0ec4d19d98ecf15",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/fabric-marigold-cotton.pack.gz": {
+   "bytes": 28568,
+   "unpacked": 29881,
+   "sha256": "d98f04f23430ee134906181dd9fb7235cc7db5357975bca343b6f187602b6acf",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/fabric-olive-casual.pack.gz": {
+   "bytes": 21748,
+   "unpacked": 22705,
+   "sha256": "b47886295d89a9dd0868e518efcfca69c1f14aa88215daebe65ac4678a7ac3cc",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/fabric-wax-coral.pack.gz": {
+   "bytes": 22843,
+   "unpacked": 23657,
+   "sha256": "ed66860404a11c5c0e3265d44f54b235835cfbcf7b36b4973d355b2be548b310",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/fabric-wax-indigo.pack.gz": {
+   "bytes": 26320,
+   "unpacked": 27119,
+   "sha256": "7123badd940fb812eb7cfb5457dde53b6bc081429ef5abaf67ec68cb1c6185ff",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/fabric-wax-ochre.pack.gz": {
+   "bytes": 34227,
+   "unpacked": 35090,
+   "sha256": "2f57bd663f62a86d111bd8962a17c3e532920278f86143a20a6ec4b2a75a3246",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/fabric-wax-river.pack.gz": {
+   "bytes": 10168,
+   "unpacked": 11100,
+   "sha256": "1d2489021e36888c0dcb639b2a0d3beb7655f7f6e84ca09b5510ca48191620fb",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/fabric-wax-sunrise.pack.gz": {
+   "bytes": 7947,
+   "unpacked": 8865,
+   "sha256": "0e9f40bee493c1b2af1b14f0825d1f73a4ac908171c99e1f56d32c6f383c70cc",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/headwear-cloth.pack.gz": {
+   "bytes": 2919,
+   "unpacked": 4160,
+   "sha256": "ffb89040963f661f390aebb401d47e18717bf0a693e616e771fbe629d2dabd93",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/headwear-fila-m08.pack.gz": {
+   "bytes": 36039,
+   "unpacked": 96655,
+   "sha256": "6be31992883b7ed9150e17347bec1277544d9282909caf982776f9112fad9acd",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/headwear-fila-m12.pack.gz": {
+   "bytes": 36106,
+   "unpacked": 97239,
+   "sha256": "e17a06bc4e1eee0ecec0ba6a17bcc0d1d3840eeed212865cad4fd3f94b7f8515",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/headwear-kufi-m08.pack.gz": {
+   "bytes": 35874,
+   "unpacked": 96659,
+   "sha256": "2e1b3bfc214327107008a411891759d6be2435663bc38688a754cc5fee1bd438",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/headwear-kufi-m12.pack.gz": {
+   "bytes": 35618,
+   "unpacked": 97235,
+   "sha256": "d18b46fa8c52407e251857c830792040790905c7c790db67726192319bfc6588",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/masks.pack.gz": {
+   "bytes": 105986,
+   "unpacked": 145467,
+   "sha256": "392c3d2a2ade11091314dc81d00f334559c8847bfdc8f6f1255b6071fae1ad1e",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/meshes/kaftan-fila-m08.pack.gz": {
+   "bytes": 66975,
+   "unpacked": 136313,
+   "sha256": "d1037e6a41560f4e237e25507094742a566bd7fdc89f6e2a97d6a154848c1b92",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/meshes/kaftan-fila-m12.pack.gz": {
+   "bytes": 67047,
+   "unpacked": 136301,
+   "sha256": "3df29b0dc4a9d8f2b76391ab7bfc6a94bdeab3611cf5208c42f7b0ea39c45d88",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/meshes/kitenge-shirt-f03.pack.gz": {
+   "bytes": 57057,
+   "unpacked": 105590,
+   "sha256": "b4373277dfcdf2ed87b756ae6e0fe6bccd57a3b14c6511dac8fa180d6887f19d",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/meshes/kitenge-shirt-f17.pack.gz": {
+   "bytes": 56970,
+   "unpacked": 105606,
+   "sha256": "f536d290fecc4a37d66541a3573fcf45e61738efc9bf24b5d147e548557eadac",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/meshes/kitenge-shirt-m01.pack.gz": {
+   "bytes": 42304,
+   "unpacked": 81261,
+   "sha256": "7bf7b5123332622bb130e5149aad9920f893f5048d9aca50e49dae99934868e7",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/meshes/kitenge-shirt-m08.pack.gz": {
+   "bytes": 43139,
+   "unpacked": 82521,
+   "sha256": "3f782f4e8e96baa903f6dcf2a52f22772f371569a0c054b7b2bf18936f37b441",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/occlusion-kaftan-fila-m08.pack.gz": {
+   "bytes": 4429,
+   "unpacked": 5486,
+   "sha256": "216941cd607f29637fe3a611720dac16b2150bd65f9781e077c3bda32cdca16e",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/occlusion-kaftan-fila-m12.pack.gz": {
+   "bytes": 4024,
+   "unpacked": 4922,
+   "sha256": "5d001ffc3562818367de167672d292384b107fe60d9774fe3ae8d4f745c0c6f2",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/occlusion-kitenge-shirt-f03.pack.gz": {
+   "bytes": 3262,
+   "unpacked": 4404,
+   "sha256": "8ca96d76015bd6a1a441fd24b9dab83d8c98923b3a09fee9790b81c9834e65ef",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/occlusion-kitenge-shirt-f17.pack.gz": {
+   "bytes": 2377,
+   "unpacked": 3817,
+   "sha256": "de021daf3bddb95386d7118daa1d9a6cb76c418c2622ab2048f16edfd3db86d3",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/occlusion-kitenge-shirt-m01.pack.gz": {
+   "bytes": 2678,
+   "unpacked": 4006,
+   "sha256": "55301451237ab325a336deb1381edf266af726b07878797082294446e35820b6",
+   "format": "nwpk",
+   "group": "clothes"
+  },
+  "/wardrobe/occlusion-kitenge-shirt-m08.pack.gz": {
+   "bytes": 3647,
+   "unpacked": 4805,
+   "sha256": "e828bb27fbcffd4316ab714be01bd054a37ce99a5174dcf19261e0c602d928e0",
+   "format": "nwpk",
+   "group": "clothes"
+  }
+ }
+}

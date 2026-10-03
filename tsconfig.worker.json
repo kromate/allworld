@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["node"]
+  },
+  "include": ["cloudflare-env.d.ts", "service/cloudflare/worker.ts", "env.d.ts"],
+  "exclude": []
+}

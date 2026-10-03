@@ -1,0 +1,21 @@
+/* Shared by the people, meetup and community windows (pulled in as a scoped style by each page). */
+
+/* On touch screens every button in the window, including the small ones, is at least 40 px. */
+@media (pointer: coarse) {
+  .people-window :deep(.btn.sm) { min-height: 40px; }
+  .people-window :deep(.btn.icon.sm) { width: 40px; }
+}
+
+/* Long names and notes never push the window sideways. */
+.people-window :deep(.wrap-any) { overflow-wrap: anywhere; min-width: 0; }
+.people-window :deep(.chip.long) { max-width: 100%; min-width: 0; }
+.people-window :deep(.chip.long > .chip-text) { overflow: hidden; text-overflow: ellipsis; }
+
+.people-window :deep(.plain-list) { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
+.people-window :deep(.section-head) { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.people-window :deep(.section-head h2) { flex: 1 1 auto; font-size: 1rem; }
+.people-window :deep(.quote) { padding: 8px 11px; border-radius: 10px; background: rgba(28, 26, 36, 0.045); border-left: 3px solid var(--line-strong); font-size: 0.9rem; color: var(--ink-2); overflow-wrap: anywhere; white-space: pre-line; }
+.people-window :deep(a.btn) { text-decoration: none; }
+
+/* A button inside a stacked notice keeps its own width instead of stretching across it. */
+.people-window :deep(.notice.stack > .btn) { align-self: flex-start; }
