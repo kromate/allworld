@@ -469,7 +469,8 @@ export function buildHomeScene(spec: InteriorSpec & { plan: HomePlan }, hooks: H
         gridCache = null
       }))
     },
-    highlight(key) {
+    highlight(key, feedback) {
+      outline.material.color.set(feedback === 'invalid' ? '#e4584a' : feedback === 'valid' ? '#3fae7a' : '#ffb020')
       const entryOf = key ? placed.get(key) : undefined
       outline.visible = Boolean(entryOf)
       if (!entryOf) return

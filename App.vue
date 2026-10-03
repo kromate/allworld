@@ -365,7 +365,7 @@ onBeforeUnmount(() => { stopBuildChecks?.(); releaseCounts?.(); window.removeEve
   <div v-else ref="game" class="game" :class="{ 'window-open': panelOpen, playing: !panelOpen }">
     <!-- Transport: render the vehicle panel with `<template #transport>` and pass `:seated`; see docs/ux/GAMEPLAY-HUD-030.md. -->
     <WorldStage :dimmed="panelOpen" :suspended="suspendWorld" :sheet="half" :menu-open="moreOpen" :menu-badge="waiting" :seated="Boolean(vehicles.seated.value)" @menu="moreOpen = !moreOpen">
-      <template #transport="{ overlayOpen: transportBlocked }"><TransportHud compact-driver :input-blocked="transportBlocked" /></template>
+      <template #transport="{ overlayOpen: transportBlocked }"><TransportHud compact-driver :input-blocked="transportBlocked" @drive-intent="moreOpen = false; router.push('/')" @boarded="moreOpen = false; router.push('/')" /></template>
     </WorldStage>
 
     <!-- Player cluster: portrait (opens the account menu), coins, meters. Names, places and counts are on demand. -->

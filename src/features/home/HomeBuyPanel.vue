@@ -2,12 +2,25 @@
 // Buy mode: furniture. Look through the catalogue, place a piece in the room, or put coins on one
 // that is not free. Free pieces are placed without paying; a bought piece waits in storage until it
 // is placed; a price is only ever the service's quote, shown before anything is taken.
-import { computed, ref } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import type { Studio } from './homeStudio.ts'
 
 const props = defineProps<{ studio: Studio; /** The character is in the home, so a piece can be put in a room. */ canPlace: boolean; checking?: boolean }>()
 const emit = defineEmits<{ notice: [text: string, tone: 'info' | 'good' | 'bad'] }>()
-const { state, dirty, selectedItem, itemProblems, busy } = props.studio
+const { state, dirty, selectedItem, itemProblems, busy, placing, canUndoPlacement, placementProblems, placementNotice } = props.studio
+
+const selectedCard = ref<HTMLElement | null>(null)
+watch(() => state.selected, (key, previous, onCleanup) => {
+  if (!key || key === previous) return
+  let active = true
+  onCleanup(() => { active = false })
+  void nextTick(() => {
+    const card = selectedCard.value
+    if (active && state.selected === key && props.canPlace && !props.checking && !props.studio.modal.value && card && !card.closest('[inert]')) {
+      card.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' })
+    }
+  })
+})
 
 const group = ref('all')
 const filter = ref<'all' | 'free' | 'owned' | 'sale'>('all')
@@ -41,8 +54,19 @@ const spare = (model: string): number | null => props.studio.spare(model)
 
 <template>
   <div v-if="state.catalog && state.estate" class="stack">
+    <details v-if="state.draft?.items.length" class="disclosure arrange" :open="canPlace">
+      <summary>Arrange your furniture <span class="chip num">{{ state.draft.items.length }}</span></summary>
+      <p class="muted small">Choose a piece already in your home to move or turn it. Rearranging costs no coins.</p>
+      <ul class="stored">
+        <li v-for="item in state.draft.items" :key="item.key" class="list-row">
+          <button class="btn ghost sm grow piece-name" type="button" :aria-pressed="state.selected === item.key" @click="studio.select(item.key)">{{ studio.label(item.model) }} <span class="muted small">{{ state.selected === item.key ? 'Selected' : 'Move' }}</span><span v-if="item.productId" class="chip sky">Real product</span></button>
+        </li>
+      </ul>
+    </details>
+
+
     <!-- The piece in hand. -->
-    <section v-if="selectedItem" class="card tint-amber stack tight" aria-label="Piece in hand">
+    <section v-if="selectedItem" ref="selectedCard" class="card tint-amber stack tight" aria-label="Piece in hand">
       <div class="row">
         <strong class="truncate grow">{{ studio.label(selectedItem.model) }}</strong>
         <button class="btn ghost sm danger" type="button" @click="studio.putAway(selectedItem.key)">Put away</button>
@@ -59,6 +83,16 @@ const spare = (model: string): number | null => props.studio.spare(model)
           <option v-for="room in studio.state.home!.building.plan.rooms" :key="room.id" :value="room.id">{{ room.id === 'r1' ? 'Main room' : `${room.kind} ${room.id}` }}</option>
         </select>
       </div>
+      <p class="muted small">Drag this piece in the room to place it. Use the arrows or Turn as an alternative.</p>
+      <div class="row wrap">
+        <button v-if="placing" class="btn sm" type="button" @click="studio.finishPlacement()">Place here</button>
+        <button v-if="placing" class="btn sm" type="button" @click="studio.cancelPlacement()">Cancel placement</button>
+        <button class="btn sm" type="button" :disabled="!canUndoPlacement" @click="studio.undoPlacement()">Undo arrangement</button>
+      </div>
+      <p v-if="placing && placementProblems.length" class="notice coral small" role="status">{{ placementProblems[0] }}</p>
+      <p v-else-if="placing" class="notice leaf small" role="status">Release to keep this placement in your draft.</p>
+      <p v-if="placementNotice" class="muted small" role="status">{{ placementNotice }}</p>
+      <p v-if="itemProblems.length" class="notice coral small" role="status">{{ itemProblems[0] }}</p>
       <p class="muted tiny">Tap the floor to move it there. <RouterLink :to="selectedItem.productId ? `/market/p/${selectedItem.productId}` : `/market?model=${selectedItem.model}`">{{ selectedItem.productId ? 'See this product' : 'Find real ones like this' }}</RouterLink></p>
     </section>
 
@@ -101,15 +135,6 @@ const spare = (model: string): number | null => props.studio.spare(model)
     </ul>
     <p v-if="!shown.length" class="muted small">Nothing matches. {{ filter === 'owned' ? 'Pieces you buy wait here until you place them.' : 'Try another kind or clear the search.' }}</p>
 
-    <details v-if="state.draft?.items.length" class="disclosure">
-      <summary>In the rooms <span class="chip num">{{ state.draft.items.length }}</span></summary>
-      <ul class="stored">
-        <li v-for="item in state.draft.items" :key="item.key" class="list-row">
-          <button class="btn ghost sm grow piece-name" type="button" :aria-pressed="state.selected === item.key" @click="studio.select(item.key)">{{ studio.label(item.model) }}<span v-if="item.productId" class="chip sky">Real product</span></button>
-          <button class="btn ghost sm danger" type="button" :aria-label="`Put away ${studio.label(item.model)}`" @click="studio.putAway(item.key)">Put away</button>
-        </li>
-      </ul>
-    </details>
 
     <details v-if="stored.length" class="disclosure">
       <summary>In storage <span class="chip num">{{ stored.reduce((total, entry) => total + (spare(entry.model) ?? 0), 0) }}</span></summary>
@@ -134,7 +159,7 @@ const spare = (model: string): number | null => props.studio.spare(model)
     <div v-else-if="dirty" class="savebar" role="status">
       <span class="grow small">Unsaved changes</span>
       <button class="btn sm" type="button" :disabled="state.saving" @click="studio.discard()">Discard</button>
-      <button class="btn primary" type="button" :disabled="state.saving || itemProblems.length > 0" @click="studio.save()">{{ state.saving ? 'Saving…' : 'Save home' }}</button>
+      <button class="btn primary" type="button" :disabled="state.saving || placing || itemProblems.length > 0" @click="studio.save()">{{ state.saving ? 'Saving…' : 'Save home' }}</button>
     </div>
     <p v-if="state.saveError" class="notice coral" role="alert">{{ state.saveError }}</p>
   </div>
@@ -142,6 +167,8 @@ const spare = (model: string): number | null => props.studio.spare(model)
 </template>
 
 <style scoped>
+.arrange .stored { max-height: 180px; overflow-y: auto; overscroll-behavior: contain; }
+.arrange .piece-name { min-height: 44px; }
 .controls { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
 .controls .btn.icon { width: 44px; min-height: 44px; }
 .room-pick { width: auto; min-height: 44px; }

@@ -1,7 +1,9 @@
 // The world engine: renderer, camera, input, the local avatar, remote avatars and the two scene
 // kinds (street district and interior). Vue talks to it through methods and the events below.
 import * as THREE from 'three'
-import type { HomeId, RoomKey, MemberId } from '../shared/ids.ts'
+import { homeFurniturePointerFor } from './homeFurniturePointer.ts'
+import type { HomeFurniturePointer } from './homeFurniturePointer.ts'
+import type { HomeId, RoomKey, MemberId, VehicleId } from '../shared/ids.ts'
 import type { Vec2 } from '../shared/geo.ts'
 import { FootObstacleGrid, moveFoot, PERSON_RADIUS, vehicleFootObstacle } from '../shared/worldCollision.ts'
 import { neighbouringDistricts } from '../shared/geo.ts'
@@ -40,7 +42,8 @@ import { STARTER_PLACES } from '../shared/places.ts'
 import { districtIdOf } from '../shared/geo.ts'
 import type { MinimapOptions } from './minimap.ts'
 import type { VehicleSnapshot, VehicleSelf, VehicleControls, VehicleEvent } from '../shared/vehicles.ts'
-import { NEUTRAL_CONTROLS } from '../shared/vehicles.ts'
+import { NEUTRAL_CONTROLS, VEHICLE_RULES } from '../shared/vehicles.ts'
+import { detourAhead, DETOUR_REPLANS, standingNear } from './footDetour.ts'
 import { VehicleScene } from './vehicles/scene.ts'
 import { vehicleDistrictContext } from './vehicles/provenance.ts'
 
@@ -67,6 +70,8 @@ export interface EngineEvents {
   rescued(): void
   gesture?(kind: BroadcastGesture): void
   vehicleInput?(intent: VehicleControls): void
+  /** Identifies a drawn vehicle only; approach and boarding remain service-checked. */
+  vehicleHit?(vehicleId: VehicleId): void
 }
 
 export interface EngineStatus { fps: number; quality: Quality; shadows: boolean; pixelRatio: number; triangles: number; degraded: boolean; drawCalls?: number; sceneBuildMs?: number; regionDescription?: string | null }
@@ -240,6 +245,7 @@ export class WorldEngine {
   private inputLocked = false
   private walkWhileLocked = false
   /** Home planning: taps and drags on the room are heard while the window is open, keys, the stick and walking are not. */
+  private furnitureDrag: { id: number; owner: HomeFurniturePointer; x: number; y: number; moved: boolean } | null = null
   private editPointer = false
   /** A home price or dialog is open over the room: no tap, drag, pinch, wheel or button moves the camera or the editor. */
   private sceneFrozen = false
@@ -342,6 +348,7 @@ export class WorldEngine {
   private wake(): void { this.activeUntil = Math.max(this.activeUntil, performance.now() + 250); this.governor?.invalidate() }
 
   private pauseMovement(preserveRoute = false): void {
+    this.dropGestures?.()
     this.neutralVehicleInput(); this.keys.clear(); this.joystick = { x: 0, z: 0 }
     if (!preserveRoute) this.stop()
     this.moving = false; this.actualSpeed = 0
@@ -953,7 +960,9 @@ export class WorldEngine {
 
   /** The HUD supplies its global gate separately from its seated foot hold. */
   setVehicleInputBlocked(blocked: boolean): void {
+    const changed = this.vehicleInputBlocked !== blocked
     this.vehicleInputBlocked = blocked
+    if (blocked && changed) this.dropGestures?.()
     if (blocked) { this.keys.clear(); this.joystick = { x: 0, z: 0 }; this.neutralVehicleInput() }
   }
 
@@ -1023,7 +1032,7 @@ export class WorldEngine {
     }
   }
 
-  async setInteriorItems(items: PlacedItem[]): Promise<void> { await this.interior?.setItems(items) }
+  async setInteriorItems(items: PlacedItem[]): Promise<void> { await this.interior?.setItems(items); this.wake() }
   /** A home's rooms changed: redraw them where they stand. Nobody is moved; a character left without floor is the service's to refuse. */
   setInteriorPlan(plan: HomePlan): void { this.interior?.setPlan?.(plan); this.wake() }
   setInteriorGhost(ghost: HomeGhost | null): void { this.interior?.setGhost?.(ghost); this.wake() }
@@ -1035,7 +1044,7 @@ export class WorldEngine {
     this.distance = on ? 13 : 3.5
     this.wake()
   }
-  highlightItem(key: string | null): void { this.interior?.highlight(key) }
+  highlightItem(key: string | null): void { this.interior?.highlight(key, homeFurniturePointerFor(this)?.feedback()); this.wake() }
   setEditing(editing: boolean): void { this.editing = editing; if (!editing) this.interior?.highlight(null) }
   /** Hear taps and drags on the room while input is locked (home planning with its window open). Keys, the stick and walking stay locked. */
   setEditPointer(on: boolean): void { if (on !== this.editPointer) { this.editPointer = on; this.dropGestures?.() } }
@@ -1167,6 +1176,27 @@ export class WorldEngine {
     for (const vehicle of this.footVehicles) this.footGrid.set(`vehicle:${vehicle.id}`, vehicleFootObstacle(vehicle.kind, vehicle.pos, vehicle.heading))
   }
 
+  /** The walk-rounds given to one route: its added turns, the leg last looked at, and how many it has had. A new route starts a new record. */
+  private detour: { path: Vec2[] | null; turns: Set<Vec2>; leg: Vec2 | null; plans: number } = { path: null, turns: new Set(), leg: null, plans: 0 }
+
+  /** Put a way round standing vehicles in front of the route. False when none is needed, none exists, or the route has had its share. */
+  private planDetour(): boolean {
+    const navigator = this.navigator
+    if (this.interior || !navigator || !this.path.length || this.detour.plans >= DETOUR_REPLANS) return false
+    // Standing bodies only. A moving vehicle is left to moveFoot, frame by frame.
+    const standing = this.footVehicles.filter(vehicle => Math.abs(vehicle.speed) < VEHICLE_RULES.stoppedSpeed && (vehicle.phase === 'parked' || vehicle.phase === 'boarding'))
+      .map(vehicle => vehicleFootObstacle(vehicle.kind, vehicle.pos, vehicle.heading))
+    if (!standingNear(this.localPos, standing)) return false
+    this.detour.leg = this.path[0]!
+    const around = detourAhead(this.localPos, this.path, standing, point => navigator.standable(point))
+    if (!around) return false
+    this.path.splice(0, around.replaces, ...around.points)
+    for (const turn of around.points.slice(0, around.turns)) this.detour.turns.add(turn)
+    this.detour.plans++; this.detour.leg = this.path[0] ?? null
+    if (this.homeRoute) this.drawHomeRoute()
+    return true
+  }
+
   private stepLocal(delta: number): void {
     if (this.vehicleSelf?.seat) { this.driveVehicleKeys(); return }
     if (this.localMemberId && this.vehicles.isTransitioning(this.localMemberId)) return
@@ -1193,14 +1223,22 @@ export class WorldEngine {
       moveX = nx * cos + nz * sin
       moveZ = -nx * sin + nz * cos
     } else if ((!this.inputLocked || this.walkWhileLocked) && this.path.length) {
-      while (this.path.length && Math.hypot(this.path[0]!.x - this.localPos.x, this.path[0]!.z - this.localPos.z) < 0.18) this.path.shift()
+      if (this.detour.path !== this.path) this.detour = { path: this.path, turns: new Set(), leg: null, plans: 0 }
+      while (this.path.length && Math.hypot(this.path[0]!.x - this.localPos.x, this.path[0]!.z - this.localPos.z) < 0.18) {
+        if (this.detour.turns.delete(this.path.shift()!)) { this.lastSentMoving = true; this.events.local({ ...this.localPos }, this.heading, true) }
+      }
       if (!this.path.length) { this.clearHomeRoute(); this.marker.visible = false; this.moving = false; this.local?.setMotion('idle'); this.actualSpeed = 0; this.local?.setTravelSpeed(0); return }
+      if (this.path[0] !== this.detour.leg) this.planDetour()
       const next = this.path[0]!
       const gap = Math.hypot(next.x - this.localPos.x, next.z - this.localPos.z)
       moveX = (next.x - this.localPos.x) / gap
       moveZ = (next.z - this.localPos.z) / gap
       // Long routes are jogged so crossing a district does not take minutes.
-      const remaining = gap + (this.path.length - 1) * 20
+      let remaining = gap
+      for (let index = 1; index < this.path.length; index++) {
+        const from = this.path[index - 1]!
+        remaining += this.detour.turns.has(from) ? Math.hypot(this.path[index]!.x - from.x, this.path[index]!.z - from.z) : 20
+      }
       speed = Math.min(MAX_SPEED, (remaining > 30 ? SPRINT_SPEED : WALK_SPEED) * this.pace, gap / Math.max(delta, 0.001))
     }
     const oldPosition = { ...this.localPos }
@@ -1218,6 +1256,8 @@ export class WorldEngine {
       let turn = targetHeading - this.heading
       turn = Math.atan2(Math.sin(turn), Math.cos(turn))
       this.heading += turn * Math.min(1, delta * 12)
+      this.heading = Math.atan2(Math.sin(this.heading), Math.cos(this.heading))
+      if (blocked && this.stuckFor === 0 && this.path.length) this.planDetour()
       // A route that keeps hitting a wall is abandoned rather than left grinding against it.
       this.stuckFor = blocked ? this.stuckFor + delta : 0
       if (blocked && this.path.length && this.stuckFor > 0.7) { this.path = []; this.marker.visible = false }
@@ -1249,25 +1289,38 @@ export class WorldEngine {
       return Boolean(target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.tagName === 'SELECT' || target.isContentEditable))
     }
     listen(window, 'keydown', event => {
-      if ((this.vehicleSelf?.seat ? this.vehicleInputBlocked : this.inputLocked) || typing(event) || event.metaKey || event.ctrlKey || event.altKey) return
+      if (this.furnitureDrag || (this.vehicleSelf?.seat ? this.vehicleInputBlocked : this.inputLocked) || typing(event) || event.metaKey || event.ctrlKey || event.altKey) return
       if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.code) && (!this.inputLocked || Boolean(this.vehicleSelf?.seat))) event.preventDefault()
       this.keys.add(event.code); if (this.vehicleSelf?.seat) this.driveVehicleKeys(); this.wake()
       if (event.code === 'BracketLeft') this.azimuth -= 0.3
       if (event.code === 'BracketRight') this.azimuth += 0.3
     })
     listen(window, 'keyup', event => { const held = this.keys.delete(event.code); if (this.vehicleSelf?.seat) this.driveVehicleKeys(); if (held && !this.inputLocked) this.wake() })
-    listen(window, 'blur', () => { this.neutralVehicleInput(); this.keys.clear(); this.joystick = { x: 0, z: 0 }; this.stop() })
+    listen(window, 'blur', () => { this.dropGestures?.(); this.neutralVehicleInput(); this.keys.clear(); this.joystick = { x: 0, z: 0 }; this.stop() })
 
     const pointers = new Map<number, { x: number; y: number }>()
     let down: { x: number; y: number; at: number; moved: number } | null = null
     let pinch = 0
     // A gesture that began before the lock (a window opened, a price appeared, planning ended) ends here, capture and all.
     this.dropGestures = () => {
+      const drag = this.furnitureDrag; this.furnitureDrag = null
+      drag?.owner.cancel()
       for (const id of [...pointers.keys()]) { try { if (this.canvas.hasPointerCapture(id)) this.canvas.releasePointerCapture(id) } catch { /* the pointer is already gone */ } }
       pointers.clear(); down = null; pinch = 0
     }
     listen(this.canvas, 'pointerdown', event => {
-      if (!this.pointerOpen()) return
+      if (this.furnitureDrag) { this.dropGestures?.(); return }
+      if (!this.cameraOpen()) return
+      if (this.interior && this.editPointer && pointers.size === 0 && event.isPrimary && event.button === 0) {
+        const owner = homeFurniturePointerFor(this), point = this.furniturePoint(event.clientX, event.clientY)
+        const key = point ? this.interior.itemAt(this.raycaster) : null
+        if (owner && key && point && owner.begin(key, point, event.pointerId)) {
+          this.furnitureDrag = { id: event.pointerId, owner, x: event.clientX, y: event.clientY, moved: false }
+          this.canvas.setPointerCapture(event.pointerId)
+          pointers.set(event.pointerId, { x: event.clientX, y: event.clientY })
+          event.preventDefault(); this.wake(); return
+        }
+      }
       this.wake()
       this.canvas.setPointerCapture(event.pointerId)
       pointers.set(event.pointerId, { x: event.clientX, y: event.clientY })
@@ -1275,9 +1328,19 @@ export class WorldEngine {
       if (pointers.size === 2) { const [a, b] = [...pointers.values()]; pinch = Math.hypot(a!.x - b!.x, a!.y - b!.y); down = null }
     })
     listen(this.canvas, 'pointermove', event => {
+      const drag = this.furnitureDrag
+      if (drag?.id === event.pointerId) {
+        if (!this.pointerOpen() || !drag.owner.owns(event.pointerId)) { this.dropGestures?.(); return }
+        drag.moved ||= Math.hypot(event.clientX - drag.x, event.clientY - drag.y) >= 6
+        if (drag.moved) {
+          const point = this.furniturePoint(event.clientX, event.clientY)
+          if (point) drag.owner.move(point, event.pointerId)
+        }
+        event.preventDefault(); this.wake(); return
+      }
       const previous = pointers.get(event.pointerId)
       if (!previous) return
-      if (!this.pointerOpen()) { this.dropGestures?.(); return }
+      if (!this.cameraOpen()) { this.dropGestures?.(); return }
       const dx = event.clientX - previous.x, dy = event.clientY - previous.y
       pointers.set(event.pointerId, { x: event.clientX, y: event.clientY })
       if (pointers.size === 2) {
@@ -1294,28 +1357,51 @@ export class WorldEngine {
       this.polar = THREE.MathUtils.clamp(this.polar - dy * 0.005, 0.45, 1.48)
     })
     const release = (event: PointerEvent): void => {
+      const drag = this.furnitureDrag
+      if (drag?.id === event.pointerId) {
+        this.furnitureDrag = null; pointers.delete(event.pointerId); down = null; pinch = 0
+        const point = this.furniturePoint(event.clientX, event.clientY), rect = this.canvas.getBoundingClientRect()
+        const onCanvas = event.clientX >= rect.left && event.clientX <= rect.right && event.clientY >= rect.top && event.clientY <= rect.bottom
+        if (!point || !onCanvas || !this.pointerOpen()) drag.owner.cancel(event.pointerId)
+        else { if (drag.moved) drag.owner.move(point, event.pointerId); drag.owner.end(event.pointerId) }
+        if (this.canvas.hasPointerCapture(event.pointerId)) this.canvas.releasePointerCapture(event.pointerId)
+        event.preventDefault(); this.wake(); return
+      }
       pointers.delete(event.pointerId)
       if (pointers.size < 2) pinch = 0
       if (down && down.moved < 6 && performance.now() - down.at < 450 && this.pointerOpen()) this.click(event.clientX, event.clientY)
       if (pointers.size === 0) down = null
     }
     listen(this.canvas, 'pointerup', release)
-    listen(this.canvas, 'pointercancel', event => { pointers.delete(event.pointerId); down = null; pinch = 0 })
-    listen(this.canvas, 'lostpointercapture', event => { pointers.delete(event.pointerId); down = null; pinch = 0 })
-    listen(this.canvas, 'wheel', event => { event.preventDefault(); if (!this.sceneFrozen) this.zoom(Math.exp(event.deltaY * 0.0012)) }, { passive: false })
+    listen(this.canvas, 'pointercancel', event => { if (this.furnitureDrag?.id === event.pointerId) { this.furnitureDrag.owner.cancel(event.pointerId); this.furnitureDrag = null } pointers.delete(event.pointerId); down = null; pinch = 0 })
+    listen(this.canvas, 'lostpointercapture', event => { if (this.furnitureDrag?.id === event.pointerId) { this.furnitureDrag.owner.cancel(event.pointerId); this.furnitureDrag = null } pointers.delete(event.pointerId); down = null; pinch = 0 })
+    listen(this.canvas, 'wheel', event => { event.preventDefault(); if (this.cameraOpen()) this.zoom(Math.exp(event.deltaY * 0.0012)) }, { passive: false })
     listen(this.canvas, 'contextmenu', event => event.preventDefault())
+  }
+
+  /** Existing home plan metres; this projects a drag without changing the avatar or camera. */
+  private furniturePoint(clientX: number, clientY: number): Vec2 | null {
+    const rect = this.canvas.getBoundingClientRect()
+    if (rect.width <= 0 || rect.height <= 0) return null
+    const pointer = new THREE.Vector2(((clientX - rect.left) / rect.width) * 2 - 1, -((clientY - rect.top) / rect.height) * 2 + 1)
+    this.raycaster.setFromCamera(pointer, this.camera)
+    const point = new THREE.Vector3()
+    return this.raycaster.ray.intersectPlane(this.groundPlane, point) && Number.isFinite(point.x) && Number.isFinite(point.z) ? { x: point.x, z: point.z } : null
   }
 
   /** Taps and drags on the room are heard: nothing is frozen over it, and either no window is open or home planning is. */
   private pointerOpen(): boolean { return !this.sceneFrozen && (!this.inputLocked || this.editPointer) }
 
+  /** Seated camera gestures stay available while foot taps keep their own lock. */
+  private cameraOpen(): boolean { return !this.furnitureDrag && !this.suspended && !document.hidden && !this.sceneFrozen && (this.editPointer || !this.vehicleInputBlocked && (!this.inputLocked || Boolean(this.vehicleSelf?.seat))) }
+
   zoom(factor: number): void {
-    if (this.sceneFrozen || !Number.isFinite(factor) || factor <= 0) return
+    if (!this.cameraOpen() || !Number.isFinite(factor) || factor <= 0) return
     const [min, max] = this.interior ? [2, 14] : [2.4, 32]
     this.distance = THREE.MathUtils.clamp(this.distance * factor, min, max); this.wake()
   }
 
-  rotate(radians: number): void { if (this.sceneFrozen) return; this.azimuth += radians; this.wake() }
+  rotate(radians: number): void { if (!this.cameraOpen()) return; this.azimuth += radians; this.wake() }
 
   drawMinimap(canvas: HTMLCanvasElement, options: MinimapOptions = {}): boolean {
     if (this.suspended || document.hidden) return false
@@ -1382,6 +1468,10 @@ export class WorldEngine {
       if (node) { this.events.pickMember(node.userData.memberId as MemberId); return }
     }
     if (!locked) this.events.pickMember(null)
+    if (!locked && !this.vehicleSelf?.seat && this.events.vehicleHit) {
+      const vehicleId = this.vehicles.hit(this.raycaster)
+      if (vehicleId) { this.events.vehicleHit(vehicleId); return }
+    }
     if (this.interior) {
       const key = this.interior.itemAt(this.raycaster)
       if (key) { this.events.pickItem(key); return }

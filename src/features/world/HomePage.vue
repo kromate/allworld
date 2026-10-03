@@ -140,7 +140,10 @@ function onKey(event: KeyboardEvent): void {
     else if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Delete', 'Backspace', 'r', 'R'].includes(event.key) && !typing) event.stopPropagation()
     return
   }
+  if (event.key === 'Escape' && studio.placing.value) { event.preventDefault(); event.stopPropagation(); studio.cancelPlacement(); return }
   if (!mine.value || mode.value !== 'buy' || !studio.selectedItem.value || typing) return
+  if ((event.metaKey || event.ctrlKey) && !event.shiftKey && event.key.toLowerCase() === 'z') { event.preventDefault(); event.stopPropagation(); studio.undoPlacement(); return }
+  if (event.metaKey || event.ctrlKey || event.altKey) return
   const moves: Record<string, [number, number]> = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] }
   if (moves[event.key]) { event.preventDefault(); event.stopPropagation(); studio.nudge(...moves[event.key]!) }
   else if (event.key === 'r' || event.key === 'R') studio.turn()
@@ -155,6 +158,7 @@ function onUnload(event: BeforeUnloadEvent): void {
 // The scene follows the mode: taps on the room edit only while planning, the ceiling lifts to plan,
 // the outline of what is being planned is drawn on the floor.
 watch(planning, on => getEngine()?.setEditPointer(on), { immediate: true })
+watch([planning, mode], ([on, next]) => studio.pointerEditing(getEngine(), on && next === 'buy'), { immediate: true })
 // A price or a dialog over the room freezes it: a drag or pinch already in progress ends, and taps, drag, pinch and wheel are ignored until it closes.
 watch(frozen, on => getEngine()?.setSceneFrozen(on), { immediate: true })
 watch(editing, on => getEngine()?.setEditing(on), { immediate: true })
@@ -162,8 +166,10 @@ watch([mode, mine], ([next, here]) => {
   state.mode = next
   const engine = getEngine()
   engine?.setInteriorCutaway(here && next !== 'home')
-  engine?.setInteriorOverview(here && next === 'build')
   engine?.setInteriorGhost(here && next === 'build' ? studio.ghostNow() : null)
+}, { immediate: true })
+watch([mode, mine, frozen], ([next, here, held]) => {
+  if (!held) getEngine()?.setInteriorOverview(here && next !== 'home')
 }, { immediate: true })
 watch(() => [state.plan, state.adding, state.pickedRoom], () => { if (building.value) getEngine()?.setInteriorGhost(studio.ghostNow()) }, { deep: true })
 watch(() => app.changed.homes, () => { if (!visiting.value) void studio.refresh() })
@@ -189,6 +195,7 @@ onBeforeUnmount(() => {
   if (!leavingForWalk && going.value) cancelHomeWalk()
   window.removeEventListener('keydown', onKey, true)
   window.removeEventListener('beforeunload', onUnload)
+  studio.pointerEditing(null, false)
   stopPick(); stopFloor()
   // If the page is torn down some way that did not ask (the account changed), nothing is left waiting on the dialog.
   if (guard.open.value) guard.stay()

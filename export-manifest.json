@@ -149,7 +149,7 @@
       "target": "AGENTS.md"
     },
     {
-      "bytes": 44115,
+      "bytes": 44212,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -158,7 +158,7 @@
       ],
       "path": "App.vue",
       "root": "project",
-      "sha256": "03a79d93973c6e0f26c316f945d33f2cf6959254a40bcd61da0f2dfa84109d0d",
+      "sha256": "f388599e6471ad0f309882b19b3ee435da95bc3bf91144f13f9529d20f32967e",
       "target": "App.vue"
     },
     {
@@ -2593,7 +2593,7 @@
       "target": "scripts/source-export-install.py"
     },
     {
-      "bytes": 147635,
+      "bytes": 149364,
       "kind": "tooling",
       "license": "Apache-2.0",
       "notices": [
@@ -2602,7 +2602,7 @@
       ],
       "path": "scripts/source-export-reference.json",
       "root": "project",
-      "sha256": "bdceaacdb6edd64df75f22d34ebbfe5836c02c9f64f478e4fafe36c4f37616bb",
+      "sha256": "c66e617969b675da2b3f4cb9220773c1a9ee21562337db0ec53caa3dd8631806",
       "target": "scripts/source-export-reference.json"
     },
     {
@@ -3428,7 +3428,7 @@
       "target": "service/guests.ts"
     },
     {
-      "bytes": 32185,
+      "bytes": 33412,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -3437,7 +3437,7 @@
       ],
       "path": "service/homeBuilding.ts",
       "root": "project",
-      "sha256": "d224df9f90d1f817be43c8fe76cf4216add29eb3d5e4302370688a252269571f",
+      "sha256": "0346d100292778a2536640f1e60448b611adbf03c35f1eb92c6cec29d0879c95",
       "target": "service/homeBuilding.ts"
     },
     {
@@ -4962,7 +4962,7 @@
       "target": "src/features/home/HomeBuildPanel.vue"
     },
     {
-      "bytes": 11436,
+      "bytes": 13234,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -4971,7 +4971,7 @@
       ],
       "path": "src/features/home/HomeBuyPanel.vue",
       "root": "project",
-      "sha256": "d869fb25016b11cf70790979e48ac78a3a5fd1667a7ea9f8fc0ebe22b50eaa74",
+      "sha256": "6611916b0fe0a7df4d409cceec30e0410177db1251929ec864b7bf94fd1b9c82",
       "target": "src/features/home/HomeBuyPanel.vue"
     },
     {
@@ -5144,7 +5144,7 @@
       "target": "src/features/home/homePlots.ts"
     },
     {
-      "bytes": 38408,
+      "bytes": 46014,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -5153,11 +5153,11 @@
       ],
       "path": "src/features/home/homeStudio.ts",
       "root": "project",
-      "sha256": "a763f65222a015420a674657364c0804ff22a5c4b8257538f63258218bfece61",
+      "sha256": "e7978ca2f6b8258419d84facc76521ace53d3277477f4f6fd1feab83f899f7b1",
       "target": "src/features/home/homeStudio.ts"
     },
     {
-      "bytes": 2137,
+      "bytes": 2414,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -5166,7 +5166,7 @@
       ],
       "path": "src/features/home/useStudio.ts",
       "root": "project",
-      "sha256": "83f8427b09c925f538d8f32bd23df4a06d6b21752847708eb1d7f9b3ae9190e6",
+      "sha256": "a284c0305eb97eacef5191ae279325eab0d58c275fbcd014db6b601fe41267d3",
       "target": "src/features/home/useStudio.ts"
     },
     {
@@ -6184,7 +6184,7 @@
       "target": "src/features/transport/DriverControls.vue"
     },
     {
-      "bytes": 10617,
+      "bytes": 29687,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -6193,11 +6193,11 @@
       ],
       "path": "src/features/transport/TransportHud.vue",
       "root": "project",
-      "sha256": "9ded5787bfaa452f756a3569cbc3f701d33960ac3b26c5af173bd4c12c000678",
+      "sha256": "b08ee557e15ff36913a3f96cc76d0269fa7ef7b850bbd12bc813481c92f01c34",
       "target": "src/features/transport/TransportHud.vue"
     },
     {
-      "bytes": 19435,
+      "bytes": 21426,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -6206,7 +6206,7 @@
       ],
       "path": "src/features/transport/TransportPanel.vue",
       "root": "project",
-      "sha256": "116420f8803578efd45db825246479a2888536b14d14bec8bb259d4186e6a86e",
+      "sha256": "6ec2d114ad9eccb8c89df403ee377c611569692ae8577eeb7d35e300e2b2fe80",
       "target": "src/features/transport/TransportPanel.vue"
     },
     {
@@ -6353,7 +6353,7 @@
       "target": "src/features/world/DoorwayPrompt.vue"
     },
     {
-      "bytes": 16232,
+      "bytes": 16860,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -6362,7 +6362,7 @@
       ],
       "path": "src/features/world/HomePage.vue",
       "root": "project",
-      "sha256": "1c349b93a7c60361436a9f006d0848ec6f43e44d7f6f43e0f19ae6b792bae78e",
+      "sha256": "f751f7cce1a9005a0a756050d8f0223a57339871bf7cb73a05bb662750219dbc",
       "target": "src/features/world/HomePage.vue"
     },
     {
@@ -7146,7 +7146,7 @@
       "target": "src/state/vehicles.ts"
     },
     {
-      "bytes": 53640,
+      "bytes": 53963,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -7155,7 +7155,7 @@
       ],
       "path": "src/state/world.ts",
       "root": "project",
-      "sha256": "425233e22342fd9fdf693fe510366e8c08a8b847360a7cf917b47e18268bde04",
+      "sha256": "d92ea1ea7e2091b3d1730a796fadfee14ab7d57a4a7c025ef29d02008f35afa1",
       "target": "src/state/world.ts"
     },
     {
@@ -7549,7 +7549,7 @@
       "target": "src/world/districtScene.ts"
     },
     {
-      "bytes": 85579,
+      "bytes": 92075,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -7558,7 +7558,7 @@
       ],
       "path": "src/world/engine.ts",
       "root": "project",
-      "sha256": "17430bfaa0d2a4079194127d16be99978a154e6dea403e10cfe10c7a075ed18f",
+      "sha256": "c6e636988eb7920c58142e90d196aee427b6be942edcebf538cc78abe9b05646",
       "target": "src/world/engine.ts"
     },
     {
@@ -7601,6 +7601,19 @@
       "target": "src/world/faces.ts"
     },
     {
+      "bytes": 6325,
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "path": "src/world/footDetour.ts",
+      "root": "project",
+      "sha256": "2c21cd0ef7d0f0b266ae13492162ce2a066b3c0613f100b6a900d9d3747afea8",
+      "target": "src/world/footDetour.ts"
+    },
+    {
       "bytes": 12278,
       "kind": "source",
       "license": "Apache-2.0",
@@ -7640,7 +7653,20 @@
       "target": "src/world/homeExterior.ts"
     },
     {
-      "bytes": 31334,
+      "bytes": 2154,
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "path": "src/world/homeFurniturePointer.ts",
+      "root": "project",
+      "sha256": "63b5b5c09e238b67f313b9d1f5078838c3f43333ddd8d81270cf70d550a09ef4",
+      "target": "src/world/homeFurniturePointer.ts"
+    },
+    {
+      "bytes": 31460,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -7649,11 +7675,11 @@
       ],
       "path": "src/world/homeScene.ts",
       "root": "project",
-      "sha256": "0e0127488d94b704a820f84abc0afb009f09f12836696fc704bbf54dac89cc35",
+      "sha256": "963e06e1106dad64a4a0f8d1c33127639af109e41046e3f6cfdca8f2e1f5fa98",
       "target": "src/world/homeScene.ts"
     },
     {
-      "bytes": 24536,
+      "bytes": 24606,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -7662,7 +7688,7 @@
       ],
       "path": "src/world/interior.ts",
       "root": "project",
-      "sha256": "9038a85502e6fe83ed7e19f9eeef46acd16cc890f88b859c7490b25f7174c823",
+      "sha256": "efe55deda04498decb2fbfc087996c3cc62f40ed40a16192b9d50427a17408e5",
       "target": "src/world/interior.ts"
     },
     {
@@ -8095,7 +8121,7 @@
       "target": "src/world/vehicles/provenance.ts"
     },
     {
-      "bytes": 14826,
+      "bytes": 15299,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -8104,7 +8130,7 @@
       ],
       "path": "src/world/vehicles/scene.ts",
       "root": "project",
-      "sha256": "bc41848c23a165fb32f23e8466da8650f2495429f2224336bdda49d9e132df25",
+      "sha256": "a3cd82d1b023d0fef43b4c882878f0e04cd4e837dfc04d2420313370078b035e",
       "target": "src/world/vehicles/scene.ts"
     },
     {
