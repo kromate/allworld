@@ -111,3 +111,7 @@ The five source tiles are 14/8345/7895, 14/8345/7896, 14/8346/7895, 14/8346/7896
 14/8532/7777. The original builders and version-manifest code use the repository's Apache-2.0
 code license. Existing regional geometry keeps its recorded CC0 terms. These data additions
 introduce no new image, character pack or third-party media license.
+
+## Social previews and icons
+
+`public/social/allworld-og.png`, `public/favicon.png` and `public/apple-touch-icon.png` are original project artwork under Apache-2.0. The icons and social image reuse the project mark from `src/ui/BrandMark.vue`. The illustrated map is original schematic artwork, not OpenStreetMap data or a gameplay screenshot. Editable SVG sources are `scripts/seo/allworld-og.svg` and `scripts/seo/favicon.svg`. See `public/social/NOTICE.md` for production details. No third-party artwork, photographs, member information or ratings are included.

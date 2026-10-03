@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /world/
+Disallow: /__world-data/
+
+Sitemap: https://joinallworld.com/sitemap.xml

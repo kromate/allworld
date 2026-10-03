@@ -77,8 +77,10 @@ async function supportFiles(directory, prefix = '') {
   }
 }
 await supportFiles(publicDir)
+const seoFiles = ['favicon.png', 'apple-touch-icon.png', 'robots.txt', 'sitemap.xml', 'social/allworld-og.png', 'social/NOTICE.md']
+for (const name of seoFiles) publicFiles.add(name)
 for (const name of [...publicFiles].sort()) {
-  if (!/^(avatars|wardrobe|packs|regions)\/[\w./-]+$/.test(name) || name.split('/').some(p => p.startsWith('.')) || name === 'packs/characters.pack.gz') throw new Error(`Unreviewed public asset: ${name}`)
+  if ((!/^(avatars|wardrobe|packs|regions)\/[\w./-]+$/.test(name) && !seoFiles.includes(name)) || name.split('/').some(p => p.startsWith('.')) || name === 'packs/characters.pack.gz') throw new Error(`Unreviewed public asset: ${name}`)
   const source = join(publicDir, name)
   if (!(await lstat(source)).isFile() || await realpath(source) !== source) throw new Error(`Non-regular public asset: ${name}`)
   const expected = manifest.assets['/' + name]

@@ -12,6 +12,7 @@ import { createWorldImport } from './worldImport.ts'
 import { createNativeImportStore } from './importPhases.ts'
 import { GUEST_TRANSFER_PATHS } from '../guestTransfers.ts'
 import { WorldError } from '../../src/shared/model.ts'
+import { pageMetadata } from '../pageMetadata.ts'
 
 export interface Env {
   ASSETS: Fetcher
@@ -289,12 +290,12 @@ export default {
         || (decoded.startsWith('/world/') && decoded !== url.pathname)) return notFound()
       const config = configuration(env)
       if (config.transfer && url.origin === config.transfer.legacyOrigin && ['GET', 'HEAD'].includes(request.method)
-        && !url.pathname.startsWith('/world/') && !/\.[^/]+$/.test(decoded)) return legacyLanding(config.binding, request.method === 'HEAD')
+        && !url.pathname.startsWith('/world/') && !/\.[^/]+$/.test(decoded)) return pageMetadata(request, legacyLanding(config.binding, request.method === 'HEAD'))
       if (!url.pathname.startsWith('/world/')) {
         const asset = await env.ASSETS.fetch(request)
-        if (asset.status !== 404 || !['GET', 'HEAD'].includes(request.method) || /\.[^/]+$/.test(decoded)) return asset
+        if (asset.status !== 404 || !['GET', 'HEAD'].includes(request.method) || /\.[^/]+$/.test(decoded)) return pageMetadata(request, asset)
         const entry = new URL('/', url)
-        return env.ASSETS.fetch(new Request(entry, request))
+        return pageMetadata(request, await env.ASSETS.fetch(new Request(entry, request)))
       }
       if (url.search || url.hash) return Response.json({ code: 'invalid', message: 'Query parameters are not accepted.' }, { status: 400 })
       if (url.pathname === '/world/runtime-config') {
