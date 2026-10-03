@@ -2602,7 +2602,7 @@
       ],
       "path": "scripts/source-export-reference.json",
       "root": "project",
-      "sha256": "15f5b1b51f64b17f5cf08182b456f40054a8db66c7542a64c298ef511706d35b",
+      "sha256": "6f4c72ce93a1d2c145afbdea0aee15ad58ecae74b83e48e3ebc732613e464db3",
       "target": "scripts/source-export-reference.json"
     },
     {
@@ -3779,7 +3779,7 @@
       "target": "service/vehicleRoutes.ts"
     },
     {
-      "bytes": 138137,
+      "bytes": 138295,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -3788,7 +3788,7 @@
       ],
       "path": "service/vehicles.ts",
       "root": "project",
-      "sha256": "3f6a6e6cf41146f65978224e909c76b68a96c0fca0a872de4495b75e5e576ffb",
+      "sha256": "8bf12a5799a88f703af5d4d6a5f8f4e7c5363670ea6c86c26639bb1172192dc2",
       "target": "service/vehicles.ts"
     },
     {
@@ -7120,7 +7120,7 @@
       "target": "src/state/travel.ts"
     },
     {
-      "bytes": 33667,
+      "bytes": 40222,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -7129,11 +7129,11 @@
       ],
       "path": "src/state/vehicles.ts",
       "root": "project",
-      "sha256": "63d85ef7d11f49c013926fe35fe724083a5240ef018dcc40eb713277b4f276dc",
+      "sha256": "46d7e94b8b8a3a6aeda723fb6bb109ae80eaf6757826073df38f6d4475fb9b4a",
       "target": "src/state/vehicles.ts"
     },
     {
-      "bytes": 50523,
+      "bytes": 53640,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -7142,7 +7142,7 @@
       ],
       "path": "src/state/world.ts",
       "root": "project",
-      "sha256": "4407169164f85f22e2ad4266bec433c98ca01a21858810635287573018a1db66",
+      "sha256": "425233e22342fd9fdf693fe510366e8c08a8b847360a7cf917b47e18268bde04",
       "target": "src/state/world.ts"
     },
     {
@@ -7536,7 +7536,7 @@
       "target": "src/world/districtScene.ts"
     },
     {
-      "bytes": 85499,
+      "bytes": 85579,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -7545,7 +7545,7 @@
       ],
       "path": "src/world/engine.ts",
       "root": "project",
-      "sha256": "6b26a7a9bbd21f1de880690ca10831bbf59340f8c572a4a77e484ae4df0d9cb9",
+      "sha256": "17430bfaa0d2a4079194127d16be99978a154e6dea403e10cfe10c7a075ed18f",
       "target": "src/world/engine.ts"
     },
     {
@@ -8082,7 +8082,7 @@
       "target": "src/world/vehicles/provenance.ts"
     },
     {
-      "bytes": 8099,
+      "bytes": 14826,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -8091,7 +8091,7 @@
       ],
       "path": "src/world/vehicles/scene.ts",
       "root": "project",
-      "sha256": "2720c40f34701699f9a7db7b76bc46b64b923610cf13f426930053b2c7698fb8",
+      "sha256": "bc41848c23a165fb32f23e8466da8650f2495429f2224336bdda49d9e132df25",
       "target": "src/world/vehicles/scene.ts"
     },
     {

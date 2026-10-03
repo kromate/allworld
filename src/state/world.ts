@@ -4,7 +4,7 @@ import { reactive, watch } from 'vue'
 import type { DistrictId, HomeId, MemberId, RoomKey } from '../shared/ids.ts'
 import { areaOfDistrict, distance, districtIdOf, tileToLatLon, parseDistrictId } from '../shared/geo.ts'
 import type { Vec2 } from '../shared/geo.ts'
-import { PROXIMITY_RADIUS } from '../shared/model.ts'
+import { PROXIMITY_RADIUS, roomKey } from '../shared/model.ts'
 import type { ChatMessage, CoarseArea, PresenceMember, RoomRef, RoomSnapshot } from '../shared/model.ts'
 import type { Home, HomeLayout } from '../shared/social.ts'
 import { homeParcelSource, sameParcelSource } from '../shared/homes.ts'
@@ -91,6 +91,7 @@ let pendingHomeExit: HomeLeft | null = null
 let homeRestorePending = false
 let homeLeaveRequested = false
 let vehicleResumeWork: Promise<void> | null = null
+let vehicleResumeSequence = 0, vehicleResumeGeneration = -1, vehicleRestoreAttempt = 0
 let exteriorWork: { scene: number; memberId: MemberId; loaded: District; target: WorldEngine; dirty: boolean; promise: Promise<void> } | null = null
 let parcelManifestRequest: Promise<HomeParcelManifest> | null = null
 let preparedTransfer: { id: string; generation: number; prepared: PreparedVehicleDistrict; disposeAbort(): void; timer: ReturnType<typeof setTimeout> } | null = null
@@ -621,7 +622,7 @@ export async function retryScene(): Promise<void> {
     return
   }
   if (homeRestorePending || world.kind === 'home') { await enterDefaultScene(); return }
-  if (vehicles.seated.value) { await vehicles.resume(); return }
+  if (vehicles.seated.value) { await restoreSeatedScene(); return }
   if (arrivalTarget) { if (await enterArea(arrivalTarget)) arrivalTarget = null; return }
   if (world.districtId) { await enterDistrict(world.districtId, { areaLabel: world.areaLabel }); return }
   const area = app.me?.browsing ?? app.me?.currentArea
@@ -637,7 +638,7 @@ export async function enterDefaultScene(location: CoarseArea | null = null): Pro
   const loadingScene = begin('Restoring your place…')
   await vehicles.load()
   if (me.id !== myId() || loadingScene !== generation) return false
-  if (vehicles.seated.value) { await vehicles.resume(); await vehicleResumeWork; return world.state === 'ready' }
+  if (vehicles.seated.value) { await restoreSeatedScene(); return world.state === 'ready' }
   homeRestorePending = true
   try {
     const { stay, lastExit } = await api('home.presence', {})
@@ -741,10 +742,10 @@ onServerEvent(event => {
   refreshInRange()
 })
 
-function syncVehicles(): void {
-  engine?.syncVehicles(vehicles.state.connected ? vehicles.state.data?.vehicles ?? [] : [], vehicles.state.connected ? vehicles.self.value : null, world.roomKey ? { key: world.roomKey, instance: world.instance } : null)
+function syncVehicles(motion?: Extract<VehicleEvent, { type: 'vehicle.move' }>): void {
+  engine?.syncVehicles(vehicles.state.connected ? vehicles.state.data?.vehicles ?? [] : [], vehicles.state.connected ? vehicles.self.value : null, world.roomKey ? { key: world.roomKey, instance: world.instance } : null, motion)
 }
-watch(() => [vehicles.state.data?.vehicles, vehicles.self.value, vehicles.state.connected, world.roomKey, world.instance], syncVehicles, { deep: true, flush: 'sync' })
+watch(() => [vehicles.state.data?.vehicles, vehicles.self.value, vehicles.state.connected, world.roomKey, world.instance], () => syncVehicles(), { deep: true, flush: 'sync' })
 watch(() => app.link, link => { if (link !== 'online') { discardTransfer(); engine?.clearVehicles() } }, { flush: 'sync' })
 
 function discardTransfer(): void {
@@ -795,18 +796,18 @@ function bindVehicles(): void {
       // The client sends ack only after this real detached scene and all its assets are ready.
     },
     transferred(event) { void commitVehicleTransfer(event) },
-    resumed(snapshot, self) { vehicleResumeWork = resumeVehicleWorld(snapshot, self) },
+    resumed(snapshot, self) { void queueVehicleResume(snapshot, self) },
     exited(result) {
       syncVehicles(); engine?.syncVehicles(vehicles.state.data?.vehicles ?? [], result.self, world.roomKey ? { key: world.roomKey, instance: world.instance } : null)
       engine?.snapTo(result.pos, result.heading)
     },
-    motion() { syncVehicles(); refreshInRange() },
+    motion(event) { syncVehicles(event); refreshInRange() },
   })
 }
 
 async function commitVehicleTransfer(event: Extract<VehicleEvent, { type: 'vehicle.transferred' }>): Promise<void> {
   const pending = preparedTransfer, target = engine, me = app.me
-  if (!pending || pending.id !== event.transferId || pending.generation !== generation || pending.prepared.district.id !== event.vehicle.room.districtId || !target || !me) { await resumeVehicleWorld(event.snapshot, event.self); return }
+  if (!pending || pending.id !== event.transferId || pending.generation !== generation || pending.prepared.district.id !== event.vehicle.room.districtId || !target || !me) { await queueVehicleResume(event.snapshot, event.self); return }
   preparedTransfer = null; clearTimeout(pending.timer); pending.disposeAbort()
   const mine = ++generation
   try {
@@ -820,56 +821,98 @@ async function commitVehicleTransfer(event: Extract<VehicleEvent, { type: 'vehic
   } catch (error) { vehicles.state.problem = messageOf(error) }
 }
 
-async function resumeVehicleWorld(snapshot: RoomSnapshot | null, self: VehicleSelf): Promise<void> {
+async function restoreSeatedScene(): Promise<void> {
+  const target = engine, memberId = myId(), scene = generation, resumeSequence = vehicleResumeSequence, attempt = ++vehicleRestoreAttempt
+  const ownsScene = (): boolean => attempt === vehicleRestoreAttempt && target === engine && memberId === myId()
+    && (generation === scene || vehicleResumeSequence > resumeSequence && generation === vehicleResumeGeneration)
+  try {
+    await vehicles.resume()
+    let pending: Promise<void> | null
+    do { pending = vehicleResumeWork; await pending } while (pending !== vehicleResumeWork && target === engine && memberId === myId())
+    if (ownsScene() && world.state !== 'ready' && world.state !== 'error') {
+      fail(new Error(vehicles.state.problem || 'Your ride is still reconnecting. Try again to restore the street.'))
+    }
+  } catch (error) { if (ownsScene()) fail(error) }
+}
+
+function queueVehicleResume(snapshot: RoomSnapshot | null, self: VehicleSelf): Promise<void> {
+  const target = engine, memberId = myId()
+  if (!target || !memberId || (!snapshot && !self.seat && !currentRef)) return Promise.resolve()
+  const sequence = ++vehicleResumeSequence, scene = ++generation
+  vehicleResumeGeneration = scene
+  if (self.seat) { world.state = 'loading'; world.loadingLabel = 'Restoring your ride…'; world.error = ''; world.errorKind = '' }
+  const ownsRequest = (): boolean => sequence === vehicleResumeSequence && target === engine && memberId === myId()
+  const previous = vehicleResumeWork
+  const work = (previous ?? Promise.resolve()).catch(() => undefined).then(async () => {
+    if (!ownsRequest() || scene !== generation) return
+    const vehicle = self.vehicle
+    if (self.seat && (!vehicle || self.seat.vehicleId !== vehicle.id || !snapshot || snapshot.ref.kind !== 'district'
+      || snapshot.room !== roomKey(snapshot.ref) || snapshot.room !== vehicle.room.key
+      || snapshot.instance !== vehicle.room.instance || snapshot.ref.districtId !== vehicle.room.districtId)) {
+      fail(new Error('Your ride changed while reconnecting. Try again to load its current street.'))
+      return
+    }
+    await resumeVehicleWorld(snapshot, self, ownsRequest)
+  })
+  vehicleResumeWork = work
+  return work
+}
+
+async function resumeVehicleWorld(snapshot: RoomSnapshot | null, self: VehicleSelf, ownsRequest: () => boolean = () => true): Promise<void> {
   const target = engine, me = app.me, mine = generation
-  if (!target || !me) return
+  if (!target || !me || !ownsRequest()) return
   if (!snapshot && !self.seat && currentRef?.kind === 'home') {
     let expected = mine
     try {
       const { stay } = await api('home.presence', {})
-      if (mine !== generation || target !== engine || me.id !== myId()) return
+      if (!ownsRequest() || mine !== generation || target !== engine || me.id !== myId()) return
       if (!stay) throw new Error('Your saved home stay is unavailable. Reload to return to the street safely.')
       if (stay.state === 'shown-out') {
         const left = await api('home.leave', {})
-        if (mine !== generation || target !== engine || me.id !== myId()) return
+        if (!ownsRequest() || mine !== generation || target !== engine || me.id !== myId()) return
         await enterDistrict(left.exit.districtId, { at: left.exit.pos, heading: left.exit.heading, homeExit: left })
       } else {
         const scene = begin('Reconnecting to your home…'); expected = scene
         await showEnteredHome(await api('home.resume', {}), scene)
       }
-    } catch (error) { if (expected === generation && target === engine && me.id === myId()) fail(error) }
+    } catch (error) { if (ownsRequest() && expected === generation && target === engine && me.id === myId()) fail(error) }
     return
   }
   if (!snapshot) {
     if (!self.seat && currentRef && world.state === 'ready') {
       try { await joinRoom(currentRef, target.position, target.facing); await refreshHomeExteriors() }
-      catch (error) { if (mine === generation && target === engine && me.id === myId()) fail(error) }
+      catch (error) { if (ownsRequest() && mine === generation && target === engine && me.id === myId()) fail(error) }
     }
     return
   }
-  if (snapshot.ref.kind !== 'district') { await acceptRoomSnapshot(snapshot); return }
+  if (snapshot.ref.kind !== 'district') { if (ownsRequest()) await acceptRoomSnapshot(snapshot); return }
   if (world.districtId !== snapshot.ref.districtId || world.kind !== 'district' || target.mode !== 'district') {
     try {
       const loaded = await loadVehicleDistrict(snapshot.ref.districtId)
-      if (mine !== generation || target !== engine || me.id !== app.me?.id) return
+      if (!ownsRequest() || mine !== generation || target !== engine || me.id !== app.me?.id) return
       const position = self.vehicle?.pos ?? snapshot.members.find(member => member.id === me.id)?.pos
       if (!position) throw new Error('The world did not return your safe resumed position.')
       const context = vehicleDistrictContext(loaded.id)
       if (!context) throw new Error('That district has no supported vehicle scene context.')
       await target.enterDistrict(loaded, position, self.vehicle?.heading ?? 0, { ...context, memberId: me.id, authoritative: true })
-      if (mine !== generation || target !== engine || me.id !== app.me?.id) return
+      if (!ownsRequest() || mine !== generation || target !== engine || me.id !== app.me?.id) return
       showTransferredDistrict(loaded)
-    } catch (error) { vehicles.state.problem = messageOf(error); return }
+    } catch (error) { if (ownsRequest() && mine === generation && target === engine && me.id === myId()) { vehicles.state.problem = messageOf(error); fail(error) }; return }
   }
+  if (!ownsRequest() || mine !== generation || target !== engine || me.id !== myId()) return
   await acceptRoomSnapshot(snapshot)
+  if (!ownsRequest() || mine !== generation || target !== engine || me.id !== myId()) return
   await refreshHomeExteriors()
+  if (!ownsRequest() || mine !== generation || target !== engine || me.id !== myId()) return
   const presence = snapshot.members.find(member => member.id === me.id)
   if (!self.seat && presence) target.snapTo(presence.pos, presence.heading)
   syncVehicles()
+  if (ownsRequest() && mine === generation && target === engine && me.id === myId()) world.state = 'ready'
 }
 
 // Reconnect is owned by vehicle.resume, whose foot result rejoins only after the service has resolved any held seat.
 onAccountReset(() => {
+  vehicleResumeSequence++; vehicleRestoreAttempt++; vehicleResumeGeneration = -1
   discardTransfer(); engine?.clearVehicles(); engine?.setHomeExteriors([], []); vehicles.scene(null)
   generation++; exteriorWork = null
   ambience.leave()
