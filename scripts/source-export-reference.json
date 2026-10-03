@@ -97,7 +97,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "03a79d93973c6e0f26c316f945d33f2cf6959254a40bcd61da0f2dfa84109d0d"
+      "sha256": "f388599e6471ad0f309882b19b3ee435da95bc3bf91144f13f9529d20f32967e"
     },
     "CONTRIBUTING.md": {
       "kind": "documentation",
@@ -3710,7 +3710,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "31f0026ce4d4ca92b918c82e4ed4e1a681986ec5e3007563019d46be2f3d798f"
+      "sha256": "b08ee557e15ff36913a3f96cc76d0269fa7ef7b850bbd12bc813481c92f01c34"
     },
     "src/features/transport/TransportPanel.vue": {
       "kind": "source",
@@ -3719,7 +3719,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "f3ae8efc92fcc5e763998e81e9dad0c23a4dd5a2a89946314347f40bb41d23f0"
+      "sha256": "6ec2d114ad9eccb8c89df403ee377c611569692ae8577eeb7d35e300e2b2fe80"
     },
     "src/features/transport/transportView.ts": {
       "kind": "source",
@@ -3809,7 +3809,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "cab298217fd8a5fc79187af7384b6277e40247bce6b429be085620e6900749f3"
+      "sha256": "f751f7cce1a9005a0a756050d8f0223a57339871bf7cb73a05bb662750219dbc"
     },
     "src/features/world/Onboarding.vue": {
       "kind": "source",
@@ -4268,7 +4268,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "425233e22342fd9fdf693fe510366e8c08a8b847360a7cf917b47e18268bde04"
+      "sha256": "d92ea1ea7e2091b3d1730a796fadfee14ab7d57a4a7c025ef29d02008f35afa1"
     },
     "src/ui/AssetProgress.vue": {
       "kind": "source",
@@ -4538,7 +4538,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "17430bfaa0d2a4079194127d16be99978a154e6dea403e10cfe10c7a075ed18f"
+      "sha256": "c6e636988eb7920c58142e90d196aee427b6be942edcebf538cc78abe9b05646"
     },
     "src/world/facadeDetails.ts": {
       "kind": "source",
@@ -4592,7 +4592,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "8e9ca2c50d68eccc295dbff3fb8eb7e378691613b7fbf13773a61bf09e215804"
+      "sha256": "efe55deda04498decb2fbfc087996c3cc62f40ed40a16192b9d50427a17408e5"
     },
     "src/world/minimap.ts": {
       "kind": "source",
@@ -4898,7 +4898,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "bc41848c23a165fb32f23e8466da8650f2495429f2224336bdda49d9e132df25"
+      "sha256": "a3cd82d1b023d0fef43b4c882878f0e04cd4e837dfc04d2420313370078b035e"
     },
     "src/world/venueInteriors.ts": {
       "kind": "source",
@@ -5112,6 +5112,69 @@
         "NOTICE"
       ],
       "sha256": "72fcab453731f5dc8daafaf18c81b24d1ddd5d23866c4c713611e0cc6dd3747f"
+    },
+    "service/homeBuilding.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "0346d100292778a2536640f1e60448b611adbf03c35f1eb92c6cec29d0879c95"
+    },
+    "src/features/home/HomeBuyPanel.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "6611916b0fe0a7df4d409cceec30e0410177db1251929ec864b7bf94fd1b9c82"
+    },
+    "src/features/home/homeStudio.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "e7978ca2f6b8258419d84facc76521ace53d3277477f4f6fd1feab83f899f7b1"
+    },
+    "src/features/home/useStudio.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "a284c0305eb97eacef5191ae279325eab0d58c275fbcd014db6b601fe41267d3"
+    },
+    "src/world/footDetour.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "2c21cd0ef7d0f0b266ae13492162ce2a066b3c0613f100b6a900d9d3747afea8"
+    },
+    "src/world/homeFurniturePointer.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "63b5b5c09e238b67f313b9d1f5078838c3f43333ddd8d81270cf70d550a09ef4"
+    },
+    "src/world/homeScene.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "963e06e1106dad64a4a0f8d1c33127639af109e41046e3f6cfdca8f2e1f5fa98"
     }
   },
   "priorManifestSha256": "491b4ac1913ba05807f1c5e3eb11f9c84ec293fb9722f5f0e39a13e8f14dab4b",

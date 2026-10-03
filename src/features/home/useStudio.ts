@@ -17,6 +17,7 @@ function requestId(): string {
 
 export function useStudio(): Studio {
   if (studio) return studio
+  let itemsDraw = 0
   const made = createStudio({
     api,
     newRequestId: requestId,
@@ -25,7 +26,13 @@ export function useStudio(): Studio {
     isFurniture,
     stage: {
       // The member's own home only, and only while they are in it: never the room of a home they are visiting.
-      showItems(items, selected) { const engine = getEngine(); if (!engine || !atOwnHome()) return; void engine.setInteriorItems(items); engine.highlightItem(selected) },
+      showItems(items, selected) {
+        const engine = getEngine(), draw = ++itemsDraw, owner = app.me?.id, home = world.home?.id
+        if (!engine || !atOwnHome()) return
+        void engine.setInteriorItems(items).then(() => {
+          if (draw === itemsDraw && engine === getEngine() && owner === app.me?.id && home === world.home?.id && atOwnHome()) engine.highlightItem(selected)
+        })
+      },
       async showHome(home) { if (!atOwnHome() || world.home?.id !== home.id) return; world.home = home; world.title = home.name; await showHome(home) },
       ghost(ghost) { getEngine()?.setInteriorGhost(ghost) },
       where() { return getEngine()?.position ?? null },
@@ -35,7 +42,7 @@ export function useStudio(): Studio {
     now: () => Date.now(),
   })
   studio = made
-  const stopReset = onAccountReset(() => made.reset())
+  const stopReset = onAccountReset(() => { itemsDraw++; made.reset() })
   // After a dropped link the answer to a payment may be waiting in the receipts: look, never assume.
   const stopReconnect = onReconnect(() => {
     if (made.state.load !== 'ready') return

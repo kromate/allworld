@@ -209,7 +209,7 @@ export interface InteriorScene {
   cameraObstacles: THREE.Object3D[]
   setQuality(quality: Quality): void
   setItems(items: PlacedItem[]): Promise<void>
-  highlight(key: string | null): void
+  highlight(key: string | null, feedback?: import('./homeFurniturePointer.ts').HomeFurnitureFeedback): void
   itemAt(raycaster: THREE.Raycaster): string | null
   route(from: Vec2, target: Vec2): Vec2[]
   walkable(point: Vec2): boolean

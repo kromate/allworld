@@ -137,6 +137,22 @@ export function furnitureInTheWay(home: BuiltHome, pos: Vec2): boolean {
   return false
 }
 
+/** Changed solid pieces cannot be saved over an avatar already occupying this home. */
+function furnitureOccupantProblem(world: World, home: BuiltHome, items: readonly PlacedItem[]): string | null {
+  const before = new Map(home.layout.items.map(item => [item.key, item]))
+  const people = occupantsOfRoom(world, roomKey({ kind: 'home', homeId: home.id }))
+    .map(memberId => roomOf(world, memberId)?.pos).filter((pos): pos is Vec2 => pos !== undefined)
+  if (!people.length) return null
+  for (const item of items) {
+    if (!blocksWalking(item.model) || sameSpot(before.get(item.key), item)) continue
+    const size = footprint(item.model, item.turns), centre = cell(item)
+    if (people.some(pos => Math.abs(pos.x - centre.x) < size.width / 2 + HOME_WALK_MARGIN && Math.abs(pos.z - centre.z) < size.depth / 2 + HOME_WALK_MARGIN)) {
+      return `The ${pieceName(item.model)} would overlap a player in this home. Move it clear before saving.`
+    }
+  }
+  return null
+}
+
 /**
  * Why these pieces cannot stand in this plan, or null. Every piece must be in a room. A piece
  * that is in the way must not stand where a character goes through a door, but only pieces that
@@ -178,6 +194,8 @@ export function checkFurnitureSave(world: World, home: BuiltHome, next: HomeLayo
   const before = new Map(home.layout.items.map(item => [item.key, item]))
   const problem = itemsProblem(planOf(home, estate), next.items, item => !sameSpot(before.get(item.key), item), new Set())
   if (problem) throw new WorldError('invalid', problem)
+  const occupied = furnitureOccupantProblem(world, home, next.items)
+  if (occupied) throw new WorldError('conflict', occupied)
   // Nothing is refused past here. A free piece is the home's from the moment it is placed, so it
   // stays owned if it ever stops being free.
   for (const [model, count] of placed) if (count > ownedOf(estate, model)) estate.owned[model] = count
@@ -304,6 +322,9 @@ function planLayout(world: World, home: BuiltHome, estate: EstateRecord, change:
   }
   const blocked = itemsProblem(plan, items, item => moves.has(item.key), openings)
   if (blocked) invalid(blocked)
+
+  const occupied = furnitureOccupantProblem(world, home, items)
+  if (occupied) throw new WorldError('conflict', occupied)
 
   // Nobody is left standing where there is no longer a floor.
   for (const memberId of occupantsOfRoom(world, roomKey({ kind: 'home', homeId: home.id }))) {

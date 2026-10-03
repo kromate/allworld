@@ -239,6 +239,13 @@ export class VehicleScene {
   hasSeat(id: MemberId): boolean { return this.seats.has(id) }
   clearActor(actor: AvatarActor): void { if (this.mounted.delete(actor)) actor.setVehiclePose(null) }
   clearActors(): void { for (const actor of this.mounted) actor.setVehiclePose(null); this.mounted.clear() }
+  /** Only identifies the drawn body. It does not choose a seat or grant boarding. */
+  hit(raycaster: THREE.Raycaster): VehicleId | null {
+    const hit = raycaster.intersectObjects([...this.vehicles.values()].map(rendered => rendered.model.root), true)[0]
+    if (!hit) return null
+    for (const [id, rendered] of this.vehicles) for (let node: THREE.Object3D | null = hit.object; node; node = node.parent) if (node === rendered.model.root) return id
+    return null
+  }
   clear(): void { this.clearActors(); for (const rendered of this.vehicles.values()) rendered.model.dispose(); this.vehicles.clear(); this.seats.clear() }
   dispose(): void { this.clear(); this.root.removeFromParent(); this.kit.dispose() }
 }

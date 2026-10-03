@@ -1,7 +1,7 @@
 // World controller: which scene is showing, who else is in the room, proximity chat, and the
 // bridge between the 3D engine and the world service.
 import { reactive, watch } from 'vue'
-import type { DistrictId, HomeId, MemberId, RoomKey } from '../shared/ids.ts'
+import type { DistrictId, HomeId, MemberId, RoomKey, VehicleId } from '../shared/ids.ts'
 import { areaOfDistrict, distance, districtIdOf, tileToLatLon, parseDistrictId } from '../shared/geo.ts'
 import type { Vec2 } from '../shared/geo.ts'
 import { PROXIMITY_RADIUS, roomKey } from '../shared/model.ts'
@@ -106,6 +106,7 @@ export async function walkToHome(homeId: HomeId): Promise<boolean> {
 }
 
 const floorListeners = new Set<(pos: Vec2) => void>()
+const vehicleListeners = new Set<(id: VehicleId) => void>()
 
 export const getEngine = (): WorldEngine | null => engine
 let attachGeneration = 0
@@ -119,6 +120,7 @@ export function getStreetContext(): { districtId: DistrictId; position: Vec2; ap
 }
 export const onItemPicked = (listener: (key: string | null) => void): (() => void) => { itemListeners.add(listener); return () => itemListeners.delete(listener) }
 export const onFloorClicked = (listener: (pos: Vec2) => void): (() => void) => { floorListeners.add(listener); return () => floorListeners.delete(listener) }
+export const onVehiclePicked = (listener: (id: VehicleId) => void): (() => void) => { vehicleListeners.add(listener); return () => vehicleListeners.delete(listener) }
 
 function localHour(timezone: string): number {
   if (world.timeMode === 'day') return 13
@@ -171,6 +173,7 @@ export function attachCanvas(canvas: HTMLCanvasElement): void {
     startEngine(new WorldEngine(canvas, {
         local: sendMove,
         vehicleInput: intent => vehicles.drive(intent),
+        vehicleHit: id => { for (const listener of vehicleListeners) listener(id) },
         nearVenue: poi => { world.nearVenue = poi },
         nearDoor: near => { world.nearDoor = near },
         nearHome: entry => {

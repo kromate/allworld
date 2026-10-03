@@ -5,7 +5,7 @@
 //
 // Everything outside this file is handed in (`StudioDeps`), so a probe runs the real controller
 // against the real service handlers with no browser and no engine.
-import { computed, reactive } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import type { ComputedRef } from 'vue'
 import type { Vec2 } from '../../shared/geo.ts'
 import {
@@ -22,6 +22,7 @@ import {
   strandedPieces, withColours, withDoor, withDoorAt, withEntrance, withRoom, withSize, withoutDoor, withoutRoom,
 } from './homeLayout.ts'
 import type { Footprint } from './homeLayout.ts'
+import { bindHomeFurniturePointer, createHomeFurniturePointer } from '../../world/homeFurniturePointer.ts'
 
 export type StudioMode = 'home' | 'build' | 'buy'
 
@@ -129,6 +130,16 @@ export interface Studio {
   putAway(key: string): void
   save(): Promise<boolean>
   discard(): void
+  placing: ComputedRef<boolean>
+  canUndoPlacement: ComputedRef<boolean>
+  placementProblems: ComputedRef<string[]>
+  placementNotice: ComputedRef<string>
+  beginPlacement(key: string, point: Vec2): boolean
+  movePlacement(point: Vec2): void
+  finishPlacement(): boolean
+  cancelPlacement(): void
+  undoPlacement(): void
+  pointerEditing(engine: object | null, enabled: boolean): void
   setQuantity(model: string, quantity: number): void
   askFurniture(): Promise<void>
   adoptPlan(): void
@@ -172,6 +183,27 @@ export function createStudio(deps: StudioDeps): Studio {
     plan: null, pickedRoom: null, adding: null, houseTo: null, flow: IDLE(),
   })
   let loadGeneration = 0, flowGeneration = 0
+  type Pose = Pick<PlacedItem, 'x' | 'z' | 'turns'>
+  type Arrangement = { key: string; before: Pose; after: Pose }
+  const placement = ref<{ key: string; before: Pose; offset: Vec2 } | null>(null)
+  const placementUndo = ref<Arrangement[]>([])
+  const placementMessage = ref('')
+  const placing = computed(() => placement.value !== null)
+  const canUndoPlacement = computed(() => placementUndo.value.length > 0 && !placing.value && !state.saving)
+  const placementNotice = computed(() => placementMessage.value)
+  const poseOf = (item: PlacedItem): Pose => ({ x: item.x, z: item.z, turns: item.turns })
+  const samePose = (a: Pose, b: Pose): boolean => a.x === b.x && a.z === b.z && a.turns === b.turns
+  function remember(item: PlacedItem, before: Pose): void {
+    if (placement.value || samePose(before, item)) return
+    placementUndo.value.push({ key: item.key, before, after: poseOf(item) })
+    if (placementUndo.value.length > 16) placementUndo.value.shift()
+  }
+  let pointerEngine: object | null = null
+  const pointer = createHomeFurniturePointer({ begin: beginPlacement, move: movePlacement, finish: finishPlacement, cancel: cancelCurrentPlacement, feedback: () => placement.value ? (placementProblems.value.length ? 'invalid' : 'valid') : 'selected' })
+  function pointerEditing(engine: object | null, enabled: boolean): void {
+    if (pointerEngine && (pointerEngine !== engine || !enabled)) { bindHomeFurniturePointer(pointerEngine, null); pointerEngine = null }
+    if (enabled && engine) { bindHomeFurniturePointer(engine, pointer); pointerEngine = engine }
+  }
 
   const type = computed(() => houseType(state.estate?.houseType ?? state.home?.building.houseType ?? 'studio'))
   const currentPlan = (): HomePlan | null => state.home?.building.plan ?? null
@@ -222,6 +254,7 @@ export function createStudio(deps: StudioDeps): Studio {
 
   function reset(): void {
     loadGeneration++; flowGeneration++
+    pointerEditing(null, false); placement.value = null; placementUndo.value = []; placementMessage.value = ''
     Object.assign(state, { load: 'idle', loadError: '', mode: 'home', catalog: null, catalogOld: false, home: null, estate: null, draft: null, baseRevision: 0, name: '', selected: null, saving: false, saveError: '', cart: {}, plan: null, pickedRoom: null, adding: null, houseTo: null, flow: IDLE() })
     deps.stage.ghost(null)
   }
@@ -229,6 +262,7 @@ export function createStudio(deps: StudioDeps): Studio {
   // ── Furniture ──
   function adopt(): void {
     if (!state.home) return
+    pointer.cancel(); placement.value = null; placementUndo.value = []; placementMessage.value = ''
     state.draft = JSON.parse(JSON.stringify(state.home.layout)) as HomeLayout
     state.baseRevision = state.home.revision
     state.name = state.home.name
@@ -267,6 +301,15 @@ export function createStudio(deps: StudioDeps): Studio {
     return doorwayPoints(plan).some(point => Math.abs(point.pos.x - item.x * GRID) < size.width / 2 + HOME_WALK_MARGIN && Math.abs(point.pos.z - item.z * GRID) < size.depth / 2 + HOME_WALK_MARGIN)
   }
 
+  /** Client preview checks its own avatar; the service checks every current occupant at save time. */
+  function overlapsPlayer(item: PlacedItem): boolean {
+    const at = deps.stage.where()
+    if (!at || !blocksWalking(item.model)) return false
+    const size = deps.footprint(item.model, item.turns)
+    return Math.abs(at.x - item.x * GRID) < size.width / 2 + HOME_WALK_MARGIN
+      && Math.abs(at.z - item.z * GRID) < size.depth / 2 + HOME_WALK_MARGIN
+  }
+
   function place(model: string, link: Pick<PlacedItem, 'productId' | 'variantId' | 'tints'> = { productId: null, variantId: null, tints: {} }): { ok: true; key: string } | { ok: false; reason: string } {
     const layout = state.draft, plan = currentPlan()
     if (!layout || !plan || !state.estate) return { ok: false, reason: 'Your home is still loading.' }
@@ -281,8 +324,8 @@ export function createStudio(deps: StudioDeps): Studio {
     const offset = (inRoom % 5) - 2
     const item: PlacedItem = { key: deps.newItemKey(), model, x: (room.x / GRID) + room.width + offset * 2, z: (room.z / GRID) + room.depth + offset, turns: 0, ...link }
     clampInto(item, room)
-    // A new piece is not put on a doorway or the front door: the nearest cell clear of them is taken, or the default when the room has none.
-    if (blocksWalking(item.model) && standsOnOpening(item, plan)) {
+    // A new piece starts clear of the door and the player, or placement leaves the draft unchanged.
+    if (blocksWalking(item.model) && (standsOnOpening(item, plan) || overlapsPlayer(item))) {
       const size = deps.footprint(item.model, 0)
       const reach = Math.ceil(Math.max(size.width, size.depth) / GRID)
       const start = { x: item.x, z: item.z }
@@ -290,11 +333,12 @@ export function createStudio(deps: StudioDeps): Studio {
       for (let dx = -reach * 4; dx <= reach * 4; dx++) for (let dz = -reach * 4; dz <= reach * 4; dz++) {
         const candidate = { ...item, x: start.x + dx, z: start.z + dz }
         clampInto(candidate, room)
-        if (candidate.x !== start.x + dx || candidate.z !== start.z + dz || standsOnOpening(candidate, plan)) continue
+        if (candidate.x !== start.x + dx || candidate.z !== start.z + dz || standsOnOpening(candidate, plan) || overlapsPlayer(candidate)) continue
         const away = Math.hypot(dx, dz)
         if (away < gap) { gap = away; best = { x: candidate.x, z: candidate.z } }
       }
-      if (best) { item.x = best.x; item.z = best.z }
+      if (!best) return { ok: false, reason: 'There is no clear place for this piece. Move to another spot or put a piece in storage first.' }
+      item.x = best.x; item.z = best.z
     }
     layout.items.push(item)
     state.selected = item.key
@@ -302,46 +346,121 @@ export function createStudio(deps: StudioDeps): Studio {
     return { ok: true, key: item.key }
   }
 
-  function select(key: string | null): void { state.selected = key; redraw() }
+  function select(key: string | null): void { if (modal.value || state.saving) return; pointer.cancel(); cancelCurrentPlacement(); state.selected = key; placementMessage.value = ''; redraw() }
   function nudge(dx: number, dz: number): void {
     const item = selectedItem.value
     if (!item) return
+    const before = poseOf(item)
     const room = roomOfItem(item)
     item.x += dx; item.z += dz
     if (room) clampInto(item, room)
+    remember(item, before)
     redraw()
   }
   function turn(): void {
     const item = selectedItem.value
     if (!item) return
+    const before = poseOf(item)
     const room = roomOfItem(item)
     item.turns = ((item.turns + 1) % 4) as PlacedItem['turns']
     if (room) clampInto(item, room)
+    remember(item, before)
     redraw()
   }
   function moveTo(point: Vec2): void {
     const item = selectedItem.value, plan = currentPlan()
     if (!item || !plan) return
+    const before = poseOf(item)
     const room = roomAt(plan.rooms, point) ?? roomOfItem(item)
     if (!room) return
     item.x = point.x / GRID; item.z = point.z / GRID
     clampInto(item, room)
+    remember(item, before)
     redraw()
   }
   function sendToRoom(roomId: string): void {
     const item = selectedItem.value, room = currentPlan()?.rooms.find(entry => entry.id === roomId)
     if (!item || !room) return
+    const before = poseOf(item)
     item.x = (room.x / GRID) + room.width; item.z = (room.z / GRID) + room.depth
     clampInto(item, room)
+    remember(item, before)
     redraw()
   }
   function putAway(key: string): void {
     if (!state.draft) return
+    pointer.cancel(); cancelCurrentPlacement(); placementUndo.value = []
     state.draft.items = state.draft.items.filter(item => item.key !== key)
     if (state.selected === key) state.selected = null
     redraw()
   }
   function discard(): void { adopt() }
+
+  function selectedPlacementProblems(): string[] {
+    const item = selectedItem.value, plan = currentPlan()
+    if (!item || !plan) return []
+    const room = roomAt(plan.rooms, { x: item.x * GRID, z: item.z * GRID })
+    if (!room) return ['This piece is outside the rooms.']
+    const size = deps.footprint(item.model, item.turns)
+    const x = item.x * GRID, z = item.z * GRID
+    const problems: string[] = []
+    if (x - size.width / 2 < room.x || x + size.width / 2 > room.x + room.width || z - size.depth / 2 < room.z || z + size.depth / 2 > room.z + room.depth) problems.push('Keep the whole piece inside one room.')
+    if (blocksWalking(item.model) && standsOnOpening(item, plan)) problems.push('Keep this piece clear of the door.')
+    if (overlapsPlayer(item)) problems.push('This piece would overlap your character.')
+    return problems
+  }
+  const placementProblems = computed(selectedPlacementProblems)
+  function beginPlacement(key: string, point: Vec2): boolean {
+    if (modal.value || state.saving || !Number.isFinite(point.x) || !Number.isFinite(point.z)) return false
+    const item = state.draft?.items.find(candidate => candidate.key === key)
+    if (!item) return false
+    cancelCurrentPlacement()
+    state.selected = key
+    placement.value = { key, before: poseOf(item), offset: { x: item.x * GRID - point.x, z: item.z * GRID - point.z } }
+    placementMessage.value = ''
+    redraw()
+    return true
+  }
+  function movePlacement(point: Vec2): void {
+    const edit = placement.value, item = selectedItem.value
+    if (!edit || !item || item.key !== edit.key || modal.value || state.saving || !Number.isFinite(point.x) || !Number.isFinite(point.z)) return
+    const x = Math.round(Math.max(-HOME_RULES.planSpan, Math.min(HOME_RULES.planSpan, point.x + edit.offset.x)) / GRID)
+    const z = Math.round(Math.max(-HOME_RULES.planSpan, Math.min(HOME_RULES.planSpan, point.z + edit.offset.z)) / GRID)
+    if (x === item.x && z === item.z) return
+    item.x = x; item.z = z
+    redraw()
+  }
+  function cancelCurrentPlacement(): void {
+    const edit = placement.value
+    placement.value = null
+    if (!edit) return
+    const item = state.draft?.items.find(candidate => candidate.key === edit.key)
+    if (item) Object.assign(item, edit.before)
+    placementMessage.value = ''
+    redraw()
+  }
+  function finishPlacement(): boolean {
+    const edit = placement.value, item = selectedItem.value
+    if (modal.value || state.saving || !edit || !item || item.key !== edit.key) { cancelCurrentPlacement(); return false }
+    if (samePose(edit.before, item)) { placement.value = null; placementMessage.value = ''; redraw(); return true }
+    const problem = selectedPlacementProblems()[0]
+    if (problem) { cancelCurrentPlacement(); placementMessage.value = problem + ' The piece was returned to its previous position.'; return false }
+    const before = edit.before
+    placement.value = null
+    remember(item, before)
+    placementMessage.value = 'Placement kept in your draft. Save home to keep it.'
+    redraw()
+    return true
+  }
+  function cancelPlacement(): void { pointer.cancel(); cancelCurrentPlacement() }
+  function undoPlacement(): void {
+    if (modal.value || state.saving || placing.value) return
+    const edit = placementUndo.value.pop(), item = edit && state.draft?.items.find(candidate => candidate.key === edit.key)
+    if (!edit || !item || !samePose(item, edit.after)) return
+    Object.assign(item, edit.before); state.selected = item.key
+    placementMessage.value = 'Last arrangement undone.'
+    redraw()
+  }
 
   /** Why the furniture as drawn cannot be saved, so the button can say it before the service has to. */
   const itemProblems = computed<string[]>(() => {
@@ -362,6 +481,7 @@ export function createStudio(deps: StudioDeps): Studio {
     for (const item of layout.items) {
       if (!roomAt(plan.rooms, { x: item.x * GRID, z: item.z * GRID })) { problems.push(`The ${label(item.model).toLowerCase()} is outside every room.`); continue }
       if (!blocksWalking(item.model) || unchanged(item)) continue
+      if (overlapsPlayer(item)) problems.push(`The ${label(item.model).toLowerCase()} would overlap your character. Move it clear before saving.`)
       const size = deps.footprint(item.model, item.turns)
       const point = points.find(candidate => Math.abs(candidate.pos.x - item.x * GRID) < size.width / 2 + HOME_WALK_MARGIN && Math.abs(candidate.pos.z - item.z * GRID) < size.depth / 2 + HOME_WALK_MARGIN)
       if (point) problems.push(`The ${label(item.model).toLowerCase()} blocks ${point.opening === 'entrance' ? 'the front door' : 'a doorway'}.`)
@@ -371,6 +491,9 @@ export function createStudio(deps: StudioDeps): Studio {
 
   async function save(): Promise<boolean> {
     if (!state.draft || !state.home || state.saving) return false
+    if (placing.value) { state.saveError = 'Place or cancel the piece before saving.'; return false }
+    if (!deps.online()) { state.saveError = 'You are offline. Your furniture draft is kept. Reconnect before saving.'; return false }
+    if (itemProblems.value.length) { state.saveError = itemProblems.value[0]!; return false }
     // An answer that arrives after the account changed belongs to nobody here: it is dropped, and so is its error.
     const mine = loadGeneration
     state.saving = true
@@ -675,14 +798,19 @@ export function createStudio(deps: StudioDeps): Studio {
   }
 
   /** An edit made while a price is open would change what the price is for. Refused, as nothing. */
-  const held = <A extends unknown[]>(edit: (...args: A) => void): ((...args: A) => void) => (...args) => { if (!modal.value) edit(...args) }
-  const heldPlace: Studio['place'] = (model, link) => (modal.value ? { ok: false, reason: 'Finish or close the price first.' } : place(model, link))
+  const held = <A extends unknown[]>(edit: (...args: A) => void): ((...args: A) => void) => (...args) => { if (!modal.value && !state.saving) edit(...args) }
+  const heldPlace: Studio['place'] = (model, link) => {
+    if (modal.value || state.saving) return { ok: false, reason: 'Finish the current save or price first.' }
+    cancelPlacement()
+    return place(model, link)
+  }
   const heldAdd = (): { ok: true } | { ok: false; reason: string } => (modal.value ? { ok: false, reason: 'Finish or close the price first.' } : confirmAdding())
   const heldSave = async (): Promise<boolean> => (modal.value ? false : save())
 
   return {
     state, type, dirty, planDirty, selectedItem, placedIn, ownedOf, spare, itemProblems, label, now: deps.now,
     load, refresh, reset, adopt, place: heldPlace, select, nudge: held(nudge), turn: held(turn), moveTo: held(moveTo), sendToRoom: held(sendToRoom), putAway: held(putAway), save: heldSave,
+    placing, canUndoPlacement, placementProblems, placementNotice, beginPlacement, movePlacement, finishPlacement, cancelPlacement, undoPlacement, pointerEditing,
     discard: held(discard), setQuantity: held(setQuantity), askFurniture,
     adoptPlan: held(adoptPlan), pickRoom: held(pickRoom), startAdding: held(startAdding), sizeAdding: held(sizeAdding), spotsForAdding, moveAdding: held(moveAdding), confirmAdding: heldAdd,
     cancelAdding: held(cancelAdding), resizeRoom: held(resizeRoom), recolour: held(recolour), removeRoom: held(removeRoom), moveDoor: held(moveDoor), addDoor: held(addDoor), removeDoor: held(removeDoor), moveFront: held(moveFront),
