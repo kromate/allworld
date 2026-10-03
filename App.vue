@@ -293,7 +293,7 @@ onBeforeUnmount(() => { stopBuildChecks?.(); releaseCounts?.(); window.removeEve
         <button class="btn block" type="button" :disabled="guest.access.pending" @click="guest.useAnother">Use another account</button>
         <button class="btn ghost block" type="button" @click="guest.cancelAccess">Cancel</button>
       </template>
-      <AccountAccess v-else class="access-form" :pending="guest.access.pending" :error="guest.access.error" :password-policy="guest.passwordPolicy()" :google-sign-in="guest.googleAvailable.value ? guest.submitGoogleAccess : undefined" @submit="guest.submitAccess" @cancel="guest.cancelAccess" />
+      <AccountAccess v-else class="access-form" :pending="guest.access.pending" :error="guest.access.error" :password-policy="guest.passwordPolicy()" :google-sign-in="guest.googleAvailable.value ? guest.submitGoogleAccess : undefined" :google-prepare="guest.googleAvailable.value ? guest.prepareGoogleAccess : undefined" @submit="guest.submitAccess" @cancel="guest.cancelAccess" />
     </div>
   </main>
 

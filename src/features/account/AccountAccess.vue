@@ -28,13 +28,14 @@ export interface AccountPasswordPolicy {
 // with no error is read as success and wipes the password; an error keeps both fields so a retry costs
 // nothing. The inputs are left uncontrolled and read when the form is submitted, so a password
 // manager's autofill is never missed and no password sits in reactive state.
-import { collectGoogleCredential } from './googleIdentity.ts'
-import type { GoogleCredentialCollector } from '../../platform/account.ts'
-import { computed, nextTick, onBeforeUnmount, ref, useId, watch } from 'vue'
+import { createGoogleButton } from './googleIdentity.ts'
+import type { GoogleCredentialCollector, GooglePreparedAttempt } from '../../platform/account.ts'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, useId, watch } from 'vue'
 
 const props = withDefaults(defineProps<{
   /** The caller's request is under way: submitting and switching are blocked, cancel stays available. */
-  googleSignIn?: (collect: GoogleCredentialCollector) => Promise<void>
+  googlePrepare?: (signal: AbortSignal) => Promise<GooglePreparedAttempt>
+  googleSignIn?: (collect: GoogleCredentialCollector, prepared?: GooglePreparedAttempt) => Promise<void>
   pending?: boolean
   /** Set in the same update that clears `pending`, or the form reads the end of the request as success. */
   error?: AccountFormError | null
@@ -66,26 +67,36 @@ const emailEl = ref<HTMLInputElement | null>(null)
 const passwordEl = ref<HTMLInputElement | null>(null)
 const emailDraft = ref(props.initialEmail)
 const reveal = ref(false)
-const googleBusy = ref(false)
+const googlePhase = ref<'idle' | 'loading' | 'ready' | 'active' | 'failed'>('idle')
+const googleBusy = computed(() => googlePhase.value === 'active')
 const googleHost = ref<HTMLElement | null>(null)
-const googleError = ref('')
-let googleStop: AbortController | null = null
-
-async function chooseGoogle() {
-  if (!props.googleSignIn || props.pending || googleBusy.value) return
-  googleBusy.value = true; googleError.value = ''; wipe()
-  const own = new AbortController(); googleStop = own
-  try {
-    await props.googleSignIn(async (input, signal) => {
+let googleButton: ReturnType<typeof createGoogleButton> | null = null
+let offGoogleFocus: (() => void) | null = null
+function retryGoogle(): void { googleButton?.retry() }
+onMounted(() => {
+  googleButton = createGoogleButton({
+    host: () => googleHost.value,
+    foreground: () => document.visibilityState === 'visible' && document.hasFocus(),
+    enabled: () => Boolean(props.googleSignIn && props.googlePrepare && (!props.pending || googleBusy.value)),
+    prepare: signal => {
+      if (!props.googlePrepare) return Promise.reject(new Error('Google is not available.'))
+      return props.googlePrepare(signal)
+    },
+    async signIn(collect, prepared) {
+      if (!props.googleSignIn) throw new Error('Google is not available.')
+      await props.googleSignIn(collect, prepared)
       await nextTick()
-      const combined = AbortSignal.any([signal, own.signal])
-      combined.throwIfAborted()
-      if (!googleHost.value) throw new Error('Google sign-in form is closed.')
-      return collectGoogleCredential(googleHost.value, input, combined)
-    })
-  } catch { if (!own.signal.aborted) googleError.value = 'Google sign-in did not finish. Try again or use your password.' }
-  finally { own.abort(); if (googleStop === own) googleStop = null; googleBusy.value = false }
-}
+      if (props.error) throw new Error('Google sign-in did not finish.')
+    },
+    present: phase => { googlePhase.value = phase },
+    onChoose: () => { wipe(); fieldErrors.value = {}; errorHidden.value = true },
+  })
+  const focus = (): void => googleButton?.foregroundChanged()
+  window.addEventListener('focus', focus); window.addEventListener('blur', focus); document.addEventListener('visibilitychange', focus)
+  offGoogleFocus = () => { window.removeEventListener('focus', focus); window.removeEventListener('blur', focus); document.removeEventListener('visibilitychange', focus) }
+  googleButton.start()
+})
+watch(() => [props.googleSignIn, props.googlePrepare, props.pending], () => { void nextTick(() => googleButton?.foregroundChanged()) })
 const fieldErrors = ref<{ email?: string; password?: string }>({})
 const errorHidden = ref(false)
 let latched = false
@@ -119,7 +130,7 @@ function check(email: string, password: string) {
 }
 
 function submit() {
-  if (props.pending || latched) return
+  if (props.pending || googleBusy.value || latched) return
   const email = emailEl.value?.value.trim() ?? ''
   const password = passwordEl.value?.value ?? ''
   const found = check(email, password)
@@ -129,17 +140,18 @@ function submit() {
   if (first) { first.focus(); return }
   // Held until the caller's `pending` has rendered, so a second Enter in the same moment sends nothing.
   latched = true
+  googleButton?.pauseIdle()
   emit('submit', { mode: mode.value, email, password })
   void nextTick(() => { latched = false })
 }
 
 function choose(next: AccountMode) {
-  if (props.pending || next === mode.value) return
+  if (props.pending || googleBusy.value || next === mode.value) return
   mode.value = next
 }
 
 function cancel() {
-  googleStop?.abort()
+  googleButton?.cancel()
   wipe()
   fieldErrors.value = {}
   emit('cancel')
@@ -170,34 +182,26 @@ watch(() => props.pending, (now, was) => {
   if (field) void nextTick(() => (field === 'email' ? emailEl.value : passwordEl.value)?.focus())
 })
 
-onBeforeUnmount(() => { googleStop?.abort(); wipe() })
+onBeforeUnmount(() => { offGoogleFocus?.(); googleButton?.dispose(); wipe() })
 defineExpose({ /** Wipe the password now, for a caller that learns of success another way. */ clear: wipe })
 </script>
 
 <template>
   <div class="access stack" :aria-busy="pending">
-    <button v-if="googleSignIn && !googleBusy" class="btn block google-start" type="button" :disabled="pending" @click="chooseGoogle">Continue with Google</button>
-    <section v-if="googleBusy" class="stack" aria-label="Choose your Google account">
-      <p>Choose your Google account below. Nothing is saved to it until you confirm the account.</p>
-      <div ref="googleHost" class="google-host" @keydown.stop @keyup.stop></div>
-      <small>Google only shares your sign-in identity. Choose within 30 seconds, or start again.</small>
-      <button class="btn ghost block" type="button" @click="cancel">Cancel Google sign-in</button>
-    </section>
-    <p v-if="googleError && !pending" class="notice coral" role="alert">{{ googleError }}</p>
-    <div v-if="!googleBusy" class="tabs" role="group" aria-label="Account action">
+    <div class="tabs" role="group" aria-label="Account action">
       <button
         v-for="option in MODES" :key="option.id" class="tab" type="button"
-        :aria-pressed="mode === option.id" :aria-disabled="pending || undefined" @click="choose(option.id)"
+        :aria-pressed="mode === option.id" :aria-disabled="pending || googleBusy || undefined" @click="choose(option.id)"
       >{{ option.label }}</button>
     </div>
 
-    <form v-if="!googleBusy" :key="mode" class="stack" method="post" novalidate :aria-label="creating ? 'Create account' : 'Sign in'" @submit.prevent="submit">
+    <form :key="mode" class="stack" method="post" novalidate :aria-label="creating ? 'Create account' : 'Sign in'" @submit.prevent="submit">
       <div class="field">
         <label class="label" :for="ids.email">Email</label>
         <input
           :id="ids.email" ref="emailEl" class="input" type="email" name="email" required
           :autocomplete="creating ? 'email' : 'username'" autocapitalize="off" autocorrect="off" spellcheck="false"
-          :readonly="pending" :aria-invalid="emailMessage ? 'true' : undefined"
+          :readonly="pending || googleBusy" :aria-invalid="emailMessage ? 'true' : undefined"
           :aria-describedby="emailMessage ? ids.emailNote : undefined" @input="edited"
         >
         <small v-if="emailMessage" :id="ids.emailNote" class="problem">{{ emailMessage }}</small>
@@ -209,7 +213,7 @@ defineExpose({ /** Wipe the password now, for a caller that learns of success an
           <input
             :id="ids.password" ref="passwordEl" class="input grow" :type="reveal ? 'text' : 'password'" name="password" required
             :autocomplete="creating ? 'new-password' : 'current-password'" autocapitalize="off" autocorrect="off" spellcheck="false"
-            :readonly="pending" :aria-invalid="passwordMessage ? 'true' : undefined" :aria-describedby="passwordNotes" @input="edited"
+            :readonly="pending || googleBusy" :aria-invalid="passwordMessage ? 'true' : undefined" :aria-describedby="passwordNotes" @input="edited"
           >
           <button
             class="btn sm reveal" type="button" :aria-controls="ids.password"
@@ -226,15 +230,29 @@ defineExpose({ /** Wipe the password now, for a caller that learns of success an
         <strong class="grow">{{ creating ? 'Creating your account…' : 'Signing you in…' }}</strong>
       </div>
 
-      <button class="btn primary block" type="submit" :aria-disabled="pending || undefined">{{ creating ? 'Create account' : 'Sign in' }}</button>
-      <button v-if="cancelable" class="btn ghost block" type="button" @click="cancel">Cancel</button>
+      <button class="btn primary block" type="submit" :aria-disabled="pending || googleBusy || undefined">{{ creating ? 'Create account' : 'Sign in' }}</button>
     </form>
+    <section v-if="googleSignIn && googlePrepare" class="google-section stack" aria-label="Google sign-in">
+      <div class="google-divider" aria-hidden="true"><span>or</span></div>
+      <div ref="googleHost" class="google-host" :class="{ 'google-active': googleBusy }" @keydown.stop @keyup.stop></div>
+      <p v-if="googlePhase === 'loading'" class="google-note" role="status">Loading Google…</p>
+      <p v-else-if="googleBusy" class="google-note" role="status">Complete sign-in in Google. You can cancel below.</p>
+      <template v-else-if="googlePhase === 'failed'">
+        <p class="google-note" role="status">Google is unavailable right now. Use your password or try again.</p>
+        <button class="btn ghost block" type="button" :disabled="pending" @click="retryGoogle">Try loading Google again</button>
+      </template>
+    </section>
+    <button v-if="cancelable" class="btn ghost block" type="button" @click="cancel">Cancel</button>
   </div>
 </template>
 
 <style scoped>
-.google-host { min-height: 44px; max-width: 100%; overflow: hidden; }
-.google-start { background: var(--surface); border: 1px solid var(--line, #c6c1b6); }
+.google-section { min-width: 0; gap: .65rem; }
+.google-divider { display: flex; align-items: center; gap: .75rem; color: var(--muted); font-size: .85rem; }
+.google-divider::before, .google-divider::after { content: ''; flex: 1; height: 1px; background: var(--line, #d7d0c4); }
+.google-host { display: flex; justify-content: center; min-height: 44px; width: 100%; min-width: 0; max-width: 100%; }
+.google-active { pointer-events: none; }
+.google-note { margin: 0; color: var(--muted); font-size: .85rem; line-height: 1.4; }
 .access { max-width: 100%; }
 .tab[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 3px rgba(40, 30, 10, 0.12); }
 .tab[aria-disabled="true"], .btn[aria-disabled="true"] { opacity: 0.5; cursor: not-allowed; }

@@ -97,7 +97,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "f388599e6471ad0f309882b19b3ee435da95bc3bf91144f13f9529d20f32967e"
+      "sha256": "3e59ca51ab44dc942928b00b73fad7b52ef30f1999146e8af958c0b4a2302e3f"
     },
     "CONTRIBUTING.md": {
       "kind": "documentation",
@@ -2909,7 +2909,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "51e40434a08197190c36a3165cbf68b89421e3c39b6f73d1b172510fb5549215"
+      "sha256": "846e7a4607d2b1040dd6d2a285c33e143392982c30c3c19ae5a95a446c6ec77f"
     },
     "src/features/guest/GuestConflict.vue": {
       "kind": "source",
@@ -2954,7 +2954,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "966a489518343ae97a781f3c1da1c130d098576c7c30cd875e4104a1217f0479"
+      "sha256": "bb73a3ef7aa1f96ec97229f4998e028af8354ecc16ba1b245113e1a8f9504523"
     },
     "src/features/guest/GuestWelcome.vue": {
       "kind": "source",
@@ -2972,7 +2972,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "1eb6b822da49010fa057b2534f04f3f7ba35507c03bd55fff4b0d4dfc64406a9"
+      "sha256": "38d2ab76205146d26221137e4e0a3dda90c26692c84b5bb3b58815252c85d844"
     },
     "src/features/guest/guestHooks.ts": {
       "kind": "source",
@@ -2981,7 +2981,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "c9f72cec38659c730dc8a6cb7e8a3c5398c23350989f674a1fe87a8c5ecbcee3"
+      "sha256": "541e4df2eadd996abef6557bc0801e0d30356aaeba86369b648482e674b733a9"
     },
     "src/features/guest/guestMay.ts": {
       "kind": "source",
@@ -4196,7 +4196,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "61e1687d76d3e940cbd9074d8bf4136ff4e30de691cfc572828b3b17ac40870f"
+      "sha256": "86f7d71cd09b18ea6c95c7312bcc347ff1be2bec4cf08ffc24c25ab1ed892d20"
     },
     "src/state/arena.ts": {
       "kind": "source",
@@ -5093,7 +5093,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "32a4ab24ee24e4e7d8b83f80306b4f02a4f053db50607125e40aa0ba3fdc6c3d"
+      "sha256": "bd96aebadb3b1410e398dcbbb95c3b5517fbc6e4d7f97baa7cef61ef0e30f1cd"
     },
     "src/features/account/googleIdentity.ts": {
       "kind": "source",
@@ -5102,7 +5102,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "525055cefbefd3471e76535c671aacc5caed02b993466a79b055e6cdec477072"
+      "sha256": "f9db821c3e51594bbf375fa4b075af55c80ebd65f3590f666f1bc8b1cc035bcc"
     },
     "src/platform/account.ts": {
       "kind": "source",
@@ -5111,7 +5111,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "72fcab453731f5dc8daafaf18c81b24d1ddd5d23866c4c713611e0cc6dd3747f"
+      "sha256": "8a7faf0a5a2c5f2f5b5a5067d994475299bdd864deb951f9700bd4799aba24f6"
     },
     "service/homeBuilding.ts": {
       "kind": "source",

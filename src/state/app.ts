@@ -9,7 +9,7 @@ import type { Gateway, LinkState, LocalActorInfo } from '../platform/gateway.ts'
 import { hostedWorldConfig, localActorKey, runtimeMode, setLocalActorKey } from '../platform/runtime.ts'
 import type { HostedWorldSetup } from '../platform/runtime.ts'
 import { accountApi } from '../platform/account.ts'
-import type { AccountApi, AccountUser, CancelResult, GoogleCredentialCollector } from '../platform/account.ts'
+import type { AccountApi, AccountUser, CancelResult, GoogleCredentialCollector, GooglePreparedAttempt } from '../platform/account.ts'
 import { openGuest, storedGuest, forgetGuest, guestRequest, submitGuestClaim, guestStorageScope, storedSessionChoice, rememberSessionChoice } from '../platform/guestService.ts'
 import { UpdateRequiredError, openHostedWorldSession } from '../platform/hostedService.ts'
 import { takeTransfer } from '../platform/transferFragment.ts'
@@ -563,11 +563,17 @@ export async function googleAccountConfiguration(signal?: AbortSignal): Promise<
   const api = account()
   return api?.available ? api.googleConfiguration(signal) : null
 }
-/** The provider proves the chosen account. Guest possession and claim remain the controller's job. */
-export async function authenticateGoogle(collect: GoogleCredentialCollector): Promise<AccountUser> {
+/** Passive button readiness only. Does not hold a guest or change the current account. */
+export async function prepareGoogleAuthentication(signal?: AbortSignal): Promise<GooglePreparedAttempt> {
   const api = account()
   if (!api?.available) throw new WorldError('unavailable', 'Accounts are not available on this page.')
-  return api.signInGoogle(collect)
+  return api.prepareGoogle(signal)
+}
+/** The provider proves the chosen account. Guest possession and claim remain the controller's job. */
+export async function authenticateGoogle(collect: GoogleCredentialCollector, prepared?: GooglePreparedAttempt): Promise<AccountUser> {
+  const api = account()
+  if (!api?.available) throw new WorldError('unavailable', 'Accounts are not available on this page.')
+  return api.signInGoogle(collect, prepared)
 }
 /** The visitor stopped waiting. The server is asked to cancel that exact attempt; this resolves with its receipt, or without one. */
 export async function cancelAuthentication(): Promise<CancelResult> {
