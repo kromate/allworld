@@ -2602,7 +2602,7 @@
       ],
       "path": "scripts/source-export-reference.json",
       "root": "project",
-      "sha256": "8b4ac507744f0ffd7d407a5f4851248ca91a2b4bae3e0702ecc7d86bb8d3562c",
+      "sha256": "534e89ae2abe3429f4d58a3490422f534a0a1ec4959fa006ac3caeb46d6d320e",
       "target": "scripts/source-export-reference.json"
     },
     {
@@ -7549,7 +7549,7 @@
       "target": "src/world/districtScene.ts"
     },
     {
-      "bytes": 92148,
+      "bytes": 92266,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -7558,7 +7558,7 @@
       ],
       "path": "src/world/engine.ts",
       "root": "project",
-      "sha256": "ce0ec70cdab2640499bd5aec19eb6537c5ce3b0af158eb917111e2e68108e6f2",
+      "sha256": "c17237fb439876016a0c3f78275b6209ec0566b4ac656965f8d654197c807696",
       "target": "src/world/engine.ts"
     },
     {
