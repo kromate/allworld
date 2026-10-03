@@ -1,5 +1,22 @@
 {
-  "exclusions": [],
+  "exclusions": [
+    {
+      "path": ".git/",
+      "reason": "excluded-path"
+    },
+    {
+      "path": ".goalmatic/",
+      "reason": "excluded-path"
+    },
+    {
+      "path": "dist/",
+      "reason": "excluded-path"
+    },
+    {
+      "path": "node_modules/",
+      "reason": "excluded-path"
+    }
+  ],
   "files": [
     {
       "bytes": 853,
@@ -132,7 +149,7 @@
       "target": "AGENTS.md"
     },
     {
-      "bytes": 43610,
+      "bytes": 43999,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -141,7 +158,7 @@
       ],
       "path": "App.vue",
       "root": "project",
-      "sha256": "a0442805da174948bff34804fa1bfd1695b4640b75b3f4bdffd6eab8ca963546",
+      "sha256": "69fc150d987599d541028386617c9d45a73bef34816c5c1a5668da64c5c808d0",
       "target": "App.vue"
     },
     {
@@ -2466,7 +2483,7 @@
       "target": "scripts/source-export-install.py"
     },
     {
-      "bytes": 142723,
+      "bytes": 142972,
       "kind": "tooling",
       "license": "Apache-2.0",
       "notices": [
@@ -2475,7 +2492,7 @@
       ],
       "path": "scripts/source-export-reference.json",
       "root": "project",
-      "sha256": "9fbe2fab5c6b61009bcc5e6cfd8f5c8c8f6da63715f8c9cb4c8be418ce7a406c",
+      "sha256": "757292ea60a44ba2ab90d4aabcbcad67c3d31ff0d1040d10fc97377a799191cb",
       "target": "scripts/source-export-reference.json"
     },
     {
@@ -4809,7 +4826,7 @@
       "target": "src/features/home/HomeBuyPanel.vue"
     },
     {
-      "bytes": 2155,
+      "bytes": 2157,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -4818,7 +4835,7 @@
       ],
       "path": "src/features/home/HomeDock.vue",
       "root": "project",
-      "sha256": "404c4d1d7b2d485c0118c9d4921416296154e4da3d87c52d452e4608112cf54f",
+      "sha256": "70f26e885707223432d7d1b73c94a27dec45532f3a440597f3743d6a2881b20f",
       "target": "src/features/home/HomeDock.vue"
     },
     {
@@ -5030,7 +5047,7 @@
       "target": "src/features/inbox/InboxPage.vue"
     },
     {
-      "bytes": 31460,
+      "bytes": 31173,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -5039,7 +5056,7 @@
       ],
       "path": "src/features/life/LifeActions.vue",
       "root": "project",
-      "sha256": "6e14ba5d1c7430ae5da1d3e4e7ff16c2c33a6b81f66781928efc8b9c57a9e9aa",
+      "sha256": "f915fe219cd410aa9eae55f10eedefc19e99b8ad0a39d0ccece2a6721f0c12e6",
       "target": "src/features/life/LifeActions.vue"
     },
     {
@@ -6239,7 +6256,7 @@
       "target": "src/features/world/WorldRoute.vue"
     },
     {
-      "bytes": 57032,
+      "bytes": 56975,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -6248,7 +6265,7 @@
       ],
       "path": "src/features/world/WorldStage.vue",
       "root": "project",
-      "sha256": "fcda7f0168e1ce8a941e85fa6a80c3345bead933b7dd1cabf94efef7e82bfb75",
+      "sha256": "3ce4738aae78a83a170edafcbbdfd536e4609d7f1615804a82f235329c850718",
       "target": "src/features/world/WorldStage.vue"
     },
     {
@@ -6980,7 +6997,7 @@
       "target": "src/state/vehicles.ts"
     },
     {
-      "bytes": 50177,
+      "bytes": 50523,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -6989,7 +7006,7 @@
       ],
       "path": "src/state/world.ts",
       "root": "project",
-      "sha256": "e6f94a72515288e1e72f0c74ce6a6f2563dd0a3ae6a3297941fbd585814c38cc",
+      "sha256": "4407169164f85f22e2ad4266bec433c98ca01a21858810635287573018a1db66",
       "target": "src/state/world.ts"
     },
     {
@@ -7162,7 +7179,7 @@
       "target": "src/ui/UpdateNotice.vue"
     },
     {
-      "bytes": 11826,
+      "bytes": 11875,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -7171,7 +7188,7 @@
       ],
       "path": "src/ui/base.css",
       "root": "project",
-      "sha256": "981e1c1a524b258b0fd88b3b9b8a4f2d1db418fdf7ef67381f864476f7405b6b",
+      "sha256": "c759d25cee7e9c26dccfac762e34910daf676cf1f97da2d9121493e27d2c25ad",
       "target": "src/ui/base.css"
     },
     {
@@ -7383,7 +7400,7 @@
       "target": "src/world/districtScene.ts"
     },
     {
-      "bytes": 84048,
+      "bytes": 85499,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -7392,7 +7409,7 @@
       ],
       "path": "src/world/engine.ts",
       "root": "project",
-      "sha256": "ead116aa684b6b54ac98075164f89860da8c56bf770c79834ce62309012a8864",
+      "sha256": "6b26a7a9bbd21f1de880690ca10831bbf59340f8c572a4a77e484ae4df0d9cb9",
       "target": "src/world/engine.ts"
     },
     {

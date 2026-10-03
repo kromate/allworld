@@ -47,6 +47,8 @@
 
 * { box-sizing: border-box; }
 html, body, #app { height: 100%; }
+body { height: 100dvh; }
+#app { min-height: 0; }
 body { margin: 0; min-width: 320px; overflow: hidden; font-size: 15px; line-height: 1.45; }
 h1, h2, h3, h4, p { margin: 0; }
 h1 { font-size: 1.55rem; letter-spacing: -0.02em; line-height: 1.15; }

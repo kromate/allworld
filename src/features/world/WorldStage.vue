@@ -38,7 +38,7 @@ import { channelLevel, channels, setChannelMuted } from '../../state/sound.ts'
 import AssetProgress from '../../ui/AssetProgress.vue'
 import HudIcon from '../../ui/HudIcon.vue'
 import { driveAllowed, footBlocked, keysBlocked, overlayOpen, permits, seated, syncEngine, useHold } from '../../ui/gameInput.ts'
-import { createOnce, fullscreenAvailable, inFullscreen, toggleFullscreen, useMedia } from '../../ui/hudDevice.ts'
+import { fullscreenAvailable, inFullscreen, toggleFullscreen, useMedia } from '../../ui/hudDevice.ts'
 import { factsOf, isTyping, worldKey } from '../../ui/hudKeys.ts'
 import { PRIORITY, interactionForKey, interactions, useInteraction } from '../../ui/interaction.ts'
 import type { Interaction } from '../../ui/interaction.ts'
@@ -93,7 +93,6 @@ const credits = ref<HTMLElement | null>(null)
 // ── What the device is ──
 const coarse = useMedia('(pointer: coarse)')
 const keyboard = useMedia('(hover: hover) and (pointer: fine)')
-const portraitPhone = useMedia('(pointer: coarse) and (max-width: 600px) and (orientation: portrait)')
 const portraitLayout = useMedia('(max-width: 720px) and (orientation: portrait)')
 
 // ── Panels: one at a time ──
@@ -293,19 +292,6 @@ watch(() => [world.state, world.title, world.kind] as const, sayPlace)
 // Crossing into another street is worth a line, but not every few seconds.
 watch(() => world.street, () => { if (Date.now() - placeHintAt > 12_000) sayPlace() })
 
-// ── Portrait phones: a brief nudge towards landscape, once ──
-const once = createOnce('allworld:hud:rotate-hint', () => window.sessionStorage)
-const rotateHint = ref(false)
-let rotateTimer = 0
-function dismissRotate(): void { rotateHint.value = false; window.clearTimeout(rotateTimer) }
-watch(() => [portraitPhone.value, world.state] as const, ([portrait, state]) => {
-  if (!portrait) { dismissRotate(); return }
-  if (state !== 'ready' || once.seen()) return
-  once.mark()
-  rotateHint.value = true
-  rotateTimer = window.setTimeout(dismissRotate, 9000)
-}, { immediate: true })
-
 // ── Full screen: only from a press, only where the browser has it ──
 const fullscreenOk = ref(false)
 const full = ref(false)
@@ -352,7 +338,6 @@ onBeforeUnmount(() => {
   window.clearInterval(mapTimer)
   window.clearTimeout(walkingTimer)
   window.clearTimeout(placeHintTimer)
-  window.clearTimeout(rotateTimer)
   // The chat field gives the keyboard back before it goes (its hold is released with the component).
   chatFocused.value = false
   detachCanvas()
@@ -364,7 +349,7 @@ const chatLabel = computed(() => (chatUnseen.value ? `Nearby chat, ${chatUnseen.
 </script>
 
 <template>
-  <div ref="stage" class="stage" :class="{ dimmed, sheet, coarse, 'panel-bottom': bottomPanel }">
+  <div ref="stage" class="stage" :class="{ dimmed, sheet, coarse, home: world.kind === 'home', 'panel-bottom': bottomPanel }">
     <canvas ref="canvas" class="canvas" tabindex="0" :aria-label="`3D view of ${world.title || 'the world'}. Use W A S D or the arrow keys to walk, or open the places list with L.`"></canvas>
 
     <!-- Loading and failure -->
@@ -403,20 +388,16 @@ const chatLabel = computed(() => (chatUnseen.value ? `Nearby chat, ${chatUnseen.
       <div v-show="!dimmed" class="hud-live">
         <!-- One-line hints: where you are, a walk under way, hunger, a shift, something to answer. They fade or are dismissed; none is idle chrome. -->
         <div class="hints">
-          <p v-if="rotateHint" class="hint" role="status">
-            <HudIcon name="rotate" :size="18" />
-            <span class="hint-text">Landscape gives you more room.</span>
-            <button class="hint-x" type="button" aria-label="Dismiss" @click="dismissRotate"><HudIcon name="close" :size="16" /></button>
-          </p>
           <p v-if="placeHint" class="hint" role="status"><HudIcon name="pin" :size="18" /><span class="hint-text truncate">{{ placeHint }}</span></p>
           <p v-if="world.homeWalk.kind === 'walking'" class="hint" role="status"><HudIcon name="walk" :size="18" /><span class="hint-text truncate">{{ Math.ceil(world.homeWalk.metres) }} m to {{ world.homeWalk.name }}</span></p>
           <RouterLink v-else-if="world.homeWalk.kind === 'travel'" class="hint" to="/travel"><HudIcon name="compass" :size="18" /><span class="hint-text">Travel to {{ world.homeWalk.to.label }} to walk home</span></RouterLink>
           <p v-else-if="world.homeWalk.kind === 'unavailable'" class="hint" role="status"><span class="hint-text">{{ world.homeWalk.message }}</span></p>
           <p v-if="walking" class="hint" role="status"><HudIcon name="walk" :size="18" /><span class="hint-text">{{ walking }}</span></p>
-          <HomeDock />
         <LifeActions />
           <SocialHud v-model:panel="socialPanel" :panel-host="panelHost" @attention="peopleAttention = $event" />
         </div>
+
+        <div class="home-tools"><HomeDock /></div>
 
         <!-- Right edge: five quiet icon buttons. Each opens one panel; pressing it again closes it. -->
         <nav class="rail" aria-label="World">
@@ -631,6 +612,8 @@ const chatLabel = computed(() => (chatUnseen.value ? `Nearby chat, ${chatUnseen.
 .hints > * { pointer-events: auto; }
 .hint { display: flex; align-items: center; gap: 8px; max-width: 100%; padding: 6px 8px 6px 12px; border-radius: 999px; background: rgba(28, 26, 36, 0.8); color: #fff; font-size: 0.86rem; font-weight: 600; line-height: 1.25; box-shadow: 0 2px 10px rgba(20, 14, 6, 0.28); animation: hint-in 0.18s ease-out; }
 .hint-text { min-width: 0; }
+.home-tools { position: absolute; z-index: 4; top: calc(var(--shell-top) + 6px); left: var(--pad-l); right: calc(var(--pad-r) + var(--tap) + 10px); display: flex; justify-content: flex-start; pointer-events: none; }
+.stage.home .hints { top: calc(var(--shell-top) + 58px); left: var(--pad-l); align-items: flex-start; }
 .hint-x { display: grid; place-items: center; width: var(--tap); height: var(--tap); margin: -10px -8px -10px 0; border: 0; border-radius: 50%; background: transparent; color: rgba(255, 255, 255, 0.85); }
 .hint-x:hover { background: rgba(255, 255, 255, 0.12); }
 @keyframes hint-in { from { transform: translateY(-4px); opacity: 0; } }
@@ -646,7 +629,7 @@ const chatLabel = computed(() => (chatUnseen.value ? `Nearby chat, ${chatUnseen.
 /* ── The one open panel: right of the rail, below the top edge, above the action ── */
 .hud-panel { position: absolute; z-index: 6; top: var(--pad-t); right: calc(var(--pad-r) + var(--tap) + 10px); width: min(360px, calc(100% - var(--pad-l) - var(--pad-r) - var(--tap) - 20px)); max-height: calc(100% - var(--pad-t) - var(--pad-b) - 70px); display: flex; flex-direction: column; border-radius: 20px; outline: none; overflow: hidden; background: rgba(255, 253, 249, 0.97); animation: panel-in 0.16s ease-out; }
 @keyframes panel-in { from { transform: translateY(-6px); opacity: 0; } }
-.hud-panel-head { display: flex; align-items: center; gap: 8px; padding: 6px 6px 2px 14px; }
+.hud-panel-head { flex: none; display: flex; align-items: center; gap: 8px; padding: 6px 6px 2px 14px; }
 .hud-panel-head h2 { font-size: 1.02rem; }
 .hud-close { display: grid; place-items: center; flex: none; width: var(--tap); height: var(--tap); border: 0; border-radius: 50%; background: transparent; color: var(--ink-2); }
 .hud-close:hover { background: var(--surface-3); }
@@ -696,7 +679,7 @@ const chatLabel = computed(() => (chatUnseen.value ? `Nearby chat, ${chatUnseen.
 .act-target { max-width: 17ch; font-size: 0.74rem; font-weight: 650; opacity: 0.85; }
 .act .kbd { margin-left: 2px; background: rgba(255, 255, 255, 0.85); }
 @keyframes act-in { from { transform: translateY(6px) scale(0.97); opacity: 0; } }
-.more-btn { position: relative; display: grid; place-items: center; width: var(--tap); height: var(--tap); padding: 0; margin-bottom: 7px; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 50%; background: rgba(28, 26, 36, 0.7); color: #fff; box-shadow: 0 2px 8px rgba(20, 14, 6, 0.22); }
+.more-btn { flex: none; position: relative; display: grid; place-items: center; width: var(--tap); height: var(--tap); padding: 0; margin-bottom: 7px; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 50%; background: rgba(28, 26, 36, 0.7); color: #fff; box-shadow: 0 2px 8px rgba(20, 14, 6, 0.22); }
 .more-btn[aria-expanded="true"] svg { transform: rotate(180deg); }
 .more-count { position: absolute; top: -4px; right: -4px; min-width: 18px; padding: 0 4px; border-radius: 999px; background: var(--accent); color: var(--accent-ink); font-size: 0.68rem; font-weight: 800; line-height: 18px; text-align: center; }
 .more-list { position: absolute; right: 0; bottom: calc(100% + 8px); width: min(300px, calc(100vw - 24px)); display: flex; flex-direction: column; gap: 2px; padding: 6px; border-radius: 18px; background: rgba(255, 253, 249, 0.98); box-shadow: var(--shadow-lg); }
@@ -724,20 +707,26 @@ const chatLabel = computed(() => (chatUnseen.value ? `Nearby chat, ${chatUnseen.
 
 /* ── Portrait phone: the cluster, then the minimap, then hints under it; panels rise from the bottom ── */
 @media (max-width: 720px) and (orientation: portrait) {
-  .stage { --cluster: 0px; }
+  .stage { --cluster: 0px; --map: 68px; }
   .hints { top: calc(var(--shell-top) + var(--map) + 14px); left: var(--pad-l); }
   .hud-panel { top: auto; left: var(--pad-l); right: var(--pad-r); bottom: var(--pad-b); width: auto; max-height: min(64dvh, calc(100% - var(--shell-top) - var(--pad-b) - 12px)); }
 }
 /* The class comes from the same computed that releases the thumb pad (bottomPanel), so the pad is never hidden without being let go. */
-.stage.panel-bottom .dock, .stage.panel-bottom .stick-slot, .stage.panel-bottom .credits { display: none; }
+.stage.panel-bottom .dock, .stage.panel-bottom .stick-slot, .stage.panel-bottom .credits, .stage.panel-bottom .home-tools, .stage.panel-bottom .hints { display: none; }
 @media (max-width: 720px) and (orientation: portrait) {
-  .decision { max-height: 40dvh; }
+  .decision { max-height: min(40dvh, calc(100% - var(--shell-top) - 148px)); }
+  .act { padding: 0 12px; gap: 6px; }
+  .dock { max-width: calc(100% - var(--pad-l) - var(--pad-r) - 134px); gap: 6px; }
+  .act-target { max-width: 12ch; }
   .decision.over { left: var(--pad-l); right: var(--pad-r); width: auto; }
 }
 /* ── Short landscape (a phone on its side): everything tightens, targets stay 44 px ── */
 @media (max-height: 460px) and (orientation: landscape) {
   .stage { --edge: 8px; --cluster: 224px; }
-  .rail { gap: 4px; }
+  .rail { display: grid; grid-template-columns: repeat(2, var(--tap)); gap: 4px; }
+  .hints { top: calc(var(--shell-top) + 6px); left: calc(var(--pad-l) + var(--map) + 14px); right: calc(var(--pad-r) + 2 * var(--tap) + 14px); }
+  .hud-panel { right: calc(var(--pad-r) + 2 * var(--tap) + 14px); }
+  .home-tools { right: calc(var(--pad-r) + 2 * var(--tap) + 14px); }
   .act { min-height: 54px; }
   .hud-panel { max-height: calc(100% - var(--pad-t) - var(--pad-b) - 62px); }
   .log { max-height: 24dvh; }

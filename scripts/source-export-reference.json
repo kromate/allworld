@@ -97,7 +97,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "92263393b5927374783b17c34911ba6796f576815f6f6fda9f739bdd745cdc62"
+      "sha256": "69fc150d987599d541028386617c9d45a73bef34816c5c1a5668da64c5c808d0"
     },
     "CONTRIBUTING.md": {
       "kind": "documentation",
@@ -3035,7 +3035,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "6e14ba5d1c7430ae5da1d3e4e7ff16c2c33a6b81f66781928efc8b9c57a9e9aa"
+      "sha256": "f915fe219cd410aa9eae55f10eedefc19e99b8ad0a39d0ccece2a6721f0c12e6"
     },
     "src/features/life/NeedMeter.vue": {
       "kind": "source",
@@ -3845,7 +3845,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "0864eabeefef75720d623e5fe542456b6c20ed1a0ccb4844eec83814761b9ea4"
+      "sha256": "3ce4738aae78a83a170edafcbbdfd536e4609d7f1615804a82f235329c850718"
     },
     "src/features/world/touchStick.ts": {
       "kind": "source",
@@ -4268,7 +4268,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "d3a847353f85bcfbec86a79b4be9f526e212a5ff6e14126da245fb1e30d1f465"
+      "sha256": "4407169164f85f22e2ad4266bec433c98ca01a21858810635287573018a1db66"
     },
     "src/ui/AssetProgress.vue": {
       "kind": "source",
@@ -4394,7 +4394,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "981e1c1a524b258b0fd88b3b9b8a4f2d1db418fdf7ef67381f864476f7405b6b"
+      "sha256": "c759d25cee7e9c26dccfac762e34910daf676cf1f97da2d9121493e27d2c25ad"
     },
     "src/ui/format.ts": {
       "kind": "source",
@@ -4538,7 +4538,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "b65f84bc89f9e145744f21e978a513e5f5a228ba5a3a47c78d93a0883cf38696"
+      "sha256": "6b26a7a9bbd21f1de880690ca10831bbf59340f8c572a4a77e484ae4df0d9cb9"
     },
     "src/world/facadeDetails.ts": {
       "kind": "source",
@@ -4935,6 +4935,15 @@
         "NOTICE"
       ],
       "sha256": "64a7eab6777d98854a7fd6f78e050b80cabc3fac2b018f0764c5d66228dbe1c7"
+    },
+    "src/features/home/HomeDock.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "70f26e885707223432d7d1b73c94a27dec45532f3a440597f3743d6a2881b20f"
     }
   },
   "priorManifestSha256": "491b4ac1913ba05807f1c5e3eb11f9c84ec293fb9722f5f0e39a13e8f14dab4b",
