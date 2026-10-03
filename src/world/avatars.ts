@@ -654,6 +654,7 @@ export class AvatarActor {
   private seated: SeatedPose | null = null
   private seatBlend = 0
   private placeholder: THREE.Mesh | null = null
+  private labelHead: THREE.Object3D | null = null
   /** Resolves once the model is on screen. */
   ready: Promise<void>
 
@@ -678,6 +679,13 @@ export class AvatarActor {
   get shown(): boolean { return this.rig !== null && !this.disposed }
 
   get height(): number { return castMember(this.look.body).bounds.max[2] * UNIT * this.look.height }
+
+  /** World-space head anchor follows body scaling, seating and vehicle transforms. */
+  labelAnchor(target: THREE.Vector3): void {
+    if (this.labelHead) this.labelHead.getWorldPosition(target)
+    else { this.group.getWorldPosition(target); target.y += this.height }
+    target.y += 0.35
+  }
 
   private beginLook(work: (token: number) => Promise<void>): Promise<void> {
     const token = ++this.lookGeneration
@@ -746,6 +754,7 @@ export class AvatarActor {
     this.clearRig()
     this.model = model
     this.rig = staged.rig
+    this.labelHead = this.rig.getObjectByName('Bip01_Head') ?? null
     this.meshes = staged.meshes
     this.materials = staged.materials
     this.removePlaceholder()
@@ -872,6 +881,7 @@ export class AvatarActor {
   }
 
   private clearRig(): void {
+    this.labelHead = null
     if (this.hairGroup) disposeHair(this.hairGroup)
     this.hairGroup = null; this.hairKey = ''
     this.clearHeadFit()

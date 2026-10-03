@@ -96,26 +96,35 @@ const SPRINT_SPEED = 5.2
 function nameTag(name: string, relation: PresenceMember['relation'], voice: PresenceMember['voice']): THREE.Sprite {
   const canvas = document.createElement('canvas')
   const context = canvas.getContext('2d')!
-  const font = '600 26px ui-rounded, "SF Pro Rounded", system-ui, sans-serif'
+  const font = '600 28px ui-rounded, "SF Pro Rounded", system-ui, sans-serif'
   context.font = font
-  const shortName = name.length > 18 ? `${name.slice(0, 17)}…` : name
-  const label = `${voice === 'live' ? '🎙 ' : voice === 'muted' ? '🔇 ' : ''}${shortName}`
+  // Preserve name joiners while removing other control and format characters.
+  const clean = name.normalize('NFC').replace(/[\p{Cc}\p{Cf}]/gu, character => character === '\u200c' || character === '\u200d' ? character : '').replace(/\s+/gu, ' ').trim() || 'Player'
+  const segmenter = typeof Intl.Segmenter === 'function' ? new Intl.Segmenter(undefined, { granularity: 'grapheme' }) : null
+  // Without segmentation, retain a short whole name or show an ellipsis; never split it.
+  const clusters = segmenter ? Array.from(segmenter.segment(clean), part => part.segment) : Array.from(clean).length <= 24 ? [clean] : []
+  const shown = clusters.slice(0, 24)
+  const prefix = voice === 'live' ? '🎙 ' : voice === 'muted' ? '🔇 ' : ''
+  let shortName = shown.join('') + (clusters.length > shown.length || !shown.length ? '…' : '')
+  while (shown.length && context.measureText(prefix + shortName).width > 240) { shown.pop(); shortName = shown.join('') + '…' }
+  const label = prefix + shortName
   const width = Math.ceil(context.measureText(label).width) + 34
-  canvas.width = width
-  canvas.height = 44
+  canvas.width = width * 2
+  canvas.height = 96
+  context.scale(2, 2)
   context.font = font
-  context.fillStyle = relation === 'friend' ? 'rgba(255,176,32,0.96)' : 'rgba(28,26,36,0.78)'
+  context.fillStyle = relation === 'friend' ? 'rgba(255,176,32,0.98)' : 'rgba(28,26,36,0.96)'
   context.beginPath()
-  context.roundRect(0, 0, width, 44, 22)
+  context.roundRect(0, 0, width, 48, 24)
   context.fill()
   context.fillStyle = relation === 'friend' ? '#241a05' : '#ffffff'
   context.textBaseline = 'middle'
-  context.fillText(label, 17, 23)
+  context.fillText(label, 17, 25)
   const texture = new THREE.CanvasTexture(canvas)
   texture.colorSpace = THREE.SRGBColorSpace
-  const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: texture, depthTest: false, transparent: true, sizeAttenuation: false }))
-  sprite.userData.aspect = width / 44
-  sprite.scale.set((width / 44) * 0.34, 0.34, 1)
+  const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: texture, depthTest: true, depthWrite: false, transparent: true, sizeAttenuation: false }))
+  sprite.userData.aspect = width / 48
+  sprite.scale.set((width / 48) * 0.34, 0.34, 1)
   sprite.renderOrder = 6
   return sprite
 }
@@ -1543,14 +1552,14 @@ export class WorldEngine {
         remote.actor.setTravelSpeed(remote.speed)
       }
       remote.actor.update(delta)
-      remote.tag.position.set(position.x, position.y + remote.actor.height + 0.32, position.z)
+      remote.actor.labelAnchor(remote.tag.position)
       const distance = Math.hypot(position.x - this.localPos.x, position.z - this.localPos.z)
-      const pixels = this.canvas.clientWidth < 600 ? 22 : 24
+      const pixels = 32
       const scale = pixels / Math.max(1, this.canvas.clientHeight) * 2 * Math.tan(THREE.MathUtils.degToRad(this.camera.fov) / 2)
       const aspect: unknown = remote.tag.userData.aspect
       remote.tag.scale.set(scale * (typeof aspect === 'number' ? aspect : 3), scale, 1)
-      remote.tag.material.opacity = 1 - THREE.MathUtils.smoothstep(distance, 25, 50)
-      remote.tag.visible = remote.actor.group.visible && distance < 50
+      remote.tag.material.opacity = 1 - THREE.MathUtils.smoothstep(distance, 24, 32)
+      remote.tag.visible = remote.actor.group.visible && distance < 32
     }
     this.updateRegionActivity()
     try { this.region?.update?.(delta, this.localPos, this.footGrid) } catch (error) { this.failRegion(error) }
