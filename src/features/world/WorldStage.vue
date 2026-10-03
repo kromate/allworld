@@ -113,6 +113,7 @@ const socialPanel = computed<'none' | 'around' | 'emotes'>({
 function openPanel(kind: Exclude<PanelKind, 'none'>, from?: Event | null, tab?: 'places' | 'view'): void {
   // The same button, or the same shortcut for the same tab, closes what it opened.
   if (panel.value === kind && !selected.value && (!tab || kind !== 'place' || placeTab.value === tab)) { closePanel(); return }
+  moreOpen.value = false
   if (tab) placeTab.value = tab
   world.selected = null
   const button = from?.currentTarget
@@ -136,9 +137,13 @@ function closePanel(keepSelection = false, restore = true): void {
   panel.value = 'none'
   if (!keepSelection) world.selected = null
   if (wasOpen && restore && inside) {
-    const rail = stage.value?.querySelector<HTMLElement>(`[data-hud-rail="${kind}"]`) ?? null
-    const target = usable(opener) ? opener : usable(rail) ? rail : canvas.value
-    target?.focus({ preventScroll: true })
+    const previous = opener
+    void nextTick(() => {
+      const rail = stage.value?.querySelector<HTMLElement>(`[data-hud-rail="${kind}"]`) ?? null
+      const actions = dock.value?.querySelector<HTMLElement>('[data-hud-actions]') ?? null
+      const target = usable(previous) ? previous : usable(rail) ? rail : usable(actions) ? actions : canvas.value
+      target?.focus({ preventScroll: true })
+    })
   }
   opener = null
 }
@@ -272,7 +277,7 @@ useInteraction('world.way', (): Interaction | null => {
 const offered = computed(() => (seated.value ? interactions.value.filter(item => item.id.startsWith('transport.')) : interactions.value))
 const primary = computed(() => offered.value[0] ?? null)
 const others = computed(() => offered.value.slice(1))
-watch(() => others.value.length, count => { if (!count) moreOpen.value = false })
+
 /** A vehicle action may run while seated; anything else is foot work and needs the avatar free. */
 const allowedAction = (item: Interaction): boolean => item.id.startsWith('transport.') || permits('foot')
 function act(item: Interaction): void { moreOpen.value = false; if (!item.disabled && !item.busy && allowedAction(item)) item.run() }
@@ -388,27 +393,21 @@ const chatLabel = computed(() => (chatUnseen.value ? `Nearby chat, ${chatUnseen.
       <div v-show="!dimmed" class="hud-live">
         <!-- One-line hints: where you are, a walk under way, hunger, a shift, something to answer. They fade or are dismissed; none is idle chrome. -->
         <div class="hints">
-          <p v-if="placeHint" class="hint" role="status"><HudIcon name="pin" :size="18" /><span class="hint-text truncate">{{ placeHint }}</span></p>
           <p v-if="world.homeWalk.kind === 'walking'" class="hint" role="status"><HudIcon name="walk" :size="18" /><span class="hint-text truncate">{{ Math.ceil(world.homeWalk.metres) }} m to {{ world.homeWalk.name }}</span></p>
           <RouterLink v-else-if="world.homeWalk.kind === 'travel'" class="hint" to="/travel"><HudIcon name="compass" :size="18" /><span class="hint-text">Travel to {{ world.homeWalk.to.label }} to walk home</span></RouterLink>
           <p v-else-if="world.homeWalk.kind === 'unavailable'" class="hint" role="status"><span class="hint-text">{{ world.homeWalk.message }}</span></p>
-          <p v-if="walking" class="hint" role="status"><HudIcon name="walk" :size="18" /><span class="hint-text">{{ walking }}</span></p>
+          <p v-if="walking && world.homeWalk.kind === 'idle'" class="hint" role="status"><HudIcon name="walk" :size="18" /><span class="hint-text">{{ walking }}</span></p>
         <LifeActions />
           <SocialHud v-model:panel="socialPanel" :panel-host="panelHost" @attention="peopleAttention = $event" />
         </div>
 
         <div class="home-tools"><HomeDock /></div>
 
-        <!-- Right edge: five quiet icon buttons. Each opens one panel; pressing it again closes it. -->
+        <!-- Keep the movement view clear: Menu and Chat; other tools live in Nearby actions. -->
         <nav class="rail" aria-label="World">
           <button class="rail-btn" type="button" data-hud-menu data-hud-rail="menu" :aria-expanded="menuOpen" aria-controls="shell-more" aria-haspopup="dialog" :aria-label="menuBadge ? `Menu, ${menuBadge} unread` : 'Menu'" title="Menu" @click="emit('menu')">
             <HudIcon name="menu" /><span v-if="menuBadge" class="dot" aria-hidden="true"></span>
           </button>
-          <button class="rail-btn" type="button" data-hud-rail="place" :aria-pressed="active === 'place'" aria-label="Place and view" title="Place and view" @click="openPanel('place', $event)"><HudIcon name="pin" /></button>
-          <button class="rail-btn" type="button" data-hud-rail="people" :aria-pressed="active === 'people'" :aria-label="peopleLabel" :title="keyboard ? 'People (P)' : 'People'" @click="openPanel('people', $event)">
-            <HudIcon name="people" /><span v-if="peopleAttention && active !== 'people'" class="dot" aria-hidden="true"></span>
-          </button>
-          <button class="rail-btn" type="button" data-hud-rail="emotes" :aria-pressed="active === 'emotes'" aria-label="Gestures and quick phrases" title="Gestures" @click="openPanel('emotes', $event)"><HudIcon name="smile" /></button>
           <button class="rail-btn" type="button" data-hud-rail="chat" :aria-pressed="active === 'chat'" :aria-label="chatLabel" :title="keyboard ? 'Nearby chat (Enter)' : 'Nearby chat'" @click="openPanel('chat', $event)">
             <HudIcon name="chat" /><span v-if="chatUnseen && active !== 'chat'" class="dot" aria-hidden="true"></span>
           </button>
@@ -547,13 +546,16 @@ const chatLabel = computed(() => (chatUnseen.value ? `Nearby chat, ${chatUnseen.
 
         <!-- The one contextual action, at the right thumb. -->
         <div ref="dock" class="dock" role="group" aria-label="Action here">
-          <div v-if="moreOpen && others.length" class="more-list" role="group" aria-label="Other actions here">
+          <div v-if="moreOpen" class="more-list" role="group" aria-label="Other actions here">
             <button v-for="item in others" :key="item.id" class="more-item" type="button" :disabled="item.disabled || item.busy" @click="act(item)">
               <HudIcon :name="item.icon" :size="20" /><span class="grow">{{ item.label }}</span><span v-if="keyboard && item.key" class="kbd">{{ item.key }}</span>
             </button>
+            <button class="more-item" type="button" @click="openPanel('place', $event)"><HudIcon name="pin" :size="20" /><span>Place and view</span></button>
+            <button class="more-item" type="button" :aria-label="peopleLabel" @click="openPanel('people', $event)"><HudIcon name="people" :size="20" /><span>People nearby</span><span v-if="peopleAttention" class="dot" aria-hidden="true"></span></button>
+            <button class="more-item" type="button" @click="openPanel('emotes', $event)"><HudIcon name="smile" :size="20" /><span>Gestures and phrases</span></button>
           </div>
-          <button v-if="others.length" class="more-btn" type="button" :aria-expanded="moreOpen" :aria-label="`${others.length} other ${others.length === 1 ? 'action' : 'actions'} here`" @click="moreOpen = !moreOpen">
-            <HudIcon name="chevron" :size="20" /><span class="more-count num" aria-hidden="true">{{ others.length }}</span>
+          <button class="more-btn" type="button" data-hud-actions :aria-expanded="moreOpen" aria-label="Nearby actions and options" @click="moreOpen = !moreOpen">
+            <HudIcon name="chevron" :size="20" /><span v-if="others.length" class="more-count num" aria-hidden="true">{{ others.length }}</span>
           </button>
           <button v-if="primary" class="act" :class="primary.tone ?? 'primary'" type="button" :disabled="primary.disabled || primary.busy" :aria-label="primary.label" :aria-keyshortcuts="primary.key" @click="act(primary)">
             <HudIcon :name="primary.icon" :size="24" :stroke-width="2" />
@@ -682,7 +684,7 @@ const chatLabel = computed(() => (chatUnseen.value ? `Nearby chat, ${chatUnseen.
 .more-btn { flex: none; position: relative; display: grid; place-items: center; width: var(--tap); height: var(--tap); padding: 0; margin-bottom: 7px; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 50%; background: rgba(28, 26, 36, 0.7); color: #fff; box-shadow: 0 2px 8px rgba(20, 14, 6, 0.22); }
 .more-btn[aria-expanded="true"] svg { transform: rotate(180deg); }
 .more-count { position: absolute; top: -4px; right: -4px; min-width: 18px; padding: 0 4px; border-radius: 999px; background: var(--accent); color: var(--accent-ink); font-size: 0.68rem; font-weight: 800; line-height: 18px; text-align: center; }
-.more-list { position: absolute; right: 0; bottom: calc(100% + 8px); width: min(300px, calc(100vw - 24px)); display: flex; flex-direction: column; gap: 2px; padding: 6px; border-radius: 18px; background: rgba(255, 253, 249, 0.98); box-shadow: var(--shadow-lg); }
+.more-list { position: absolute; right: 0; bottom: calc(100% + 8px); width: min(300px, calc(100vw - 24px)); max-height: min(50dvh, 320px); overflow-y: auto; display: flex; flex-direction: column; gap: 2px; padding: 6px; border-radius: 18px; background: rgba(255, 253, 249, 0.98); box-shadow: var(--shadow-lg); }
 .more-item { display: flex; align-items: center; gap: 10px; min-height: var(--tap); padding: 0 12px; border: 0; border-radius: 12px; background: transparent; text-align: left; font-weight: 650; }
 .more-item:hover:not(:disabled) { background: var(--surface-2); }
 .more-item:disabled { opacity: 0.5; }

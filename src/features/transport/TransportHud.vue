@@ -4,7 +4,7 @@
 // say: a seat, a fare to confirm, an invitation, an answer from the service, or because the member asked for it. A paid ride
 // is never started by the action itself: it opens the destination chooser, and the fare is paid only from the panel's own
 // "Confirm … coin ride" button, with the fare and balance in view. The service still decides every one of these.
-import { computed, onBeforeUnmount, ref, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { app, messageOf, onAccountReset, toast } from '../../state/app.ts'
 import { getEngine, onFloorClicked, onVehiclePicked, world } from '../../state/world.ts'
@@ -159,7 +159,15 @@ const shown = computed(() => detailsOpen.value || (blocking.value && !intent.val
 /** Seated as the driver: the panel folds to its header so the controls and the road are not under it. */
 const driverSeat = computed(() => vehicles.seated.value?.seatId === 'driver')
 const closable = computed(() => (!vehicles.seated.value || driverSeat.value) && !vehicles.state.quote && !vehicles.state.paidRide && !vehicles.state.pending && !vehicles.state.uncertain && !vehicles.state.transfer)
-function closePanel(): void { detailsOpen.value = false; dismissed.value = vehicles.state.problem }
+function closePanel(): void {
+  const restore = document.activeElement instanceof HTMLElement && Boolean(document.activeElement.closest('.transport-hud'))
+  detailsOpen.value = false; dismissed.value = vehicles.state.problem
+  if (restore) void nextTick(() => document.querySelector<HTMLElement>('[data-hud-actions]')?.focus({ preventScroll: true }))
+}
+function panelExpanded(open: boolean): void {
+  emit('expanded', open)
+  if (!open && closable.value) closePanel()
+}
 useHold('ride.details', () => shown.value && closable.value, { role: 'panel', close: closePanel })
 /** The door nearest the member, for a paid ride booked from where they stand (the panel lets them choose another). */
 const quoteEntry = computed(() => {
@@ -273,7 +281,7 @@ function stepIntent(): void {
 const MOVE_KEYS = new Set(['KeyW', 'KeyA', 'KeyS', 'KeyD', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'])
 const takeOver = (): void => cancelIntent('', false)
 const onKey = (event: KeyboardEvent): void => { if (intent.value && MOVE_KEYS.has(event.code)) takeOver() }
-const onPointer = (event: PointerEvent): void => { if (intent.value && event.target instanceof Element && event.target.closest('.stick-slot, canvas')) cancelIntent() }
+const onPointer = (event: PointerEvent): void => { if (intent.value && event.target instanceof Element && event.target.closest('.stick-slot')) cancelIntent() }
 window.addEventListener('keydown', onKey, true)
 window.addEventListener('pointerdown', onPointer, true)
 const stopFloor = onFloorClicked(takeOver)
@@ -355,7 +363,7 @@ onBeforeUnmount(stopReset)
       <div class="transport-guide-actions"><button class="btn sm" type="button" @click="cancelIntent()">Cancel</button></div>
     </section>
     <template v-if="shown">
-      <TransportPanel :view="vehicles.state" :member-id="app.me?.id ?? null" :members="peers" :capability-reason="vehicles.capabilityReason.value" :can-drive="driveEnabled" :show-driver-controls="!props.compactDriver" :open="!driverSeat" :preferred-entry="quoteEntry" :depot="depotInfo" @approach="startApproach" @borrow-drive="startBorrowDrive" @command="command" @refresh="nearby" @map="router.push('/map')" @destination="destination" @drive="drive" @expanded="emit('expanded', $event)" />
+      <TransportPanel :view="vehicles.state" :member-id="app.me?.id ?? null" :members="peers" :capability-reason="vehicles.capabilityReason.value" :can-drive="driveEnabled" :show-driver-controls="!props.compactDriver" :open="!driverSeat" :preferred-entry="quoteEntry" :depot="depotInfo" @approach="startApproach" @borrow-drive="startBorrowDrive" @command="command" @refresh="nearby" @map="router.push('/map')" @destination="destination" @drive="drive" @expanded="panelExpanded" />
       <button v-if="closable" class="btn sm transport-close" type="button" @click="closePanel">Close vehicle details</button>
     </template>
   </div>
