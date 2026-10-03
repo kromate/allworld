@@ -2593,7 +2593,7 @@
       "target": "scripts/source-export-install.py"
     },
     {
-      "bytes": 149364,
+      "bytes": 149611,
       "kind": "tooling",
       "license": "Apache-2.0",
       "notices": [
@@ -2602,7 +2602,7 @@
       ],
       "path": "scripts/source-export-reference.json",
       "root": "project",
-      "sha256": "820278b921121a1ca868b2e6dfd6ac1848b993546c0db12dd9e0bb9ba9e951cf",
+      "sha256": "b958ddcf11a81c9cc8de65ca31f9c549a342d2c7262e4673722865f2b3635ad5",
       "target": "scripts/source-export-reference.json"
     },
     {
@@ -6405,7 +6405,7 @@
       "target": "src/features/world/WorldRoute.vue"
     },
     {
-      "bytes": 56739,
+      "bytes": 55955,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -6414,7 +6414,7 @@
       ],
       "path": "src/features/world/WorldStage.vue",
       "root": "project",
-      "sha256": "70486438537077e3e73892bdc1beac14b59befe894b9f851b9c5f229b4297070",
+      "sha256": "121257d8b8313eace495e1929aa35ba6ef32139182b7f744576c20d43632d829",
       "target": "src/features/world/WorldStage.vue"
     },
     {
@@ -7198,7 +7198,20 @@
       "target": "src/ui/BuildInfo.vue"
     },
     {
-      "bytes": 6179,
+      "bytes": 2945,
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "path": "src/ui/FullscreenControl.vue",
+      "root": "project",
+      "sha256": "5a9a7a311d1e2169cebebe1753e461b30ec68107bf6e655b78c54d2118f8cc7c",
+      "target": "src/ui/FullscreenControl.vue"
+    },
+    {
+      "bytes": 6263,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -7207,7 +7220,7 @@
       ],
       "path": "src/ui/GameMenu.vue",
       "root": "project",
-      "sha256": "1ba95eba407033727add96c4c0c3c107b8f53c1658caeb11e2f4ede97826bde4",
+      "sha256": "a63d513f1f4fd15b9730ac3ed4838a4bfe7d8ffff55f4c015ec3b8da2292af2b",
       "target": "src/ui/GameMenu.vue"
     },
     {
@@ -7276,7 +7289,7 @@
       "target": "src/ui/PanelPage.vue"
     },
     {
-      "bytes": 6987,
+      "bytes": 7242,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -7285,7 +7298,7 @@
       ],
       "path": "src/ui/ShellNav.vue",
       "root": "project",
-      "sha256": "459924153aafc2b032e0fed279a54f35470532ce212dd39c8c4c3cc6ec89b413",
+      "sha256": "a222f6e7cf87b77d3d67d77dee9288f8449ae671b52cdcc70f96c8dd9faafbd9",
       "target": "src/ui/ShellNav.vue"
     },
     {
@@ -7380,7 +7393,7 @@
       "target": "src/ui/gameReload.ts"
     },
     {
-      "bytes": 3106,
+      "bytes": 2996,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -7389,7 +7402,7 @@
       ],
       "path": "src/ui/hudDevice.ts",
       "root": "project",
-      "sha256": "f6ea30b7b8d0d140aea4d371dbcd392563c284c7251af07acd346f9907ed1e6c",
+      "sha256": "c003780434bab7aa4b08ca4890c586edcd446cacaa063ef933b72dc3470a62ac",
       "target": "src/ui/hudDevice.ts"
     },
     {

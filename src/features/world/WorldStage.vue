@@ -38,7 +38,8 @@ import { channelLevel, channels, setChannelMuted } from '../../state/sound.ts'
 import AssetProgress from '../../ui/AssetProgress.vue'
 import HudIcon from '../../ui/HudIcon.vue'
 import { driveAllowed, footBlocked, keysBlocked, overlayOpen, permits, seated, syncEngine, useHold } from '../../ui/gameInput.ts'
-import { fullscreenAvailable, inFullscreen, toggleFullscreen, useMedia } from '../../ui/hudDevice.ts'
+import { useMedia } from '../../ui/hudDevice.ts'
+import FullscreenControl from '../../ui/FullscreenControl.vue'
 import { factsOf, isTyping, worldKey } from '../../ui/hudKeys.ts'
 import { PRIORITY, interactionForKey, interactions, useInteraction } from '../../ui/interaction.ts'
 import type { Interaction } from '../../ui/interaction.ts'
@@ -297,12 +298,6 @@ watch(() => [world.state, world.title, world.kind] as const, sayPlace)
 // Crossing into another street is worth a line, but not every few seconds.
 watch(() => world.street, () => { if (Date.now() - placeHintAt > 12_000) sayPlace() })
 
-// ── Full screen: only from a press, only where the browser has it ──
-const fullscreenOk = ref(false)
-const full = ref(false)
-const syncFullscreen = (): void => { fullscreenOk.value = fullscreenAvailable(document); full.value = inFullscreen(document) }
-async function fullscreen(): Promise<void> { await toggleFullscreen(document, screen); syncFullscreen() }
-
 // ── Map credits ──
 
 // ── Keyboard and pointer outside the stage ──
@@ -331,15 +326,10 @@ function onPointer(event: PointerEvent): void {
 onMounted(() => {
   window.addEventListener('keydown', onKey)
   document.addEventListener('pointerdown', onPointer)
-  document.addEventListener('fullscreenchange', syncFullscreen)
-  document.addEventListener('webkitfullscreenchange', syncFullscreen)
-  syncFullscreen()
 })
 onBeforeUnmount(() => {
   window.removeEventListener('keydown', onKey)
   document.removeEventListener('pointerdown', onPointer)
-  document.removeEventListener('fullscreenchange', syncFullscreen)
-  document.removeEventListener('webkitfullscreenchange', syncFullscreen)
   window.clearInterval(mapTimer)
   window.clearTimeout(walkingTimer)
   window.clearTimeout(placeHintTimer)
@@ -483,7 +473,7 @@ const chatLabel = computed(() => (chatUnseen.value ? `Nearby chat, ${chatUnseen.
                   <span><strong class="small">Leave by the door on my own</strong><span class="muted tiny" style="display: block">Otherwise you are asked at the door.</span></span>
                   <button class="switch" type="button" role="switch" :aria-checked="doorway.preference === 'auto'" aria-label="Leave by the door on my own" @click="setAutoExit(doorway.preference !== 'auto')"></button>
                 </label>
-                <button v-if="fullscreenOk" class="btn sm" type="button" :aria-pressed="full" @click="fullscreen"><HudIcon :name="full ? 'fullscreen-exit' : 'fullscreen'" :size="18" /> {{ full ? 'Leave full screen' : 'Full screen' }}</button>
+                <FullscreenControl />
                 <dl v-if="keyboard" class="keys">
                   <dt><span class="kbd">W</span><span class="kbd">A</span><span class="kbd">S</span><span class="kbd">D</span> or arrows</dt><dd>Walk</dd>
                   <dt><span class="kbd">Shift</span></dt><dd>Run</dd>
@@ -545,7 +535,7 @@ const chatLabel = computed(() => (chatUnseen.value ? `Nearby chat, ${chatUnseen.
         </section>
 
         <!-- The one contextual action, at the right thumb. -->
-        <div ref="dock" class="dock" role="group" aria-label="Action here">
+        <div ref="dock" class="dock" :class="{ 'actions-open': moreOpen }" role="group" aria-label="Action here">
           <div v-if="moreOpen" class="more-list" role="group" aria-label="Other actions here">
             <button v-for="item in others" :key="item.id" class="more-item" type="button" :disabled="item.disabled || item.busy" @click="act(item)">
               <HudIcon :name="item.icon" :size="20" /><span class="grow">{{ item.label }}</span><span v-if="keyboard && item.key" class="kbd">{{ item.key }}</span>
@@ -669,6 +659,7 @@ const chatLabel = computed(() => (chatUnseen.value ? `Nearby chat, ${chatUnseen.
 
 /* ── The one contextual action, lower right ── */
 .dock { position: absolute; z-index: 5; right: var(--pad-r); bottom: var(--pad-b); display: flex; align-items: flex-end; gap: 8px; max-width: calc(100% - var(--pad-l) - var(--pad-r) - 150px); pointer-events: none; }
+.dock.actions-open { z-index: 8; }
 .dock > * { pointer-events: auto; }
 .act { display: flex; align-items: center; gap: 10px; min-width: 0; min-height: 58px; padding: 0 20px 0 16px; border-radius: 29px; border: 1px solid transparent; font-weight: 700; box-shadow: 0 4px 14px rgba(20, 14, 6, 0.32); transition: transform 0.08s ease, filter 0.15s ease; animation: act-in 0.18s ease-out; }
 .act.primary { background: linear-gradient(180deg, #ffbe3d, var(--accent)); border-color: #e59700; color: var(--accent-ink); }

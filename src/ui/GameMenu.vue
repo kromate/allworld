@@ -9,6 +9,7 @@ import { useRoute } from 'vue-router'
 import { NAV } from './shell.ts'
 import type { NavItem } from './shell.ts'
 import HudIcon from './HudIcon.vue'
+import FullscreenControl from './FullscreenControl.vue'
 import { leaveInterior, world } from '../state/world.ts'
 import { useMedia } from './hudDevice.ts'
 
@@ -41,6 +42,7 @@ watch(open, async value => {
         <h2>Menu</h2>
         <button class="close" type="button" aria-label="Close menu" @click="open = false"><HudIcon name="close" :size="20" /></button>
       </header>
+      <FullscreenControl />
       <ul class="menu-grid">
         <li v-for="item in items" :key="item.to">
           <RouterLink :to="item.to" class="menu-item" :aria-label="badges[item.to] ? `${item.label}, ${badges[item.to]} unread` : item.label" @click="open = false">
