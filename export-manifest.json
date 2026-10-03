@@ -2602,7 +2602,7 @@
       ],
       "path": "scripts/source-export-reference.json",
       "root": "project",
-      "sha256": "534e89ae2abe3429f4d58a3490422f534a0a1ec4959fa006ac3caeb46d6d320e",
+      "sha256": "820278b921121a1ca868b2e6dfd6ac1848b993546c0db12dd9e0bb9ba9e951cf",
       "target": "scripts/source-export-reference.json"
     },
     {
@@ -7510,7 +7510,7 @@
       "target": "src/world/avatarVehiclePose.ts"
     },
     {
-      "bytes": 73213,
+      "bytes": 73653,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -7519,7 +7519,7 @@
       ],
       "path": "src/world/avatars.ts",
       "root": "project",
-      "sha256": "baad528ab854aac875f9a76b9e97bcf43f8d98bea0f4a9bea58d657f57096ba9",
+      "sha256": "ce760d04924ae93c9864618219912c7655755eef1e90606abc5041c79744eb21",
       "target": "src/world/avatars.ts"
     },
     {
@@ -7549,7 +7549,7 @@
       "target": "src/world/districtScene.ts"
     },
     {
-      "bytes": 92266,
+      "bytes": 93062,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -7558,7 +7558,7 @@
       ],
       "path": "src/world/engine.ts",
       "root": "project",
-      "sha256": "c17237fb439876016a0c3f78275b6209ec0566b4ac656965f8d654197c807696",
+      "sha256": "50a5845faad0cb17f7d54fe459110b48c261ef5f9c984664cdd92bf0a206e428",
       "target": "src/world/engine.ts"
     },
     {

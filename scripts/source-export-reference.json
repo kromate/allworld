@@ -4511,7 +4511,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "3a804b027d18d2b1f0185a535005d9e0784af0c0dc5f1206b2e8dd73deb90c69"
+      "sha256": "ce760d04924ae93c9864618219912c7655755eef1e90606abc5041c79744eb21"
     },
     "src/world/cameraCollision.ts": {
       "kind": "source",
@@ -4538,7 +4538,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "c17237fb439876016a0c3f78275b6209ec0566b4ac656965f8d654197c807696"
+      "sha256": "50a5845faad0cb17f7d54fe459110b48c261ef5f9c984664cdd92bf0a206e428"
     },
     "src/world/facadeDetails.ts": {
       "kind": "source",
