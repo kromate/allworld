@@ -12,7 +12,7 @@ import { MAX_SPEED } from '../shared/model.ts'
 import type { HomePlan } from '../shared/homes.ts'
 import type { PlacedItem } from '../shared/social.ts'
 import type { District, Poi } from '../geo/district.ts'
-import { AvatarActor, loadAvatarLibrary } from './avatars.ts'
+import { AvatarActor } from './avatars.ts'
 import { buildDistrictScene } from './districtScene.ts'
 import type { DistrictScene, Quality } from './districtScene.ts'
 import { buildInterior } from './interior.ts'
@@ -599,7 +599,8 @@ export class WorldEngine {
     this.remoteChanges = changes
     this.localMemberId = selfId
     try {
-      await loadAvatarLibrary()
+      // Preserve event ordering; each actor loads its own animation family.
+      await Promise.resolve()
       if (generation !== this.remoteGeneration) return
       const wanted = new Set(members.filter(member => member.id !== selfId).map(member => member.id))
       for (const [id, remote] of this.remotes) if (!wanted.has(id) && !changes.has(id)) { this.vehicles.clearActor(remote.actor); remote.actor.dispose(); disposeTag(remote.tag); this.remotes.delete(id) }
@@ -647,7 +648,8 @@ export class WorldEngine {
     this.remoteLoads.set(member.id, token)
     this.remoteChanges?.set(member.id, token)
     try {
-      await loadAvatarLibrary()
+      // Presence must not wait for unrelated animation assets.
+      await Promise.resolve()
       if (generation !== this.remoteGeneration || this.remoteLoads.get(member.id) !== token || member.id === this.localMemberId) return
       this.upsertRemote(member)
     } finally { if (this.remoteLoads.get(member.id) === token) this.remoteLoads.delete(member.id) }
