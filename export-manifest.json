@@ -2593,7 +2593,7 @@
       "target": "scripts/source-export-install.py"
     },
     {
-      "bytes": 149611,
+      "bytes": 149867,
       "kind": "tooling",
       "license": "Apache-2.0",
       "notices": [
@@ -2602,7 +2602,7 @@
       ],
       "path": "scripts/source-export-reference.json",
       "root": "project",
-      "sha256": "ba7e725850c85bbb4937836f3aba4eda8347e40fe7b9061cd481c134a487d928",
+      "sha256": "c311f4deaa1d103149955eedc18d654bac827bd3f95bc5ee9e2823c2e3f59317",
       "target": "scripts/source-export-reference.json"
     },
     {
@@ -3779,7 +3779,7 @@
       "target": "service/vehicleRoutes.ts"
     },
     {
-      "bytes": 138295,
+      "bytes": 144582,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -3788,7 +3788,7 @@
       ],
       "path": "service/vehicles.ts",
       "root": "project",
-      "sha256": "8bf12a5799a88f703af5d4d6a5f8f4e7c5363670ea6c86c26639bb1172192dc2",
+      "sha256": "d61d99f7493c6e0855e748d9458080424cb98436b4927eff7adf95bb7ab42282",
       "target": "service/vehicles.ts"
     },
     {
@@ -6184,7 +6184,7 @@
       "target": "src/features/transport/DriverControls.vue"
     },
     {
-      "bytes": 30048,
+      "bytes": 32094,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -6193,11 +6193,11 @@
       ],
       "path": "src/features/transport/TransportHud.vue",
       "root": "project",
-      "sha256": "d7440e3a765c4959a4381fcb28d04208124f5abaea1d1f90a4c4189682bd36db",
+      "sha256": "24d3bf7d99b22fb532df98ff94d60259406777ad831fd74adfe19d8cf483fb0b",
       "target": "src/features/transport/TransportHud.vue"
     },
     {
-      "bytes": 21426,
+      "bytes": 20656,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -6206,11 +6206,11 @@
       ],
       "path": "src/features/transport/TransportPanel.vue",
       "root": "project",
-      "sha256": "6ec2d114ad9eccb8c89df403ee377c611569692ae8577eeb7d35e300e2b2fe80",
+      "sha256": "8eb6f0563b417cc630025c69c941ee033e04175cf88de5d285dafa5cea23255e",
       "target": "src/features/transport/TransportPanel.vue"
     },
     {
-      "bytes": 7264,
+      "bytes": 10891,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -6219,11 +6219,11 @@
       ],
       "path": "src/features/transport/rideActions.ts",
       "root": "project",
-      "sha256": "f3c679827fdb629b6cfff4a6fab1dca76f9274e9af8839f87a4e65f610a47338",
+      "sha256": "a2277a24189f99116a3cddfc8c28c2c71bd8a4e742f6a61870a119278fa3951c",
       "target": "src/features/transport/rideActions.ts"
     },
     {
-      "bytes": 1174,
+      "bytes": 1160,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -6232,7 +6232,7 @@
       ],
       "path": "src/features/transport/transportView.ts",
       "root": "project",
-      "sha256": "3fa4e794001a4d5082e76209dd13bfd25e993d815944b3e44f343020502a23aa",
+      "sha256": "0f10c311b17f8e038d312244b96b5d3e52cf6a6ad192ec32cd4d14990bd35956",
       "target": "src/features/transport/transportView.ts"
     },
     {
@@ -6834,7 +6834,7 @@
       "target": "src/shared/geo.ts"
     },
     {
-      "bytes": 12399,
+      "bytes": 12437,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -6843,7 +6843,7 @@
       ],
       "path": "src/shared/guest.ts",
       "root": "project",
-      "sha256": "c288abe76ac9b73cd5b47db4eba22a33c6a656a0c47ac03a3e4a4693c567986c",
+      "sha256": "1c4f03fbbda181f8de583707647fdc87b545031d4aa378930af0f762be01cddf",
       "target": "src/shared/guest.ts"
     },
     {
@@ -7016,7 +7016,7 @@
       "target": "src/shared/vehicleRoadData.ts"
     },
     {
-      "bytes": 25372,
+      "bytes": 25853,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -7025,7 +7025,7 @@
       ],
       "path": "src/shared/vehicles.ts",
       "root": "project",
-      "sha256": "fd16ffd10ff55e113002ead7428f65e5defd9c0356b14d071e1f7db148780f40",
+      "sha256": "c184f2948002a57174965404d2f3eecfe0db21f39ea1e16e1f58dc739861a6b7",
       "target": "src/shared/vehicles.ts"
     },
     {
@@ -7133,7 +7133,7 @@
       "target": "src/state/travel.ts"
     },
     {
-      "bytes": 40222,
+      "bytes": 40908,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -7142,7 +7142,7 @@
       ],
       "path": "src/state/vehicles.ts",
       "root": "project",
-      "sha256": "46d7e94b8b8a3a6aeda723fb6bb109ae80eaf6757826073df38f6d4475fb9b4a",
+      "sha256": "4b63c1bde4ff408013c95150edb03127490be26ebaa826ef0df7e520602f18fb",
       "target": "src/state/vehicles.ts"
     },
     {

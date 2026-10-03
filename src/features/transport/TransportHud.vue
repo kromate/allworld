@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// The vehicle host. On foot it offers ONE action for what the member is standing next to (get in, drive, see the fare for a
+// The vehicle host. On foot it offers ONE action for what the member is standing next to (enter, see the fare for a
 // paid ride, borrow at a depot) through src/ui/interaction.ts, and shows the detailed panel only while it has something to
 // say: a seat, a fare to confirm, an invitation, an answer from the service, or because the member asked for it. A paid ride
 // is never started by the action itself: it opens the destination chooser, and the fare is paid only from the panel's own
@@ -14,18 +14,18 @@ import { PRIORITY, primaryInteraction, useInteraction } from '../../ui/interacti
 import type { Interaction } from '../../ui/interaction.ts'
 import TransportPanel from './TransportPanel.vue'
 import DriverControls from './DriverControls.vue'
-import { RIDE_REACH, entriesNear, nearestRideTarget, planBoarding, rideWords, sameTarget } from './rideActions.ts'
+import { RIDE_REACH, entriesNear, nearestRideTarget, planBoarding, hasRideAuthorization, paidBookingEntry, entryApproachPoint, boardingApproachPlans, rideWords, sameTarget } from './rideActions.ts'
 import type { RideTarget } from './rideActions.ts'
 import type { DriverIntent, TransportCommand } from './transportView.ts'
 import type { MemberId, VehicleId } from '../../shared/ids.ts'
-import { VEHICLE_KINDS, VEHICLE_SPECS, vehiclePoint } from '../../shared/vehicles.ts'
+import { VEHICLE_KINDS, VEHICLE_RULES, VEHICLE_SPECS, vehiclePoint } from '../../shared/vehicles.ts'
 import type { VehicleDepotView, VehicleKind, VehicleSnapshot } from '../../shared/vehicles.ts'
 import type { Vec2 } from '../../shared/geo.ts'
 const props = defineProps<{ compactDriver?: boolean; inputBlocked?: boolean }>()
 watch(() => props.inputBlocked, blocked => { if (blocked) vehicles.stopDriving() }, { immediate: true, flush: 'sync' })
 function drive(intent: DriverIntent): void { if (props.inputBlocked) vehicles.stopDriving(); else vehicles.drive(intent) }
 const driveEnabled = computed(() => vehicles.canDrive.value && !props.inputBlocked)
-/** `drive-intent`: the member asked to drive, so a page or window open over the world should close (it holds foot input). `boarded`: the service seated them as the driver. */
+/** `drive-intent`: the member asked to approach a vehicle, so a page or window open over the world should close (it holds foot input). `boarded`: the service seated them. */
 const emit = defineEmits<{ expanded: [open: boolean]; 'drive-intent': []; boarded: [] }>()
 const router = useRouter()
 const peers = computed(() => world.members.filter(member => member.id !== app.me?.id))
@@ -36,7 +36,8 @@ async function command(intent: TransportCommand): Promise<void> {
       case 'inspect': await vehicles.inspect(intent.vehicleId); break
       case 'loan': await vehicles.loan(intent.depotId, intent.vehicleKind); if (vehicles.selected.value) await vehicles.inspect(vehicles.selected.value.id); break
       case 'return': await vehicles.returnVehicle(); break
-      case 'board': await vehicles.board(intent.seatId, intent.entryId, intent.inviteId); break
+      case 'enter': await vehicles.enter(intent.inviteId); break
+      case 'cycle-seat': await vehicles.cycleSeat(); break
       case 'exit': await vehicles.exit(); break
       case 'access': await vehicles.access(intent.access); break
       case 'invite': await vehicles.invite(intent.to, intent.role); break
@@ -92,7 +93,7 @@ function look(): void {
   const here = engine && !document.hidden && world.state === 'ready' && world.kind === 'district' && !vehicles.seated.value ? engine.position : null
   position.value = here
   const next = here && data?.available && !footBlocked.value
-    ? nearestRideTarget({ at: here, vehicles: data.vehicles.filter(vehicle => vehicle.room.key === world.roomKey && vehicle.room.instance === world.instance), depots: data.depots.filter(depot => depot.districtId === world.districtId), me: me.value, invites: data.invites, previous: target.value })
+    ? nearestRideTarget({ at: here, vehicles: data.vehicles.filter(vehicle => vehicle.room.key === world.roomKey && vehicle.room.instance === world.instance), depots: data.depots.filter(depot => depot.districtId === world.districtId), me: me.value, invites: data.invites, previous: target.value, driveAllowedVehicleId: vehicles.state.actions?.drive ? vehicles.state.selectedId : null })
     : null
   if (!sameTarget(next, target.value)) target.value = next
   const depot = here && data?.available ? nearestDepot(here, data.depots) : null
@@ -103,11 +104,15 @@ const lookTimer = window.setInterval(look, 250)
 onBeforeUnmount(() => window.clearInterval(lookTimer))
 
 const vehicleHere = computed(() => { const here = target.value; return here?.kind === 'vehicle' ? vehicles.state.data?.vehicles.find(vehicle => vehicle.id === here.id) ?? null : null })
-const plan = computed(() => vehicleHere.value && position.value ? planBoarding(vehicleHere.value, position.value, { me: me.value, invites: vehicles.state.data?.invites ?? [], paid: vehicleHere.value.source === 'service' }) : null)
+const plan = computed(() => vehicleHere.value && position.value ? planBoarding(vehicleHere.value, position.value, { me: me.value, invites: vehicles.state.data?.invites ?? [], paid: vehicleHere.value.source === 'service', driveAllowed: vehicles.state.selectedId === vehicleHere.value.id && Boolean(vehicles.state.actions?.drive) }) : null)
 /** A vehicle borrowed by this member that is in this room: it can be returned from the panel even when it is not next to them. */
 const ownBorrowed = computed(() => { const own = vehicles.self.value?.vehicle; return own && own.source === 'borrowed' && own.ownerId === me.value && !vehicles.seated.value ? own : null })
 
+const entering = ref(false)
+const boardingAllowed = (vehicle: VehicleSnapshot): boolean => hasRideAuthorization(vehicle, me.value, vehicles.state.data?.invites ?? [], vehicles.state.selectedId === vehicle.id && Boolean(vehicles.state.actions?.board))
 async function ride(vehicleId: VehicleId): Promise<void> {
+  if (entering.value || vehicles.state.pending || vehicles.state.uncertain) return
+  entering.value = true
   const asked = lifetime
   try {
     await vehicles.inspect(vehicleId)
@@ -115,22 +120,23 @@ async function ride(vehicleId: VehicleId): Promise<void> {
     const vehicle = vehicles.selected.value
     if (!vehicle || vehicle.id !== vehicleId) return
     // A paid ride only asks where to. The fare is shown and confirmed from the panel.
-    if (vehicle.source === 'service') { destination(vehicle.id); return }
+    if (!boardingAllowed(vehicle)) { destination(vehicle.id); return }
     const here = getEngine()?.position
-    const chosen = here ? planBoarding(vehicle, here, { me: me.value, invites: vehicles.state.data?.invites ?? [], paid: false }) : null
+    const chosen = here ? planBoarding(vehicle, here, { me: me.value, invites: vehicles.state.data?.invites ?? [], paid: vehicle.source === 'service', driveAllowed: vehicles.state.selectedId === vehicle.id && Boolean(vehicles.state.actions?.drive) }) : null
     if (!chosen) { vehicles.state.problem = 'No free seat is within reach of where you are standing.'; return }
-    await vehicles.board(chosen.seatId, chosen.entryId, chosen.inviteId)
+    await vehicles.enter()
   } catch (error) { if (asked === lifetime) vehicles.state.problem = messageOf(error) }
+  finally { entering.value = false }
 }
-const idle = (): boolean => !vehicles.seated.value && !vehicles.capabilityReason.value && !vehicles.state.quote && !vehicles.state.paidRide
+const idle = (): boolean => !vehicles.seated.value && !vehicles.capabilityReason.value && !vehicles.state.quote
 useInteraction('ride.board', (): Interaction | null => {
   const vehicle = vehicleHere.value, chosen = plan.value
   if (!vehicle || !chosen || !idle()) return null
-  return { id: 'ride.board', priority: PRIORITY.vehicleHere, ...rideWords(vehicle, chosen), icon: 'car', key: 'E', tone: 'primary', busy: Boolean(vehicles.state.pending), disabled: !vehicles.state.connected || vehicles.state.uncertain, run: () => { void ride(vehicle.id) } }
+  return { id: 'ride.board', priority: PRIORITY.vehicleHere, ...rideWords(vehicle, chosen, boardingAllowed(vehicle)), icon: 'car', key: 'E', tone: 'primary', busy: entering.value || Boolean(vehicles.state.pending), disabled: !vehicles.state.connected || vehicles.state.uncertain, run: () => { void ride(vehicle.id) } }
 })
 useInteraction('ride.depot', (): Interaction | null => {
   if (target.value?.kind !== 'depot' || !idle() || intent.value) return null
-  return { id: 'ride.depot', priority: PRIORITY.depot, verb: 'Borrow & drive', target: DIRECT_KIND, label: `Borrow a ${DIRECT_KIND} at the nearby depot, walk to it and drive`, icon: 'car', key: 'E', tone: 'primary', busy: Boolean(vehicles.state.pending), disabled: !vehicles.state.connected || vehicles.state.uncertain, run: () => { startBorrowDrive() } }
+  return { id: 'ride.depot', priority: PRIORITY.depot, verb: 'Borrow & drive', target: DIRECT_KIND, label: `Borrow a ${DIRECT_KIND} at the nearby depot, walk to its driver side and drive`, icon: 'car', key: 'E', tone: 'primary', busy: entering.value || Boolean(vehicles.state.pending), disabled: !vehicles.state.connected || vehicles.state.uncertain, run: () => { startBorrowDrive() } }
 })
 useInteraction('ride.depot-more', (): Interaction | null => {
   if (target.value?.kind !== 'depot' || !idle() || intent.value) return null
@@ -141,11 +147,11 @@ useInteraction('ride.drive', (): Interaction | null => {
   if (!own || intent.value || !idle() || !position.value || own.room.key !== world.roomKey || own.room.instance !== world.instance || target.value?.kind === 'vehicle') return null
   const door = entriesNear(own, position.value)[0]
   if (!door || door.distance > GUIDE.keep) return null
-  return { id: 'ride.drive', priority: PRIORITY.depot, verb: 'Drive', target: `your ${VEHICLE_SPECS[own.kind].label.toLowerCase()}`, label: `Walk to your borrowed ${VEHICLE_SPECS[own.kind].label.toLowerCase()} and drive it`, icon: 'car', tone: 'dark', busy: Boolean(vehicles.state.pending), disabled: !vehicles.state.connected || vehicles.state.uncertain, run: () => { startApproach(own.id) } }
+  return { id: 'ride.drive', priority: PRIORITY.depot, verb: 'Enter', target: `your ${VEHICLE_SPECS[own.kind].label.toLowerCase()}`, label: `Walk to your borrowed ${VEHICLE_SPECS[own.kind].label.toLowerCase()} and enter it`, icon: 'car', tone: 'dark', busy: entering.value || Boolean(vehicles.state.pending), disabled: !vehicles.state.connected || vehicles.state.uncertain, run: () => { startApproach(own.id) } }
 })
 useInteraction('ride.details', (): Interaction | null => {
   if (vehicles.seated.value || detailsOpen.value || (!vehicleHere.value && !ownBorrowed.value)) return null
-  return { id: 'ride.details', priority: PRIORITY.rideMore, verb: 'Vehicle', target: 'seats and options', label: 'Seats and options for this vehicle', icon: 'sliders', tone: 'dark', run: () => { detailsOpen.value = true } }
+  return { id: 'ride.details', priority: PRIORITY.rideMore, verb: 'Vehicle', target: 'entry and options', label: 'Entry and options for this vehicle', icon: 'sliders', tone: 'dark', run: () => { detailsOpen.value = true } }
 })
 
 // ── The panel: only while it has something to say ──
@@ -158,7 +164,7 @@ const driverDecision = computed(() => Boolean(vehicles.state.uncertain || vehicl
 const shown = computed(() => detailsOpen.value || (blocking.value && !intent.value && !driverSeat.value) || Boolean(vehicles.seated.value && !driverSeat.value) || driverDecision.value)
 /** Seated as the driver: the panel folds to its header so the controls and the road are not under it. */
 const driverSeat = computed(() => vehicles.seated.value?.seatId === 'driver')
-const closable = computed(() => (!vehicles.seated.value || driverSeat.value) && !vehicles.state.quote && !vehicles.state.paidRide && !vehicles.state.pending && !vehicles.state.uncertain && !vehicles.state.transfer)
+const closable = computed(() => (!vehicles.seated.value || driverSeat.value) && !vehicles.state.quote && !vehicles.state.pending && !vehicles.state.uncertain && !vehicles.state.transfer)
 function closePanel(): void {
   const restore = document.activeElement instanceof HTMLElement && Boolean(document.activeElement.closest('.transport-hud'))
   detailsOpen.value = false; dismissed.value = vehicles.state.problem
@@ -169,19 +175,21 @@ function panelExpanded(open: boolean): void {
   if (!open && closable.value) closePanel()
 }
 useHold('ride.details', () => shown.value && closable.value, { role: 'panel', close: closePanel })
-/** The door nearest the member, for a paid ride booked from where they stand (the panel lets them choose another). */
+/** Nearest reachable passenger entry for fare confirmation; no door picker is shown. */
 const quoteEntry = computed(() => {
   const quote = vehicles.state.quote, vehicle = quote ? vehicles.state.data?.vehicles.find(item => item.id === quote.vehicleId) : null
-  return vehicle && position.value ? entriesNear(vehicle, position.value)[0]?.id : undefined
+  return vehicle && position.value ? paidBookingEntry(vehicle, position.value) : undefined
 })
-// ── Driving at once: walk to the driver's door, then ask the service to seat the member. ──
+// Walk to the nearest permitted entry hint, then ask the service to choose a seat.
 // The member's own intent, in one place. It walks the avatar with the engine's ordinary `walkTo` (no teleport, no position write),
 // asks to board only from the door, and the service still decides seat, access, range and control. A paid service vehicle
-// (a taxi, a driver already in the seat) is never reached from here: that stays the "Ride" action that asks where to and shows the fare.
+// requires a confirmed fare or an existing boarding grant before this approach can start.
 /** What "Borrow & drive" borrows when the member did not choose. */
 const DIRECT_KIND: VehicleKind = 'car'
 const INTENT = { totalMs: 45_000, blockedTicks: 8, backoffMetres: 3 } as const
-interface DriveIntent {
+interface EntryIntent {
+  goal: 'enter' | 'drive'
+  entryId: string | null
   phase: 'borrowing' | 'walking' | 'boarding'
   /** Who asked, and where: a different member, street, instance or a dropped link ends it. */
   actor: MemberId | null; roomKey: string | null; instance: number
@@ -190,8 +198,8 @@ interface DriveIntent {
   /** The loan was sent and has answered (or failed). */
   loanDone: boolean
 }
-const intent = ref<DriveIntent | null>(null)
-const NOT_DRIVABLE = 'You cannot drive this vehicle. A free seat of your own borrowed vehicle is needed.'
+const intent = ref<EntryIntent | null>(null)
+const NO_ENTRY = 'No available seat can be reached here. The service checks your boarding permission.'
 /** End the intent. `stop` also halts the walk the engine is on; it is false when the member took over walking themselves. */
 function cancelIntent(reason = '', stop = true): void {
   const was = intent.value
@@ -200,44 +208,54 @@ function cancelIntent(reason = '', stop = true): void {
   if (stop && was.walking) getEngine()?.stop()
   if (reason) vehicles.state.problem = reason
 }
-function begin(phase: DriveIntent['phase'], vehicleId: VehicleId | null): DriveIntent | null {
-  if (intent.value || vehicles.seated.value || !vehicles.state.connected || vehicles.state.pending || vehicles.state.uncertain || vehicles.state.quote || vehicles.state.paidRide || vehicles.capabilityReason.value || world.kind !== 'district') return null
-  const next: DriveIntent = { phase, actor: me.value, roomKey: world.roomKey, instance: world.instance, vehicleId, startedAt: Date.now(), blocked: 0, best: Infinity, walking: false, loanDone: false }
+function begin(phase: EntryIntent['phase'], vehicleId: VehicleId | null, goal: EntryIntent['goal'] = 'enter'): EntryIntent | null {
+  if (intent.value || vehicles.seated.value || !vehicles.state.connected || vehicles.state.pending || vehicles.state.uncertain || vehicles.state.quote || vehicles.capabilityReason.value || world.kind !== 'district') return null
+  const next: EntryIntent = { phase, goal, entryId: null, actor: me.value, roomKey: world.roomKey, instance: world.instance, vehicleId, startedAt: Date.now(), blocked: 0, best: Infinity, walking: false, loanDone: false }
   intent.value = next
   closePanel()
   emit('drive-intent')
   return next
 }
-/** Walk to a parked vehicle the member may drive, then drive it. Does nothing for a vehicle they may not drive (a taxi, someone else's). */
-function startApproach(vehicleId: VehicleId): void {
-  const data = vehicles.state.data, here = getEngine()?.position
-  const vehicle = data?.vehicles.find(item => item.id === vehicleId) ?? (vehicles.self.value?.vehicle?.id === vehicleId ? vehicles.self.value.vehicle : undefined)
-  if (!vehicle || !here || vehicle.room.key !== world.roomKey || vehicle.room.instance !== world.instance) return
-  const chosen = planBoarding(vehicle, here, { me: me.value, invites: data?.invites ?? [], paid: false })
-  if (vehicle.source !== 'borrowed' || chosen?.role !== 'driver') { toast(vehicle.source === 'service' ? 'This taxi has a driver. Use Borrow & drive at the depot for your own car.' : NOT_DRIVABLE, 'info'); return }
-  begin('walking', vehicleId)
+/** Walk to the nearest entry hint. The service chooses the actual seat when Enter is requested. */
+async function startApproach(vehicleId: VehicleId, goal: EntryIntent['goal'] = 'enter'): Promise<void> {
+  if (entering.value || intent.value || vehicles.state.pending || vehicles.state.uncertain || vehicles.seated.value) return
+  entering.value = true
+  const asked = lifetime
+  try {
+    await vehicles.inspect(vehicleId)
+    if (asked !== lifetime) return
+    const data = vehicles.state.data, here = getEngine()?.position, vehicle = vehicles.selected.value
+    if (!vehicle || vehicle.id !== vehicleId || !here || vehicle.room.key !== world.roomKey || vehicle.room.instance !== world.instance) return
+    if (!boardingAllowed(vehicle)) { destination(vehicle.id); return }
+    const chosen = planBoarding(vehicle, here, { me: me.value, invites: data?.invites ?? [], paid: vehicle.source === 'service', driveAllowed: vehicles.state.selectedId === vehicle.id && Boolean(vehicles.state.actions?.drive), driverOnly: goal === 'drive' })
+    if (!chosen) { toast(NO_ENTRY, 'info'); return }
+    begin('walking', vehicleId, goal)
+  } catch (error) { if (asked === lifetime) vehicles.state.problem = messageOf(error) }
+  finally { entering.value = false }
 }
-/** The depot's loan, then the same walk. `depotId` and `kind` come from the panel; the action at the depot uses the nearest depot and a keke. */
+/** The depot's loan, then a driver-side approach. `depotId` and `kind` come from the panel; the action at the depot uses the nearest depot and a keke. */
 function startBorrowDrive(depotId?: string, kind: VehicleKind = DIRECT_KIND): void {
   const own = ownBorrowed.value
-  if (own) { startApproach(own.id); return }
+  if (own) { startApproach(own.id, 'drive'); return }
   const id = depotId ?? depotInfo.value?.id
   if (!id || !vehicles.state.data?.available) return
-  const it = begin('borrowing', null)
+  const it = begin('borrowing', null, 'drive')
   if (!it) return
   void command({ kind: 'loan', depotId: id, vehicleKind: kind }).finally(() => { it.loanDone = true })
 }
-function boardNow(it: DriveIntent, vehicle: VehicleSnapshot): void {
+function boardNow(it: EntryIntent, vehicle: VehicleSnapshot): void {
   it.phase = 'boarding'
   void (async () => {
     try {
       if (vehicles.state.selectedId !== vehicle.id) await vehicles.inspect(vehicle.id)
       if (intent.value !== it || me.value !== it.actor || world.roomKey !== it.roomKey || world.instance !== it.instance || !vehicles.state.connected) return
       const fresh = vehicles.selected.value, here = getEngine()?.position
-      const chosen = fresh && here ? planBoarding(fresh, here, { me: me.value, invites: vehicles.state.data?.invites ?? [], paid: false }) : null
-      // Only the driver's seat, only from the door, only a vehicle the member may drive: never a passenger seat by this route.
-      if (!fresh || fresh.id !== vehicle.id || fresh.source !== 'borrowed' || chosen?.role !== 'driver' || chosen.distance > RIDE_REACH.keep) { vehicles.state.problem = NOT_DRIVABLE; return }
-      await vehicles.board(chosen.seatId, chosen.entryId, chosen.inviteId)
+      const chosen = fresh && here ? planBoarding(fresh, here, { me: me.value, invites: vehicles.state.data?.invites ?? [], paid: fresh.source === 'service', driveAllowed: Boolean(vehicles.state.actions?.drive), driverOnly: it.goal === 'drive', entryId: it.entryId ?? undefined }) : null
+      // The approach hint only checks reach; the service chooses the actual seat and door.
+      if (!fresh || fresh.id !== vehicle.id || !boardingAllowed(fresh) || !chosen || chosen.distance > RIDE_REACH.keep) { vehicles.state.problem = NO_ENTRY; return }
+      const drivePoint = it.goal === 'drive' ? entryApproachPoint(fresh, chosen, true) : null
+      if (it.goal === 'drive' && (!drivePoint || !here || Math.hypot(drivePoint.x - here.x, drivePoint.z - here.z) > 0.3)) { vehicles.state.problem = NO_ENTRY; return }
+      await vehicles.enter()
     } catch (error) { if (intent.value === it && me.value === it.actor) vehicles.state.problem = messageOf(error) }
     finally {
       if (intent.value === it) { intent.value = null; if (vehicles.seated.value) emit('boarded') }
@@ -249,7 +267,7 @@ function stepIntent(): void {
   const it = intent.value
   if (!it || it.phase === 'boarding') return
   const at = position.value
-  if (Date.now() - it.startedAt > INTENT.totalMs) return cancelIntent('Could not reach the vehicle. Walk up to it and press Drive.')
+  if (Date.now() - it.startedAt > INTENT.totalMs) return cancelIntent('Could not reach the vehicle. Walk up to it and press Enter.')
   if (!at || me.value !== it.actor || world.roomKey !== it.roomKey || world.instance !== it.instance || !vehicles.state.connected || vehicles.seated.value) return cancelIntent()
   const data = vehicles.state.data
   if (it.phase === 'borrowing') {
@@ -261,22 +279,27 @@ function stepIntent(): void {
     return
   }
   const vehicle = data?.vehicles.find(item => item.id === it.vehicleId) ?? (vehicles.self.value?.vehicle?.id === it.vehicleId ? vehicles.self.value.vehicle : undefined)
-  const chosen = vehicle ? planBoarding(vehicle, at, { me: me.value, invites: data?.invites ?? [], paid: false }) : null
-  if (!vehicle || vehicle.source !== 'borrowed' || chosen?.role !== 'driver' || (vehicle.phase !== 'parked' && vehicle.phase !== 'boarding') || Math.abs(vehicle.speed) > 0.5) return cancelIntent(NOT_DRIVABLE)
-  if (vehicles.state.uncertain || vehicles.state.quote || vehicles.state.paidRide) return cancelIntent()
-  if (chosen.distance <= RIDE_REACH.take) { getEngine()?.stop(); it.walking = false; boardNow(it, vehicle); return }
+  const chosen = vehicle ? planBoarding(vehicle, at, { me: me.value, invites: data?.invites ?? [], paid: vehicle.source === 'service', driveAllowed: vehicles.state.selectedId === vehicle.id && Boolean(vehicles.state.actions?.drive), driverOnly: it.goal === 'drive', entryId: it.entryId ?? undefined }) : null
+  if (!vehicle || !boardingAllowed(vehicle) || !chosen || (vehicle.phase !== 'parked' && vehicle.phase !== 'boarding') || Math.abs(vehicle.speed) >= VEHICLE_RULES.stoppedSpeed) return cancelIntent(NO_ENTRY)
+  if (vehicles.state.uncertain || vehicles.state.quote) return cancelIntent()
+  const door = entryApproachPoint(vehicle, chosen, it.goal === 'drive')
+  const reached = it.goal === 'drive' ? Boolean(door && Math.hypot(door.x - at.x, door.z - at.z) <= 0.3) : chosen.distance <= RIDE_REACH.take
+  if (reached) { it.entryId = chosen.entryId; getEngine()?.stop(); it.walking = false; boardNow(it, vehicle); return }
   if (footBlocked.value) { if (++it.blocked > INTENT.blockedTicks) cancelIntent(); return }
   it.blocked = 0
   // Walking away from the door means the member took over: end the intent without stopping their walk.
   if (it.walking && chosen.distance > it.best + INTENT.backoffMetres) return cancelIntent('', false)
   it.best = Math.min(it.best, chosen.distance)
   if (it.walking) return
-  const entry = VEHICLE_SPECS[vehicle.kind].entries.find(item => item.id === chosen.entryId)
-  // Stop outside the body while staying inside the service's existing boarding range.
-  const door = entry ? vehiclePoint(vehicle.pos, vehicle.heading, entry.x + Math.sign(entry.x) * 0.45, entry.z) : null
-  const walk = door ? getEngine()?.walkTo(door, { exact: true }) : null
-  if (!walk || walk.status === 'unreachable') return cancelIntent('There is no walkable way to the vehicle door from here.')
-  it.walking = true
+  const candidates = boardingApproachPlans(vehicle, at, { me: me.value, invites: data?.invites ?? [], paid: vehicle.source === 'service', driveAllowed: vehicles.state.selectedId === vehicle.id && Boolean(vehicles.state.actions?.drive), driverOnly: it.goal === 'drive' })
+  for (const candidate of candidates) {
+    const target = entryApproachPoint(vehicle, candidate, it.goal === 'drive')
+    const walk = target ? getEngine()?.walkTo(target, { exact: true }) : null
+    if (!walk || walk.status === 'unreachable') continue
+    it.entryId = candidate.entryId; it.best = candidate.distance; it.walking = true
+    return
+  }
+  return cancelIntent('There is no walkable way to an available vehicle entry from here.')
 }
 const MOVE_KEYS = new Set(['KeyW', 'KeyA', 'KeyS', 'KeyD', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'])
 const takeOver = (): void => cancelIntent('', false)
@@ -306,7 +329,7 @@ const depotInfo = computed(() => {
   return { id: found.depot.id, here, where: `${metres(found.distance)} to the ${direction(at, found.depot.pos)}` }
 })
 const kindWords = VEHICLE_KINDS.map(kind => VEHICLE_SPECS[kind].label.toLowerCase()).join(', ').replace(/, ([^,]*)$/, ' or $1')
-interface Guide { key: string; text: string; /** `drive`: walk to the member's own vehicle and drive. `borrow`: borrow and drive at the depot. */ act?: 'drive' | 'borrow'; vehicleId?: VehicleId }
+interface Guide { key: string; text: string; /** `drive` is the existing guide key for entering the borrowed vehicle. */ act?: 'drive' | 'borrow'; vehicleId?: VehicleId }
 /** What there is to say about getting to a vehicle, if anything. The member's own borrowed vehicle comes before a depot: it is one at a time. */
 const wayTo = computed<Guide | null>(() => {
   const at = position.value
@@ -318,7 +341,7 @@ const wayTo = computed<Guide | null>(() => {
     if (target.value?.kind === 'vehicle' && target.value.id === own.id) return null
     const door = entriesNear(own, at)[0]
     if (!door || door.distance > GUIDE.keep) return null
-    return { key: `own:${own.id}`, text: `Your ${VEHICLE_SPECS[own.kind].label.toLowerCase()} is ${metres(door.distance)} to the ${direction(at, own.pos)}. Walk up to a door and press Drive, or let it take you there.`, act: 'drive', vehicleId: own.id }
+    return { key: `own:${own.id}`, text: `Your ${VEHICLE_SPECS[own.kind].label.toLowerCase()} is ${metres(door.distance)} to the ${direction(at, own.pos)}. Walk up to a door and press Enter, or let it take you there.`, act: 'drive', vehicleId: own.id }
   }
   const depot = depotInfo.value
   if (!depot || (!depot.here && seen.value !== depot.id)) return null
@@ -354,11 +377,11 @@ onBeforeUnmount(stopReset)
       <div class="transport-guide-actions">
         <button v-if="guide.act === 'borrow'" class="btn sm primary" type="button" @click="startBorrowDrive()">Borrow and drive</button>
         <button v-if="guide.act === 'borrow'" class="btn sm" type="button" @click="detailsOpen = true">Choose vehicle</button>
-        <button v-if="guide.act === 'drive' && guide.vehicleId" class="btn sm primary" type="button" @click="startApproach(guide.vehicleId)">Walk there and drive</button>
+        <button v-if="guide.act === 'drive' && guide.vehicleId" class="btn sm primary" type="button" @click="startApproach(guide.vehicleId)">Walk there and enter</button>
         <button class="btn sm" type="button" @click="hidden = guide.key">Hide</button>
       </div>
     </section>
-    <section v-if="intent && !shown" class="transport-guide" aria-label="Driving">
+    <section v-if="intent && !shown" class="transport-guide" aria-label="Entering vehicle">
       <p role="status">{{ intentWords }}</p>
       <div class="transport-guide-actions"><button class="btn sm" type="button" @click="cancelIntent()">Cancel</button></div>
     </section>

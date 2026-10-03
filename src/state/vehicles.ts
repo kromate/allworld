@@ -226,6 +226,16 @@ export function createVehicleClient(runtime: VehicleRuntime) {
     const vehicle = current()
     await mutate('vehicle.board', { vehicleId: vehicle.id, seatId, entryId, expectedRevision: vehicle.revision, ...(inviteId ? { inviteId } : {}), requestId: requestId() }, 'Checking your seat…', vehicleAnswer, true, true)
   }
+  /** Seat and door are selected from the service's current pose, permissions and occupancy. */
+  async function enter(inviteId?: VehicleInviteId): Promise<void> {
+    const vehicle = current()
+    await mutate('vehicle.enter', { vehicleId: vehicle.id, ...(inviteId ? { inviteId } : {}), requestId: requestId() }, 'Checking your seat…', vehicleAnswer, true, true)
+  }
+  async function cycleSeat(): Promise<void> {
+    const seat = seated.value; if (!seat || state.pending || state.uncertain) return
+    stopDriving()
+    await mutate('vehicle.cycleSeat', { vehicleId: seat.vehicleId, requestId: requestId() }, 'Changing your seat…', vehicleAnswer, true, true)
+  }
   async function exit(): Promise<void> {
     const seat = seated.value; if (!seat) return
     await mutate('vehicle.exit', { vehicleId: seat.vehicleId, requestId: requestId() }, 'Leaving the vehicle…', result => { vehicleAnswer(result); stopDriving() }, false, true, result => bridge?.exited(result))
@@ -474,7 +484,7 @@ export function createVehicleClient(runtime: VehicleRuntime) {
   }
   const stopGuard = watch(() => [canDrive.value, driver.value?.control.kind === 'member' ? driver.value.control.controlEpoch : null] as const, ([allowed, epoch], before) => { if (!allowed || epoch !== before?.[1]) stopDriving() })
   function dispose(): void { if (!disposed) { reset(false); stopGuard(); bridge = null; disposed = true } }
-  return { state, self, seated, selected, driver, canDrive, compatible, capabilityReason, load, inspect, loan, returnVehicle, board, exit, access, invite, respondInvite, offerDriver, acceptDriver, quote, book, depart, cancelTrip, destination, resume: (): Promise<void> => resume(), drive, stopDriving, event, connect, reset, dispose,
+  return { state, self, seated, selected, driver, canDrive, compatible, capabilityReason, load, inspect, loan, returnVehicle, board, enter, cycleSeat, exit, access, invite, respondInvite, offerDriver, acceptDriver, quote, book, depart, cancelTrip, destination, resume: (): Promise<void> => resume(), drive, stopDriving, event, connect, reset, dispose,
     bindWorld(next: VehicleWorldBridge | null): void { stopDriving(); crossing.abort(); bridge = next; state.worldBound = Boolean(next) },
     scene(next: VehicleDataVersion | null): void { state.sceneData = next; if (!compatible.value) stopDriving() },
     async retryLast(): Promise<void> { if (retry && !state.pending) await retry() },

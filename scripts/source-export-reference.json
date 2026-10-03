@@ -2243,7 +2243,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "8bf12a5799a88f703af5d4d6a5f8f4e7c5363670ea6c86c26639bb1172192dc2"
+      "sha256": "d61d99f7493c6e0855e748d9458080424cb98436b4927eff7adf95bb7ab42282"
     },
     "service/work.ts": {
       "kind": "source",
@@ -3710,7 +3710,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "d7440e3a765c4959a4381fcb28d04208124f5abaea1d1f90a4c4189682bd36db"
+      "sha256": "24d3bf7d99b22fb532df98ff94d60259406777ad831fd74adfe19d8cf483fb0b"
     },
     "src/features/transport/TransportPanel.vue": {
       "kind": "source",
@@ -3719,7 +3719,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "6ec2d114ad9eccb8c89df403ee377c611569692ae8577eeb7d35e300e2b2fe80"
+      "sha256": "8eb6f0563b417cc630025c69c941ee033e04175cf88de5d285dafa5cea23255e"
     },
     "src/features/transport/transportView.ts": {
       "kind": "source",
@@ -3728,7 +3728,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "3fa4e794001a4d5082e76209dd13bfd25e993d815944b3e44f343020502a23aa"
+      "sha256": "0f10c311b17f8e038d312244b96b5d3e52cf6a6ad192ec32cd4d14990bd35956"
     },
     "src/features/travel/CostPreview.vue": {
       "kind": "source",
@@ -4061,7 +4061,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "f4877d0b679eb91ad12ada0086109f8830250a8134853988a2fb9aa444536473"
+      "sha256": "1c4f03fbbda181f8de583707647fdc87b545031d4aa378930af0f762be01cddf"
     },
     "src/shared/ids.ts": {
       "kind": "source",
@@ -4178,7 +4178,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "7fab12862c89172ea9e2e2c1a895a175732e7245e5738621388eb28b1c2a957b"
+      "sha256": "c184f2948002a57174965404d2f3eecfe0db21f39ea1e16e1f58dc739861a6b7"
     },
     "src/shared/worldCollision.ts": {
       "kind": "source",
@@ -4259,7 +4259,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "46d7e94b8b8a3a6aeda723fb6bb109ae80eaf6757826073df38f6d4475fb9b4a"
+      "sha256": "4b63c1bde4ff408013c95150edb03127490be26ebaa826ef0df7e520602f18fb"
     },
     "src/state/world.ts": {
       "kind": "source",
@@ -5184,6 +5184,15 @@
         "NOTICE"
       ],
       "sha256": "5a9a7a311d1e2169cebebe1753e461b30ec68107bf6e655b78c54d2118f8cc7c"
+    },
+    "src/features/transport/rideActions.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "a2277a24189f99116a3cddfc8c28c2c71bd8a4e742f6a61870a119278fa3951c"
     }
   },
   "priorManifestSha256": "491b4ac1913ba05807f1c5e3eb11f9c84ec293fb9722f5f0e39a13e8f14dab4b",
