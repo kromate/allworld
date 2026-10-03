@@ -94,7 +94,7 @@ interface ButtonRuntime {
   clear(timer: ReturnType<typeof setTimeout>): void
 }
 /** Owns passive readiness separately from the active account flow, including expected popup blur. */
-export function createGoogleButton(owner: GoogleButtonOwner, runtime: ButtonRuntime = { load: loadGoogleIdentity, render: renderGoogleButton, schedule: setTimeout, clear: clearTimeout }) {
+export function createGoogleButton(owner: GoogleButtonOwner, runtime: ButtonRuntime = { load: loadGoogleIdentity, render: renderGoogleButton, schedule: (run, delay) => globalThis.setTimeout(run, delay), clear: timer => globalThis.clearTimeout(timer) }) {
   let phase: GoogleButtonPhase = 'idle', run = 0, closed = false, failed = false
   let work: AbortController | null = null, lease: GooglePreparedAttempt | null = null, button: GoogleButtonHandle | null = null
   let renewal: ReturnType<typeof setTimeout> | null = null

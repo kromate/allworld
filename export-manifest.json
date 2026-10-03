@@ -2602,7 +2602,7 @@
       ],
       "path": "scripts/source-export-reference.json",
       "root": "project",
-      "sha256": "13e8dea18cab795234d5e7f31dd165d0ef0d77ce2ad562000860f0996cb3a22b",
+      "sha256": "8b4ac507744f0ffd7d407a5f4851248ca91a2b4bae3e0702ecc7d86bb8d3562c",
       "target": "scripts/source-export-reference.json"
     },
     {
@@ -4013,7 +4013,7 @@
       "target": "src/features/account/AccountAccess.vue"
     },
     {
-      "bytes": 10619,
+      "bytes": 10685,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -4022,7 +4022,7 @@
       ],
       "path": "src/features/account/googleIdentity.ts",
       "root": "project",
-      "sha256": "f9db821c3e51594bbf375fa4b075af55c80ebd65f3590f666f1bc8b1cc035bcc",
+      "sha256": "99046147e491ae0a2f1d84c7a360e4f4217d17032ba6bd6f8791b8a1d872a141",
       "target": "src/features/account/googleIdentity.ts"
     },
     {
