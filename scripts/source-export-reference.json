@@ -5102,7 +5102,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "f9db821c3e51594bbf375fa4b075af55c80ebd65f3590f666f1bc8b1cc035bcc"
+      "sha256": "99046147e491ae0a2f1d84c7a360e4f4217d17032ba6bd6f8791b8a1d872a141"
     },
     "src/platform/account.ts": {
       "kind": "source",
