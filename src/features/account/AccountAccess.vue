@@ -28,10 +28,13 @@ export interface AccountPasswordPolicy {
 // with no error is read as success and wipes the password; an error keeps both fields so a retry costs
 // nothing. The inputs are left uncontrolled and read when the form is submitted, so a password
 // manager's autofill is never missed and no password sits in reactive state.
+import { collectGoogleCredential } from './googleIdentity.ts'
+import type { GoogleCredentialCollector } from '../../platform/account.ts'
 import { computed, nextTick, onBeforeUnmount, ref, useId, watch } from 'vue'
 
 const props = withDefaults(defineProps<{
   /** The caller's request is under way: submitting and switching are blocked, cancel stays available. */
+  googleSignIn?: (collect: GoogleCredentialCollector) => Promise<void>
   pending?: boolean
   /** Set in the same update that clears `pending`, or the form reads the end of the request as success. */
   error?: AccountFormError | null
@@ -63,6 +66,26 @@ const emailEl = ref<HTMLInputElement | null>(null)
 const passwordEl = ref<HTMLInputElement | null>(null)
 const emailDraft = ref(props.initialEmail)
 const reveal = ref(false)
+const googleBusy = ref(false)
+const googleHost = ref<HTMLElement | null>(null)
+const googleError = ref('')
+let googleStop: AbortController | null = null
+
+async function chooseGoogle() {
+  if (!props.googleSignIn || props.pending || googleBusy.value) return
+  googleBusy.value = true; googleError.value = ''; wipe()
+  const own = new AbortController(); googleStop = own
+  try {
+    await props.googleSignIn(async (input, signal) => {
+      await nextTick()
+      const combined = AbortSignal.any([signal, own.signal])
+      combined.throwIfAborted()
+      if (!googleHost.value) throw new Error('Google sign-in form is closed.')
+      return collectGoogleCredential(googleHost.value, input, combined)
+    })
+  } catch { if (!own.signal.aborted) googleError.value = 'Google sign-in did not finish. Try again or use your password.' }
+  finally { own.abort(); if (googleStop === own) googleStop = null; googleBusy.value = false }
+}
 const fieldErrors = ref<{ email?: string; password?: string }>({})
 const errorHidden = ref(false)
 let latched = false
@@ -116,6 +139,7 @@ function choose(next: AccountMode) {
 }
 
 function cancel() {
+  googleStop?.abort()
   wipe()
   fieldErrors.value = {}
   emit('cancel')
@@ -146,20 +170,28 @@ watch(() => props.pending, (now, was) => {
   if (field) void nextTick(() => (field === 'email' ? emailEl.value : passwordEl.value)?.focus())
 })
 
-onBeforeUnmount(wipe)
+onBeforeUnmount(() => { googleStop?.abort(); wipe() })
 defineExpose({ /** Wipe the password now, for a caller that learns of success another way. */ clear: wipe })
 </script>
 
 <template>
   <div class="access stack" :aria-busy="pending">
-    <div class="tabs" role="group" aria-label="Account action">
+    <button v-if="googleSignIn && !googleBusy" class="btn block google-start" type="button" :disabled="pending" @click="chooseGoogle">Continue with Google</button>
+    <section v-if="googleBusy" class="stack" aria-label="Choose your Google account">
+      <p>Choose your Google account below. Nothing is saved to it until you confirm the account.</p>
+      <div ref="googleHost" class="google-host" @keydown.stop @keyup.stop></div>
+      <small>Google only shares your sign-in identity. Choose within 30 seconds, or start again.</small>
+      <button class="btn ghost block" type="button" @click="cancel">Cancel Google sign-in</button>
+    </section>
+    <p v-if="googleError && !pending" class="notice coral" role="alert">{{ googleError }}</p>
+    <div v-if="!googleBusy" class="tabs" role="group" aria-label="Account action">
       <button
         v-for="option in MODES" :key="option.id" class="tab" type="button"
         :aria-pressed="mode === option.id" :aria-disabled="pending || undefined" @click="choose(option.id)"
       >{{ option.label }}</button>
     </div>
 
-    <form :key="mode" class="stack" method="post" novalidate :aria-label="creating ? 'Create account' : 'Sign in'" @submit.prevent="submit">
+    <form v-if="!googleBusy" :key="mode" class="stack" method="post" novalidate :aria-label="creating ? 'Create account' : 'Sign in'" @submit.prevent="submit">
       <div class="field">
         <label class="label" :for="ids.email">Email</label>
         <input
@@ -201,6 +233,8 @@ defineExpose({ /** Wipe the password now, for a caller that learns of success an
 </template>
 
 <style scoped>
+.google-host { min-height: 44px; max-width: 100%; overflow: hidden; }
+.google-start { background: var(--surface); border: 1px solid var(--line, #c6c1b6); }
 .access { max-width: 100%; }
 .tab[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 3px rgba(40, 30, 10, 0.12); }
 .tab[aria-disabled="true"], .btn[aria-disabled="true"] { opacity: 0.5; cursor: not-allowed; }

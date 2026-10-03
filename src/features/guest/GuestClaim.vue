@@ -7,6 +7,7 @@ import { computed } from 'vue'
 import MemberBadge from '../../ui/MemberBadge.vue'
 import AccountAccess from '../account/AccountAccess.vue'
 import type { AccountCredentials, AccountFormError, AccountPasswordPolicy } from '../account/AccountAccess.vue'
+import type { GoogleCredentialCollector } from '../../platform/account.ts'
 import GuestConflict from './GuestConflict.vue'
 import GuestKeeps from './GuestKeeps.vue'
 import { NOT_PERSISTED, failureView } from './guestView.ts'
@@ -24,6 +25,7 @@ const props = defineProps<{
    * confirmed). Null while the shell is still checking for a session.
    */
   access?: { pending: boolean; error: AccountFormError | null; existing: string | null } | null
+  googleSignIn?: (collect: GoogleCredentialCollector) => Promise<void>
   passwordPolicy?: AccountPasswordPolicy
   /** The last save got no definite answer: it may have gone through. */
   uncertain?: boolean
@@ -88,7 +90,7 @@ const character = computed(() => props.session?.character ?? null)
 
       <template v-else-if="claim.kind === 'signing-in' && access">
         <p class="small">Sign in, or create an account, and this character becomes that account’s. Nothing is moved until the world has checked the account.</p>
-        <AccountAccess :pending="access.pending" :error="access.error" :password-policy="passwordPolicy" @submit="emit('access', $event)" @cancel="emit('cancel')" />
+        <AccountAccess :pending="access.pending" :error="access.error" :password-policy="passwordPolicy" :google-sign-in="googleSignIn" @submit="emit('access', $event)" @cancel="emit('cancel')" />
       </template>
 
       <template v-else-if="claim.kind === 'signing-in'">

@@ -53,7 +53,7 @@ const digest = (value: string): string => createHash('sha256').update(value).dig
 const BODY_LIMIT = 6144, FRAME_LIMIT = 256 * 1024, BUFFER_LIMIT = 1024 * 1024
 const HTTP_PATHS = new Set(['/world/guest-session', '/world/guest-claim', '/world/guest-revoke', '/world/hosted-challenge', '/world/hosted-session', '/world/counts/snapshot', '/world/counts/view'])
 // The only routes that read the session cookie. Same origin only: none of them ever answers with a CORS header.
-const ACCOUNT_PATHS = new Set(['/world/account/attempt', '/world/account/signup', '/world/account/signin', '/world/account/cancel', '/world/account/me', '/world/account/grant', '/world/account/signout'])
+const ACCOUNT_PATHS = new Set(['/world/account/attempt', '/world/account/signup', '/world/account/signin', '/world/account/cancel', '/world/account/google-config', '/world/account/google', '/world/account/me', '/world/account/grant', '/world/account/signout'])
 // Root policy: a new password is 12 to 128 characters. Sign-in asks only for 1 to 128, so a password that was valid when it was set still works.
 const NEW_PASSWORD_MIN = 12, PASSWORD_MAX = 128
 // Pending sign-in work is bounded on its own, never by the connection limit: two players at a two-player cap can still renew.
@@ -285,7 +285,12 @@ export function createHostedWorldServer(options: HostedServerOptions) {
       world.limit(`account:attempt:${from}`, 30, 60_000)
       reply(response, 200, sessions.issue()); return
     }
-    fields(input, ['email', 'password', 'attemptId'])
+    if (path === '/world/account/google-config') {
+      fields(input, [])
+      world.limit(`account:google-config:${from}`, 30, 60_000)
+      reply(response, 200, provider.google ? { clientId: provider.google.clientId } : null); return
+    }
+    fields(input, path === '/world/account/google' ? ['idToken', 'attemptId'] : ['email', 'password', 'attemptId'])
     // Spent by this request whatever happens next: an attempt makes one request, ever.
     const attempt = sessions.enter(attemptId(input.attemptId))
     try { await signIn(request, response, path, input, cookie, from, attempt) } finally { sessions.settle(attempt) }
@@ -296,19 +301,34 @@ export function createHostedWorldServer(options: HostedServerOptions) {
     const email = typeof input.email === 'string' ? input.email.trim().toLowerCase() : ''
     // The password lives in this call and in the one request to the provider. It is never stored, logged or echoed.
     const password = input.password
-    if (email.length < 3 || email.length > 254 || !/^[^\s@]+@[^\s@]+$/.test(email)) throw new WorldError('invalid', 'Enter a valid email address.')
-    if (typeof password !== 'string' || password.length < (creating ? NEW_PASSWORD_MIN : 1) || password.length > PASSWORD_MAX) throw new WorldError('invalid', creating ? `Use a password of ${NEW_PASSWORD_MIN} to ${PASSWORD_MAX} characters.` : 'Enter your password.')
+    const google = path === '/world/account/google'
+    const idToken = input.idToken
+    if (google && (!provider.google || typeof idToken !== 'string' || idToken.length > 4096 || idToken.length < 100)) throw new WorldError('invalid', 'Google sign-in is not available or the credential is invalid.')
+    if (!google && (email.length < 3 || email.length > 254 || !/^[^\s@]+@[^\s@]+$/.test(email))) throw new WorldError('invalid', 'Enter a valid email address.')
+    if (!google && (typeof password !== 'string' || password.length < (creating ? NEW_PASSWORD_MIN : 1) || password.length > PASSWORD_MAX)) throw new WorldError('invalid', creating ? `Use a password of ${NEW_PASSWORD_MIN} to ${PASSWORD_MAX} characters.` : 'Enter your password.')
     // All before the provider is asked: every sign-up and sign-in leaves from this server's one address.
-    world.limit(creating ? `account:signup:${from}` : `account:signin:${from}`, creating ? 6 : 20, 5 * 60_000)
-    world.limit(`account:email:${digest(`${scopeKey}\n${email}`)}`, 8, 5 * 60_000)
+    world.limit(google ? `account:google:${from}` : creating ? `account:signup:${from}` : `account:signin:${from}`, creating ? 6 : 20, 5 * 60_000)
+    if (!google) world.limit(`account:email:${digest(`${scopeKey}\n${email}`)}`, 8, 5 * 60_000)
+    else world.limit(`account:google-token:${digest(typeof idToken === 'string' ? idToken : '')}`, 8, 5 * 60_000)
     world.limit('account:provider', 300, 60_000)
     const askedAt = now()
     let credential: ProviderCredential
     // The provider's own 8-second deadline applies; cancelling the attempt or stopping the world aborts it sooner.
     const signal = AbortSignal.any([providerCalls.signal, attempt.signal])
-    try { credential = await (creating ? provider.signUp({ email, password }, signal) : provider.signIn({ email, password }, signal)) }
+    try {
+      if (google) {
+        if (!provider.google || typeof idToken !== 'string') throw new WorldError('invalid', 'Google sign-in is not available.')
+        credential = await provider.google.signIn({ idToken, nonce: typeof input.attemptId === 'string' ? input.attemptId : '', requestUri: binding.origin }, signal)
+        world.limit(`account:google-uid:${digest(`${scopeKey}\n${credential.identity.uid}`)}`, 8, 5 * 60_000)
+      } else {
+        if (typeof password !== 'string') throw new WorldError('invalid', 'Enter your password.')
+        credential = await (creating ? provider.signUp({ email, password }, signal) : provider.signIn({ email, password }, signal))
+      }
+    }
     catch (error) {
       if (!sessions.going(attempt)) throw sessions.cancelledError()
+      if (error instanceof WorldError) throw error
+      if (google && error instanceof ProviderError && error.refusal !== 'throttled' && error.refusal !== 'unavailable') throw new WorldError('unauthorized', 'Google sign-in was refused. You can try again or sign in with your password.')
       throw accountRefusal(creating, error)
     }
     // Cancelled, expired or closed while the provider answered: the answer opens nothing. A provider account that

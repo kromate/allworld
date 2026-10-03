@@ -26,12 +26,17 @@ export interface AccountProvider {
   signUp(input: { email: string; password: string }, signal: AbortSignal): Promise<ProviderCredential>
   signIn(input: { email: string; password: string }, signal: AbortSignal): Promise<ProviderCredential>
   /** Proves the account still exists, is enabled and has not had its tokens revoked. May return a new refresh token. */
+  google?: {
+    readonly clientId: string
+    signIn(input: { idToken: string; nonce: string; requestUri: string }, signal: AbortSignal): Promise<ProviderCredential>
+  }
   revalidate(input: { refreshToken: string; expectedIssuer: string; expectedUid: string }, signal: AbortSignal): Promise<ProviderCredential>
 }
 
 const TIMEOUT_MS = 8000, REPLY_LIMIT = 16 * 1024
 export const REFRESH_TOKEN_LIMIT = 4096
 const REFUSALS: Readonly<Record<string, ProviderRefusal>> = {
+  INVALID_IDP_RESPONSE: 'invalid-credentials', INVALID_CREDENTIAL: 'invalid-credentials', FEDERATED_USER_ID_ALREADY_LINKED: 'invalid-credentials', OPERATION_NOT_ALLOWED: 'disabled',
   INVALID_LOGIN_CREDENTIALS: 'invalid-credentials', EMAIL_NOT_FOUND: 'invalid-credentials', INVALID_PASSWORD: 'invalid-credentials', INVALID_EMAIL: 'invalid-credentials',
   EMAIL_EXISTS: 'email-in-use',
   WEAK_PASSWORD: 'weak-password', PASSWORD_DOES_NOT_MEET_REQUIREMENTS: 'weak-password',
@@ -44,11 +49,12 @@ const short = (value: unknown, max: number): value is string => typeof value ===
 /** An address the page can name the account by: bounded, one `@`, no spaces. Anything else counts as absent. */
 const address = (value: unknown): value is string => short(value, 254) && /^[^\s@]+@[^\s@]+$/.test(value)
 
-export function createFirebaseRestProvider(options: { projectId: string; projectNumber?: string; apiKey: string; fetch?: typeof fetch }): AccountProvider {
+export function createFirebaseRestProvider(options: { projectId: string; projectNumber?: string; apiKey: string; googleClientId?: string; fetch?: typeof fetch }): AccountProvider {
   const { projectId, projectNumber, apiKey } = options
   if (!/^[a-z][a-z0-9-]{4,29}$/.test(projectId)) throw new Error('Invalid Firebase project id.')
   if (projectNumber !== undefined && !/^\d{6,20}$/.test(projectNumber)) throw new Error('Invalid Firebase project number.')
   if (!/^[A-Za-z0-9_-]{20,80}$/.test(apiKey)) throw new Error('Invalid Firebase web API key.')
+  if (options.googleClientId !== undefined && !/^[0-9]+-[A-Za-z0-9_-]+\.apps\.googleusercontent\.com$/.test(options.googleClientId)) throw new Error('Invalid Google client id.')
   const request = options.fetch ?? fetch
   const issuer = `firebase:${projectId}` as const
   const key = `?key=${encodeURIComponent(apiKey)}`
@@ -85,11 +91,12 @@ export function createFirebaseRestProvider(options: { projectId: string; project
    * what is trusted here and is not checked. Its claims are read for one thing: to refuse a reply
    * that is for another project or another person than the reply itself names.
    */
-  function credential(uid: unknown, idToken: unknown, refreshToken: unknown, replyEmail?: unknown): ProviderCredential {
+  function credential(uid: unknown, idToken: unknown, refreshToken: unknown, replyEmail?: unknown, requiredProvider?: string): ProviderCredential {
     if (!short(uid, 128) || !short(idToken, 8192) || !short(refreshToken, REFRESH_TOKEN_LIMIT)) throw new ProviderError('unavailable')
     let claims: unknown
     try { claims = JSON.parse(Buffer.from(idToken.split('.')[1] ?? '', 'base64url').toString('utf8')) } catch { throw new ProviderError('unavailable') }
     if (!object(claims) || claims.aud !== projectId || claims.iss !== `https://securetoken.google.com/${projectId}` || claims.sub !== uid) throw new ProviderError('unavailable')
+    if (requiredProvider && (!object(claims.firebase) || claims.firebase.sign_in_provider !== requiredProvider)) throw new ProviderError('unavailable')
     // The address comes from the provider's own reply about this uid, never from what was typed.
     // Empty when the provider named none: a refresh then keeps the address it verified before.
     const email = address(claims.email) ? claims.email : address(replyEmail) ? replyEmail : ''
@@ -105,6 +112,31 @@ export function createFirebaseRestProvider(options: { projectId: string; project
   }
   return {
     issuer,
+    ...(options.googleClientId ? { google: {
+      clientId: options.googleClientId,
+      async signIn(input: { idToken: string; nonce: string; requestUri: string }, signal: AbortSignal): Promise<ProviderCredential> {
+        if (!short(input.idToken, 4096) || !/^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/.test(input.idToken) || !/^[A-Za-z0-9_-]{43}$/.test(input.nonce)) throw new ProviderError('invalid-credentials')
+        let origin: URL
+        try { origin = new URL(input.requestUri) } catch { throw new ProviderError('unavailable') }
+        if (origin.protocol !== 'https:' || origin.origin !== input.requestUri || origin.username || origin.password) throw new ProviderError('unavailable')
+        const raw = await call('https://identitytoolkit.googleapis.com/v1/accounts:signInWithIdp', 'application/json', JSON.stringify({
+          requestUri: input.requestUri, postBody: new URLSearchParams({ id_token: input.idToken, providerId: 'google.com' }).toString(), returnSecureToken: true, returnIdpCredential: false,
+        }), signal)
+        if (raw.providerId !== 'google.com' || raw.needConfirmation === true) throw new ProviderError('invalid-credentials')
+        const proved = credential(raw.localId, raw.idToken, raw.refreshToken, raw.email, 'google.com')
+        // Firebase has now verified this exact Google id_token over TLS. Decoding alone proves nothing.
+        let google: unknown
+        try { google = JSON.parse(Buffer.from(input.idToken.split('.')[1] ?? '', 'base64url').toString('utf8')) } catch { throw new ProviderError('invalid-credentials') }
+        if (!object(google) || google.aud !== options.googleClientId || (google.iss !== 'https://accounts.google.com' && google.iss !== 'accounts.google.com') || google.nonce !== input.nonce
+          || typeof google.exp !== 'number' || google.exp <= Date.now() / 1000 || !short(google.sub, 256)) throw new ProviderError('invalid-credentials')
+        let firebase: unknown
+        try { firebase = JSON.parse(Buffer.from(typeof raw.idToken === 'string' ? raw.idToken.split('.')[1] ?? '' : '', 'base64url').toString('utf8')) } catch { throw new ProviderError('unavailable') }
+        const subjects = object(firebase) && object(firebase.firebase) && object(firebase.firebase.identities) ? firebase.firebase.identities['google.com'] : null
+        if (!Array.isArray(subjects) || !subjects.includes(google.sub)) throw new ProviderError('unavailable')
+        if (!proved.identity.email || !proved.identity.emailVerified) throw new ProviderError('invalid-credentials')
+        return proved
+      },
+    } } : {}),
     signUp: (input, signal) => withPassword('signUp', input, signal),
     signIn: (input, signal) => withPassword('signInWithPassword', input, signal),
     async revalidate(input, signal) {

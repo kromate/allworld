@@ -84,7 +84,7 @@
       "target": ".github/workflows/ci.yml"
     },
     {
-      "bytes": 7066,
+      "bytes": 7141,
       "kind": "notice-or-metadata",
       "license": "Apache-2.0",
       "notices": [
@@ -93,7 +93,7 @@
       ],
       "path": ".github/workflows/release.yml",
       "root": "project",
-      "sha256": "6908f249cf470a50e1a1e320e8c47f0aa216ef396f409677cfdaf0d2923d8678",
+      "sha256": "081a40b2e0b4abd60ac2dff17248777e4f7caab32c05373037b2ec69a4430042",
       "target": ".github/workflows/release.yml"
     },
     {
@@ -149,7 +149,7 @@
       "target": "AGENTS.md"
     },
     {
-      "bytes": 43999,
+      "bytes": 44115,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -158,7 +158,7 @@
       ],
       "path": "App.vue",
       "root": "project",
-      "sha256": "69fc150d987599d541028386617c9d45a73bef34816c5c1a5668da64c5c808d0",
+      "sha256": "03a79d93973c6e0f26c316f945d33f2cf6959254a40bcd61da0f2dfa84109d0d",
       "target": "App.vue"
     },
     {
@@ -2253,7 +2253,7 @@
       "target": "scripts/README.md"
     },
     {
-      "bytes": 10695,
+      "bytes": 11091,
       "kind": "tooling",
       "license": "Apache-2.0",
       "notices": [
@@ -2262,7 +2262,7 @@
       ],
       "path": "scripts/assemble-release-package.mjs",
       "root": "project",
-      "sha256": "4adbc9b9591af66091e91e11e1cb97d78566ff58cbdc340bd81a83740acaadc8",
+      "sha256": "67bdde46e9f96e33e6fb4bc27e1258006e2cd68246f0cca95ffc62a90ce784f5",
       "target": "scripts/assemble-release-package.mjs"
     },
     {
@@ -2435,7 +2435,7 @@
       "target": "scripts/export-source.mjs"
     },
     {
-      "bytes": 14042,
+      "bytes": 14358,
       "kind": "tooling",
       "license": "Apache-2.0",
       "notices": [
@@ -2444,7 +2444,7 @@
       ],
       "path": "scripts/guard-release-package.mjs",
       "root": "project",
-      "sha256": "26a180c095ac0e31c6c1885cc10eb0f7cc2910b041b945f319beafc6fd1e9d86",
+      "sha256": "35f4f08d940962be02f84c7ec40eddcef4d824bd25fa6549e4acf544489876fe",
       "target": "scripts/guard-release-package.mjs"
     },
     {
@@ -2474,7 +2474,7 @@
       "target": "scripts/probe-cicd.mjs"
     },
     {
-      "bytes": 8673,
+      "bytes": 10009,
       "kind": "tooling",
       "license": "Apache-2.0",
       "notices": [
@@ -2483,7 +2483,7 @@
       ],
       "path": "scripts/probe-release-package-guard.mjs",
       "root": "project",
-      "sha256": "3a0db67adfdd76d8d056c21fe624e65a517710aad1c14a9a30a432dcb0efe367",
+      "sha256": "015f599fa55753d081d60b1cd50b9530bfa15bb040a45243acb421470b181c4b",
       "target": "scripts/probe-release-package-guard.mjs"
     },
     {
@@ -2593,7 +2593,7 @@
       "target": "scripts/source-export-install.py"
     },
     {
-      "bytes": 146123,
+      "bytes": 147635,
       "kind": "tooling",
       "license": "Apache-2.0",
       "notices": [
@@ -2602,7 +2602,7 @@
       ],
       "path": "scripts/source-export-reference.json",
       "root": "project",
-      "sha256": "6f4c72ce93a1d2c145afbdea0aee15ad58ecae74b83e48e3ebc732613e464db3",
+      "sha256": "bdceaacdb6edd64df75f22d34ebbfe5836c02c9f64f478e4fafe36c4f37616bb",
       "target": "scripts/source-export-reference.json"
     },
     {
@@ -2866,7 +2866,7 @@
       "target": "service/accountGrants.ts"
     },
     {
-      "bytes": 7926,
+      "bytes": 11260,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -2875,7 +2875,7 @@
       ],
       "path": "service/accountProvider.ts",
       "root": "project",
-      "sha256": "e5f6b79e4b4286f1e9715ddfe94ee2eae2e1e061b06183179357ff32b5f1bec5",
+      "sha256": "87ae522e2a15dc7cf4bf9367a97d8c51cafa72d0d8b9bf22d1598494a9935c7e",
       "target": "service/accountProvider.ts"
     },
     {
@@ -3047,7 +3047,7 @@
       "target": "service/arena/words/tiles.ts"
     },
     {
-      "bytes": 12509,
+      "bytes": 14164,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -3056,7 +3056,7 @@
       ],
       "path": "service/cloudflare/accountHttp.ts",
       "root": "project",
-      "sha256": "08b9e10bfa5f55c02cfd46ab12750c28567e0e4b0d1a369c16ba80ab6f451574",
+      "sha256": "53fde8a1456bbb850bbf8ba036f0f801205b61037fc3a0d77ae8916c1a6653ed",
       "target": "service/cloudflare/accountHttp.ts"
     },
     {
@@ -3125,7 +3125,7 @@
       "target": "service/cloudflare/transport.ts"
     },
     {
-      "bytes": 21854,
+      "bytes": 22169,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -3134,7 +3134,7 @@
       ],
       "path": "service/cloudflare/worker.ts",
       "root": "project",
-      "sha256": "1365d9ae9f9bc457a5b109058fc65cc80f88d5291ab7509dd07a9bc2f26ad4eb",
+      "sha256": "7a1102d4c544e3ae32f9c36706f526769ae13ab013edffa8b1c6d546c7c54572",
       "target": "service/cloudflare/worker.ts"
     },
     {
@@ -3493,7 +3493,7 @@
       "target": "service/hostedIdentity.ts"
     },
     {
-      "bytes": 37137,
+      "bytes": 38836,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -3502,7 +3502,7 @@
       ],
       "path": "service/hostedServer.ts",
       "root": "project",
-      "sha256": "43437bbf9bba7e456353208eb381ff85406d9b9fc1733cc3a7fc29d392c311db",
+      "sha256": "e268182d79da8c3ade1e8b2c02657a69672ba849eb64a09006dd22b07c7ceae1",
       "target": "service/hostedServer.ts"
     },
     {
@@ -4000,7 +4000,7 @@
       "target": "src/config/wardrobe.ts"
     },
     {
-      "bytes": 9880,
+      "bytes": 12010,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -4009,8 +4009,21 @@
       ],
       "path": "src/features/account/AccountAccess.vue",
       "root": "project",
-      "sha256": "81d015b2fb2da53166850d208d04307f78a916bd65236e74f21d514f5919d41e",
+      "sha256": "32a4ab24ee24e4e7d8b83f80306b4f02a4f053db50607125e40aa0ba3fdc6c3d",
       "target": "src/features/account/AccountAccess.vue"
+    },
+    {
+      "bytes": 3696,
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "path": "src/features/account/googleIdentity.ts",
+      "root": "project",
+      "sha256": "525055cefbefd3471e76535c671aacc5caed02b993466a79b055e6cdec477072",
+      "target": "src/features/account/googleIdentity.ts"
     },
     {
       "bytes": 6447,
@@ -4767,7 +4780,7 @@
       "target": "src/features/guest/GuestChip.vue"
     },
     {
-      "bytes": 9007,
+      "bytes": 9184,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -4776,7 +4789,7 @@
       ],
       "path": "src/features/guest/GuestClaim.vue",
       "root": "project",
-      "sha256": "7154bdfb548a8ab9a5046060e898c3649340c30620d00087d2322d650d7d9869",
+      "sha256": "51e40434a08197190c36a3165cbf68b89421e3c39b6f73d1b172510fb5549215",
       "target": "src/features/guest/GuestClaim.vue"
     },
     {
@@ -4832,7 +4845,7 @@
       "target": "src/features/guest/GuestKeeps.vue"
     },
     {
-      "bytes": 3846,
+      "bytes": 3995,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -4841,7 +4854,7 @@
       ],
       "path": "src/features/guest/GuestSavePage.vue",
       "root": "project",
-      "sha256": "c7a6392029d09c3d404d7ac4dfc6d0035ed80ddd1ebd6fb97ad9058ba9a83cab",
+      "sha256": "966a489518343ae97a781f3c1da1c130d098576c7c30cd875e4104a1217f0479",
       "target": "src/features/guest/GuestSavePage.vue"
     },
     {
@@ -4871,7 +4884,7 @@
       "target": "src/features/guest/GuestWelcome.vue"
     },
     {
-      "bytes": 25664,
+      "bytes": 27586,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -4880,11 +4893,11 @@
       ],
       "path": "src/features/guest/guestControl.ts",
       "root": "project",
-      "sha256": "2def63953f723a2876e9721f320c4757a3d93d595610f986d00090bca4c2faa1",
+      "sha256": "1eb6b822da49010fa057b2534f04f3f7ba35507c03bd55fff4b0d4dfc64406a9",
       "target": "src/features/guest/guestControl.ts"
     },
     {
-      "bytes": 6420,
+      "bytes": 6725,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -4893,7 +4906,7 @@
       ],
       "path": "src/features/guest/guestHooks.ts",
       "root": "project",
-      "sha256": "b320e08376a8c3ee48f049aae20e973e463077ee0c65e1fae8d201d678faf77e",
+      "sha256": "c9f72cec38659c730dc8a6cb7e8a3c5398c23350989f674a1fe87a8c5ecbcee3",
       "target": "src/features/guest/guestHooks.ts"
     },
     {
@@ -6522,7 +6535,7 @@
       "target": "src/geo/mvt.ts"
     },
     {
-      "bytes": 16689,
+      "bytes": 19908,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -6531,7 +6544,7 @@
       ],
       "path": "src/platform/account.ts",
       "root": "project",
-      "sha256": "bff5c53d614e269b831b14affd414e880a6c320805121acb06e6e21e4fdf6b37",
+      "sha256": "72fcab453731f5dc8daafaf18c81b24d1ddd5d23866c4c713611e0cc6dd3747f",
       "target": "src/platform/account.ts"
     },
     {
@@ -7029,7 +7042,7 @@
       "target": "src/shared/worldCollision.ts"
     },
     {
-      "bytes": 34863,
+      "bytes": 35536,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -7038,7 +7051,7 @@
       ],
       "path": "src/state/app.ts",
       "root": "project",
-      "sha256": "5abf8c8dfee47f5e5125e53a71d365dd92c0359ef3294f7f0c852b900a5f97aa",
+      "sha256": "61e1687d76d3e940cbd9074d8bf4136ff4e30de691cfc572828b3b17ac40870f",
       "target": "src/state/app.ts"
     },
     {

@@ -23,7 +23,7 @@ export interface Env {
   WORLD_REDEEM_URL?: string
   WORLD_CREATOR_CONFIG?: string
   WORLD_MAX_CONNECTIONS?: string
-  /** Public provider config: {"projectId","projectNumber"}. */
+  /** Public provider config: {"projectId","projectNumber","googleClientId"?}. */
   WORLD_ACCOUNT?: string
   /** Server-only Worker secrets. Never build vars, static assets or runtime metadata. */
   WORLD_FIREBASE_API_KEY?: string
@@ -79,11 +79,12 @@ export function configuration(env: Omit<Env, 'ASSETS' | 'WORLD'>) {
   if (accountParts === 3) {
     const provider: unknown = JSON.parse(env.WORLD_ACCOUNT ?? '')
     if (!object(provider) || typeof provider.projectId !== 'string' || (provider.projectNumber !== undefined && typeof provider.projectNumber !== 'string')
-      || Object.keys(provider).some(key => key !== 'projectId' && key !== 'projectNumber')) throw new Error('Invalid account provider configuration.')
+      || (provider.googleClientId !== undefined && (typeof provider.googleClientId !== 'string' || !/^[0-9]+-[A-Za-z0-9_-]+\.apps\.googleusercontent\.com$/.test(provider.googleClientId)))
+      || Object.keys(provider).some(key => key !== 'projectId' && key !== 'projectNumber' && key !== 'googleClientId')) throw new Error('Invalid account provider configuration.')
     if (!/^[A-Za-z0-9_-]{43}$/.test(env.WORLD_SESSION_KEY ?? '')) throw new Error('The session key must be 32 random bytes as base64url.')
     const sessionKey = new Uint8Array(Buffer.from(env.WORLD_SESSION_KEY ?? '', 'base64url'))
     if (sessionKey.length !== 32) throw new Error('The session key must be 32 random bytes as base64url.')
-    account = { provider: createFirebaseRestProvider({ projectId: provider.projectId, ...(provider.projectNumber ? { projectNumber: provider.projectNumber } : {}), apiKey: env.WORLD_FIREBASE_API_KEY ?? '',
+    account = { provider: createFirebaseRestProvider({ projectId: provider.projectId, ...(provider.projectNumber ? { projectNumber: provider.projectNumber } : {}), apiKey: env.WORLD_FIREBASE_API_KEY ?? '', ...(provider.googleClientId ? { googleClientId: provider.googleClientId } : {}),
       // Workers rejects redirect:'error'; the reviewed adapter keeps the no-follow contract and refuses any redirect.
       fetch: cloudflareIdentityFetch }), sessionKey }
   }

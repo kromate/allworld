@@ -37,11 +37,16 @@ export type SignOutResult = 'confirmed' | 'unconfirmed' | 'unreached'
 /** `none`: nothing had been sent. `confirmed`: the server's receipt. `unconfirmed`: no receipt yet; it is retried before any other account request. */
 export type CancelResult = 'none' | 'confirmed' | 'unconfirmed'
 
+export interface GoogleCredentialRequest { clientId: string; nonce: string }
+export type GoogleCredentialCollector = (request: GoogleCredentialRequest, signal: AbortSignal) => Promise<string>
+
 export interface AccountApi {
   /** False when the world's endpoint is not this page's own origin: no account request is ever sent then. */
   readonly available: boolean
   /** Who this browser's session names, or null. The server's record, not proof: `issuer` is the authority. */
   me(signal?: AbortSignal): Promise<AccountUser | null>
+  googleConfiguration(signal?: AbortSignal): Promise<{ clientId: string } | null>
+  signInGoogle(collect: GoogleCredentialCollector): Promise<AccountUser>
   signIn(email: string, password: string): Promise<AccountUser>
   signUp(email: string, password: string): Promise<AccountUser>
   /** Ends this device's session only. Never rejects: the caller has already closed the world here. */
@@ -63,7 +68,7 @@ export const ACCOUNT_PASSWORD_MIN = 12
 export const ACCOUNT_PASSWORD_MAX = 128
 export const PASSWORD_RULE = `Use a password of ${ACCOUNT_PASSWORD_MIN} to ${ACCOUNT_PASSWORD_MAX} characters.`
 
-type AccountPath = '/world/account/attempt' | '/world/account/signup' | '/world/account/signin' | '/world/account/me' | '/world/account/grant' | '/world/account/signout' | '/world/account/cancel'
+type AccountPath = '/world/account/google-config' | '/world/account/google' | '/world/account/attempt' | '/world/account/signup' | '/world/account/signin' | '/world/account/me' | '/world/account/grant' | '/world/account/signout' | '/world/account/cancel'
 interface Answer { ok: boolean; status: number; value: unknown }
 interface Attempt { run: number; stop: AbortController; cancelled: Promise<CancelResult>; settle(result: CancelResult): void }
 
@@ -97,6 +102,20 @@ function refusal(answer: Answer): WorldError {
     : status === 400 ? 'invalid' : status === 401 ? 'unauthorized' : status === 403 ? 'forbidden' : status === 429 ? 'rate_limited' : 'unavailable'
   const fallback = status === 429 ? 'Too many tries just now. Wait a minute, then try again.' : 'The account service is unavailable. Try again later.'
   return new WorldError(code, record(value) && text(value.message, 400) ? value.message : fallback)
+}
+
+function collectGoogle(collect: GoogleCredentialCollector, input: GoogleCredentialRequest, signal: AbortSignal): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const stop = (): void => { signal.removeEventListener('abort', stop); reject(stopped()) }
+    if (signal.aborted) { stop(); return }
+    signal.addEventListener('abort', stop, { once: true })
+    Promise.resolve().then(() => collect(input, signal)).then(value => {
+      signal.removeEventListener('abort', stop)
+      if (signal.aborted) { reject(stopped()); return }
+      if (typeof value !== 'string' || value.length < 100 || value.length > 4096) { reject(new WorldError('invalid', 'Google returned an invalid credential. Try again.')); return }
+      resolve(value)
+    }, () => { signal.removeEventListener('abort', stop); reject(new WorldError('unavailable', 'Google sign-in did not finish. Try again or use your password.')) })
+  })
 }
 
 export function accountApi(config: HostedWorldSetup): AccountApi {
@@ -164,9 +183,9 @@ export function accountApi(config: HostedWorldSetup): AccountApi {
     return owedCancels.size === 0 && !owedSignOut
   }
 
-  function credential(path: '/world/account/signup' | '/world/account/signin', email: string, password: string): Promise<AccountUser> {
+  function credential(path: '/world/account/signup' | '/world/account/signin' | '/world/account/google', email: string, password: string, collect?: GoogleCredentialCollector): Promise<AccountUser> {
     // Out of bounds: refused here, before any attempt exists, with the same sentence the server uses.
-    if (length(password) > ACCOUNT_PASSWORD_MAX || (path === '/world/account/signup' && length(password) < ACCOUNT_PASSWORD_MIN)) return Promise.reject(new WorldError('invalid', PASSWORD_RULE))
+    if (path !== '/world/account/google' && (length(password) > ACCOUNT_PASSWORD_MAX || (path === '/world/account/signup' && length(password) < ACCOUNT_PASSWORD_MIN))) return Promise.reject(new WorldError('invalid', PASSWORD_RULE))
     const creating = path === '/world/account/signup'
     const run = ++generation
     current?.stop.abort()
@@ -180,6 +199,14 @@ export function accountApi(config: HostedWorldSetup): AccountApi {
         if (!live()) throw stopped()
         if (!await settleOwed()) throw new WorldError('unavailable', UNSETTLED)
         if (!live()) throw stopped()
+        let clientId: string | null = null
+        if (path === '/world/account/google') {
+          const metadata = await send('/world/account/google-config', {}, attempt.stop.signal)
+          if (!metadata.ok) throw refusal(metadata)
+          if (!record(metadata.value) || typeof metadata.value.clientId !== 'string' || !/^[0-9]+-[A-Za-z0-9_-]+\.apps\.googleusercontent\.com$/.test(metadata.value.clientId)) throw new WorldError('unavailable', 'Google sign-in is not available here. Use your password instead.')
+          clientId = metadata.value.clientId
+          if (!live()) throw stopped()
+        }
         // 1. A fresh attempt from the server, asked for now that the form was submitted.
         const askedAt = Date.now()
         let issued: Answer
@@ -199,7 +226,17 @@ export function accountApi(config: HostedWorldSetup): AccountApi {
         let failure: unknown
         sent = true
         const deadline = AbortSignal.timeout(Math.max(0, askedAt + ATTEMPT_MS - Date.now()) + 15_000)
-        try { answer = await send(path, { email, password, attemptId }, AbortSignal.any([attempt.stop.signal, deadline]), 45_000) } catch (error) { failure = error }
+        try {
+          const signal = AbortSignal.any([attempt.stop.signal, deadline, ...(path === '/world/account/google' ? [AbortSignal.timeout(Math.max(0, askedAt + ATTEMPT_MS - Date.now()))] : [])])
+          let body: Record<string, string> = { email, password, attemptId }
+          if (path === '/world/account/google') {
+            if (!collect || !clientId) throw new WorldError('unavailable', 'Google sign-in is not available here.')
+            const idToken = await collectGoogle(collect, { clientId, nonce: attemptId }, signal)
+            signal.throwIfAborted()
+            body = { idToken, attemptId }
+          }
+          answer = await send(path, body, signal, 45_000)
+        } catch (error) { failure = error }
         let user: AccountUser | null = null
         if (answer?.ok) { try { user = userOf(answer.value) } catch (error) { failure = error } }
         if (live() && user) { attempt.settle('none'); tell(user); return user }
@@ -237,6 +274,14 @@ export function accountApi(config: HostedWorldSetup): AccountApi {
       if (run !== generation) throw stopped()
       return answer.value === null ? null : userOf(answer.value)
     },
+    async googleConfiguration(signal) {
+      const answer = await send('/world/account/google-config', {}, signal)
+      if (!answer.ok) throw refusal(answer)
+      if (answer.value === null) return null
+      if (!record(answer.value) || typeof answer.value.clientId !== 'string' || !/^[0-9]+-[A-Za-z0-9_-]+\.apps\.googleusercontent\.com$/.test(answer.value.clientId)) throw new WorldError('unavailable', 'The account service returned an invalid reply. Try again.')
+      return { clientId: answer.value.clientId }
+    },
+    signInGoogle: collect => credential('/world/account/google', '', '', collect),
     signIn: (email, password) => credential('/world/account/signin', email, password),
     signUp: (email, password) => credential('/world/account/signup', email, password),
     signOut() {
