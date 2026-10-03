@@ -1479,13 +1479,14 @@ export class WorldEngine {
     if (this.districtScene && !locked) {
       const hit = this.raycaster.intersectObjects(this.districtScene.venues.filter(v => v.sprite.visible).map(v => v.sprite), false)[0]
       const venue = hit ? this.districtScene.venues.find(v => v.sprite === hit.object) : undefined
-      if (venue) { this.walkTo(venue.anchor); return }
+      if (venue) { this.events.floorClick(venue.anchor); this.walkTo(venue.anchor); return }
     }
     const point = new THREE.Vector3()
     if (!this.raycaster.ray.intersectPlane(this.groundPlane, point)) return
     const target = { x: point.x, z: point.z }
     if (this.interior && this.editing) { this.events.pickItem(null); this.events.floorClick(target); return }
     if (locked) return
+    this.events.floorClick(target)
     this.walkTo(target)
   }
 

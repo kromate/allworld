@@ -191,6 +191,18 @@ useInteraction('life.menu', () => {
   return { id: 'life.menu', priority: PRIORITY.meal, verb: here.verb, target: here.title && here.title !== here.verb ? here.title : undefined, label: here.title ? `${here.label}: ${here.title}` : here.label, icon: here.glyph, key: 'F', tone: 'primary', run: () => { void show() } }
 })
 
+// Guidance shares the existing action menu instead of covering the road with another card.
+useInteraction('life.need', () => {
+  if (spot.value || pending.value || !nudge.value || inVehicle.value || !state.value) return null
+  const food = nudge.value === 'eat'
+  if (food && nearest.value === undefined) return null
+  const place = food ? nearest.value : null
+  return { id: 'life.need', priority: PRIORITY.way - 1, verb: food ? 'Find food' : 'Rest',
+    target: place?.poi.name ?? 'Home', label: place ? `Find food: ${place.poi.name}` : food ? 'Free meal at home' : 'Rest at home',
+    icon: food ? 'food' as const : 'energy' as const, tone: 'dark' as const, disabled: !permits('foot'),
+    run: () => { if (place) walk(); else void router.push('/home') } }
+})
+
 /** Order with the service, where the member now is. It decides the price and what the dish does. */
 async function order(item: MenuItem): Promise<void> {
   busy.value = item.id
@@ -337,26 +349,7 @@ onBeforeUnmount(() => {
       <button class="btn sm" type="button" @click="cancelPending">Cancel</button>
     </div>
 
-    <!-- Street: hungry or worn out, with somewhere real to go. -->
-    <div v-else-if="!spot && nudge === 'eat' && state && nearest !== undefined" class="nudge glass" role="status">
-      <HudIcon class="nudge-icon" name="food" :size="20" />
-      <span class="grow nudge-text">
-        <strong>{{ state.hunger.label }}</strong>
-        <span v-if="nearest && atDoor" class="truncate">&nbsp;· {{ nearest.poi.name }} · food here</span>
-        <span v-else-if="nearest && !nearest.reachable" class="truncate">&nbsp;· {{ nearest.poi.name }} · no walking route</span>
-        <span v-else-if="nearest" class="truncate">&nbsp;· {{ nearest.poi.name }} · {{ walkWords(nearest) }}</span>
-        <span v-else>&nbsp;· free meal at home</span>
-      </span>
-      <button v-if="nearest && !atDoor" class="btn sm primary" type="button" :disabled="nearest.reachable && !permits('foot')" @click="walk">{{ nearest.reachable ? 'Walk there' : 'Open the map' }}</button>
-      <button v-else-if="!nearest" class="btn sm primary" type="button" @click="router.push('/home')">Go home</button>
-      <button class="btn ghost icon sm" type="button" aria-label="Dismiss" @click="dismissed = nudgeKey"><HudIcon name="close" :size="16" /></button>
-    </div>
-    <div v-else-if="!spot && nudge === 'rest' && state" class="nudge glass" role="status">
-      <HudIcon class="nudge-icon" name="energy" :size="20" />
-      <span class="grow nudge-text"><strong>{{ state.energy.label }}</strong><span class="truncate">&nbsp;· a minute at home brings energy back</span></span>
-      <button class="btn sm primary" type="button" @click="router.push('/home')">Go home</button>
-      <button class="btn ghost icon sm" type="button" aria-label="Dismiss" @click="dismissed = nudgeKey"><HudIcon name="close" :size="16" /></button>
-    </div>
+
 
     <!-- Someone here has sat down to eat: an opening to eat together. -->
     <div v-if="invite" class="nudge glass" role="status">
