@@ -30,6 +30,8 @@ The native road loader reads `assets/__world-data/yaba-vehicles.json` through th
 
 The [release package guard](../scripts/release-package-guard.md) checks the complete package before invoking deployment. Its file digest includes the internal road data and headers. A frontend build alone is not a complete Worker deployment.
 
+The [CI and release workflows](CI-CD.md) assemble that package, run the guard and deploy from reviewed `main` through a protected environment.
+
 ## Release evidence and limits
 
 A deployment receipt proves the provider accepted a package. Browser acceptance also covers fresh guest entry, account creation, claim, sign-out and return, independent players, and progress after a Worker restart. Local development actors and synthetic probes cover different boundaries.

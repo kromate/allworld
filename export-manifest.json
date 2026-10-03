@@ -1,22 +1,5 @@
 {
-  "exclusions": [
-    {
-      "path": "dist/",
-      "reason": "excluded-path"
-    },
-    {
-      "path": "node_modules/",
-      "reason": "excluded-path"
-    },
-    {
-      "path": "docs/handover/",
-      "reason": "excluded-path"
-    },
-    {
-      "path": "scripts/__pycache__/",
-      "reason": "excluded-path"
-    }
-  ],
+  "exclusions": [],
   "files": [
     {
       "bytes": 853,
@@ -69,6 +52,58 @@
       "root": "project",
       "sha256": "7b45a103a5a46215368dbecfc4ba79b9028a5f7a7a1f3bb936ab4411c39d1536",
       "target": ".github/PULL_REQUEST_TEMPLATE.md"
+    },
+    {
+      "bytes": 2718,
+      "kind": "notice-or-metadata",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "path": ".github/workflows/ci.yml",
+      "root": "project",
+      "sha256": "38b712e5e1f0a80f21599e451ea91179e59f76d18149d6529e6cb7633d300c1a",
+      "target": ".github/workflows/ci.yml"
+    },
+    {
+      "bytes": 7066,
+      "kind": "notice-or-metadata",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "path": ".github/workflows/release.yml",
+      "root": "project",
+      "sha256": "6908f249cf470a50e1a1e320e8c47f0aa216ef396f409677cfdaf0d2923d8678",
+      "target": ".github/workflows/release.yml"
+    },
+    {
+      "bytes": 48421,
+      "kind": "notice-or-metadata",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "path": ".github/wrangler/package-lock.json",
+      "root": "project",
+      "sha256": "de3efc943f9bbfae5038b7da08ef63c646d7c7a12e79893c1b6e1fc13f7792cd",
+      "target": ".github/wrangler/package-lock.json"
+    },
+    {
+      "bytes": 246,
+      "kind": "notice-or-metadata",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "path": ".github/wrangler/package.json",
+      "root": "project",
+      "sha256": "350b368113949d55ed66a520cc0375a81f1a4367f4bf722f509f984865451181",
+      "target": ".github/wrangler/package.json"
     },
     {
       "bytes": 886,
@@ -214,7 +249,20 @@
       "target": "docs/ASSETS-LICENSES.md"
     },
     {
-      "bytes": 6674,
+      "bytes": 4270,
+      "kind": "documentation",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "path": "docs/CI-CD.md",
+      "root": "project",
+      "sha256": "a468f1ab64a120dbcac0857048a0baff8560ee76287857c767e2a2c984a65e48",
+      "target": "docs/CI-CD.md"
+    },
+    {
+      "bytes": 7076,
       "kind": "documentation",
       "license": "Apache-2.0",
       "notices": [
@@ -223,7 +271,7 @@
       ],
       "path": "docs/CONTRIBUTOR-MAP.md",
       "root": "project",
-      "sha256": "fe44dd24c3b672d5048dfb9708c06330162dd770c4b9d8fb615c5e7df900745b",
+      "sha256": "1b2ce3da20a1e146d0fbb1d711a5bb6c440090ef2c852664be918cf3e85a8bfe",
       "target": "docs/CONTRIBUTOR-MAP.md"
     },
     {
@@ -253,7 +301,7 @@
       "target": "docs/GOOD-FIRST-CONTRIBUTIONS.md"
     },
     {
-      "bytes": 4038,
+      "bytes": 4182,
       "kind": "documentation",
       "license": "Apache-2.0",
       "notices": [
@@ -262,7 +310,7 @@
       ],
       "path": "docs/HOSTING.md",
       "root": "project",
-      "sha256": "df55da85e88b721b3050aabdd31c6c7117b41e8ef301051f063ccee6c550cf67",
+      "sha256": "ff88182cd6570b78d704c56c6dc68c93b2afc686139a109e7d63c5f77371f059",
       "target": "docs/HOSTING.md"
     },
     {
@@ -2093,7 +2141,7 @@
       "target": "public/wardrobe/wax-sunrise.jpg"
     },
     {
-      "bytes": 3115,
+      "bytes": 3462,
       "kind": "documentation",
       "license": "Apache-2.0",
       "notices": [
@@ -2102,8 +2150,21 @@
       ],
       "path": "scripts/README.md",
       "root": "project",
-      "sha256": "93903d1101bcba323efad833988889addefc5d659320ab0ffb53e0321e56dba0",
+      "sha256": "962ee469d311fd8392176011fee0ebb19929b3d42cbc8229e8005f52f4163035",
       "target": "scripts/README.md"
+    },
+    {
+      "bytes": 10695,
+      "kind": "tooling",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "path": "scripts/assemble-release-package.mjs",
+      "root": "project",
+      "sha256": "4adbc9b9591af66091e91e11e1cb97d78566ff58cbdc340bd81a83740acaadc8",
+      "target": "scripts/assemble-release-package.mjs"
     },
     {
       "bytes": 10278,
@@ -2236,6 +2297,19 @@
       "target": "scripts/check-structure.mjs"
     },
     {
+      "bytes": 14690,
+      "kind": "tooling",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "path": "scripts/check-workflows.mjs",
+      "root": "project",
+      "sha256": "a33d806d567f20d4ca3688aa259de09da0d5591a6f57816e8a615674a44dfa0f",
+      "target": "scripts/check-workflows.mjs"
+    },
+    {
       "bytes": 9141,
       "kind": "tooling",
       "license": "Apache-2.0",
@@ -2262,7 +2336,7 @@
       "target": "scripts/export-source.mjs"
     },
     {
-      "bytes": 13587,
+      "bytes": 13905,
       "kind": "tooling",
       "license": "Apache-2.0",
       "notices": [
@@ -2271,7 +2345,7 @@
       ],
       "path": "scripts/guard-release-package.mjs",
       "root": "project",
-      "sha256": "91b2b9c6baf44b8ac8e5996e997395335aae294c6a65312ef08381c57d79f2a7",
+      "sha256": "382a317747433cdf95a2b0a1e634b0d331a239aa2e2147c0177c7d98db98d85b",
       "target": "scripts/guard-release-package.mjs"
     },
     {
@@ -2286,6 +2360,19 @@
       "root": "project",
       "sha256": "9245bd493fc6fd47c7f42b02e59c3d55c58366359df01f900a137e01b1713c66",
       "target": "scripts/preview/build-info.mjs"
+    },
+    {
+      "bytes": 26533,
+      "kind": "tooling",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "path": "scripts/probe-cicd.mjs",
+      "root": "project",
+      "sha256": "6d79e84277999e1800c00d6fb5b28f2cc418c4a05465eaf18579b2b9617da69e",
+      "target": "scripts/probe-cicd.mjs"
     },
     {
       "bytes": 8673,
@@ -2327,6 +2414,19 @@
       "target": "scripts/release-package-guard.md"
     },
     {
+      "bytes": 4572,
+      "kind": "tooling",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "path": "scripts/run-release-gate.mjs",
+      "root": "project",
+      "sha256": "7920095fc1eae9eae7a920d5e3746c88a34c881ba04d7d293605a5f8e952cb28",
+      "target": "scripts/run-release-gate.mjs"
+    },
+    {
       "bytes": 2606,
       "kind": "tooling",
       "license": "Apache-2.0",
@@ -2366,7 +2466,7 @@
       "target": "scripts/source-export-install.py"
     },
     {
-      "bytes": 139698,
+      "bytes": 142723,
       "kind": "tooling",
       "license": "Apache-2.0",
       "notices": [
@@ -2375,7 +2475,7 @@
       ],
       "path": "scripts/source-export-reference.json",
       "root": "project",
-      "sha256": "09a1ddc8bb5c44d356d6e44f12747f54cb19c9bc354d5873f9bf63bf41ff798a",
+      "sha256": "9fbe2fab5c6b61009bcc5e6cfd8f5c8c8f6da63715f8c9cb4c8be418ce7a406c",
       "target": "scripts/source-export-reference.json"
     },
     {
@@ -2429,6 +2529,19 @@
       "root": "project",
       "sha256": "bfce772519fa017b5f388ad09a52c2f8e4ce68bf1634284e8b0305d28362679a",
       "target": "scripts/verify-creator.ts"
+    },
+    {
+      "bytes": 2596,
+      "kind": "tooling",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "path": "scripts/verify-deployed-build.mjs",
+      "root": "project",
+      "sha256": "3cd08eaf21442d3e567e44f0fb8f085c72a1e6a78a489c1eaf4b8818c87b09c3",
+      "target": "scripts/verify-deployed-build.mjs"
     },
     {
       "bytes": 60099,
@@ -2872,7 +2985,7 @@
       "target": "service/cloudflare/transport.ts"
     },
     {
-      "bytes": 16035,
+      "bytes": 21729,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -2881,7 +2994,7 @@
       ],
       "path": "service/cloudflare/worker.ts",
       "root": "project",
-      "sha256": "4bb65d6d15cd4bdc7c5e93c25aafb5aed9dfeb9afa137af5a1b231794bc8ea86",
+      "sha256": "d09f218e136ca3ad6ba2f66bfa23dd7fa0cd71428b1c5b28ff7704068d5eb578",
       "target": "service/cloudflare/worker.ts"
     },
     {
