@@ -2602,7 +2602,7 @@
       ],
       "path": "scripts/source-export-reference.json",
       "root": "project",
-      "sha256": "1aa6e7347db239974b7ace72e38ce5d9908e016844182f8625e5daee082df4fc",
+      "sha256": "13e8dea18cab795234d5e7f31dd165d0ef0d77ce2ad562000860f0996cb3a22b",
       "target": "scripts/source-export-reference.json"
     },
     {
@@ -5196,7 +5196,7 @@
       "target": "src/features/inbox/InboxPage.vue"
     },
     {
-      "bytes": 31173,
+      "bytes": 30125,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -5205,7 +5205,7 @@
       ],
       "path": "src/features/life/LifeActions.vue",
       "root": "project",
-      "sha256": "f915fe219cd410aa9eae55f10eedefc19e99b8ad0a39d0ccece2a6721f0c12e6",
+      "sha256": "b56eaa02a396ea7b53a3094306d4c66aa20071ac2772a1f0c3faebb618de4fd9",
       "target": "src/features/life/LifeActions.vue"
     },
     {
@@ -6184,7 +6184,7 @@
       "target": "src/features/transport/DriverControls.vue"
     },
     {
-      "bytes": 29687,
+      "bytes": 30048,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -6193,7 +6193,7 @@
       ],
       "path": "src/features/transport/TransportHud.vue",
       "root": "project",
-      "sha256": "b08ee557e15ff36913a3f96cc76d0269fa7ef7b850bbd12bc813481c92f01c34",
+      "sha256": "d7440e3a765c4959a4381fcb28d04208124f5abaea1d1f90a4c4189682bd36db",
       "target": "src/features/transport/TransportHud.vue"
     },
     {
@@ -6405,7 +6405,7 @@
       "target": "src/features/world/WorldRoute.vue"
     },
     {
-      "bytes": 56975,
+      "bytes": 56739,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -6414,7 +6414,7 @@
       ],
       "path": "src/features/world/WorldStage.vue",
       "root": "project",
-      "sha256": "3ce4738aae78a83a170edafcbbdfd536e4609d7f1615804a82f235329c850718",
+      "sha256": "70486438537077e3e73892bdc1beac14b59befe894b9f851b9c5f229b4297070",
       "target": "src/features/world/WorldStage.vue"
     },
     {
@@ -7549,7 +7549,7 @@
       "target": "src/world/districtScene.ts"
     },
     {
-      "bytes": 92075,
+      "bytes": 92148,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -7558,7 +7558,7 @@
       ],
       "path": "src/world/engine.ts",
       "root": "project",
-      "sha256": "c6e636988eb7920c58142e90d196aee427b6be942edcebf538cc78abe9b05646",
+      "sha256": "ce0ec70cdab2640499bd5aec19eb6537c5ce3b0af158eb917111e2e68108e6f2",
       "target": "src/world/engine.ts"
     },
     {
