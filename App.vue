@@ -522,7 +522,7 @@ code { padding: 1px 6px; border-radius: 6px; background: var(--surface-3); font-
 @keyframes drift { 50% { transform: translateX(8px); } }
 
 .window-layer { position: absolute; inset: 0; z-index: 13; display: flex; justify-content: flex-end; align-items: stretch; padding: calc(12px + env(safe-area-inset-top, 0px)) 12px var(--shell-nav); pointer-events: none; }
-.window { pointer-events: auto; width: min(470px, 100%); max-height: 100%; display: flex; flex-direction: column; border-radius: 24px; background: var(--bg); border: 1px solid rgba(255, 255, 255, 0.7); box-shadow: var(--shadow-lg), 0 0 0 1px rgba(28, 26, 36, 0.08); overflow: hidden; animation: pop 0.2s ease; }
+.window { min-width: 0; min-height: 0; pointer-events: auto; width: min(470px, 100%); max-height: 100%; display: flex; flex-direction: column; border-radius: 24px; background: var(--bg); border: 1px solid rgba(255, 255, 255, 0.7); box-shadow: var(--shadow-lg), 0 0 0 1px rgba(28, 26, 36, 0.08); overflow: hidden; animation: pop 0.2s ease; }
 .window.wide { width: min(780px, 100%); }
 .window.full { width: min(1180px, 100%); }
 @keyframes pop { from { transform: translateY(14px) scale(0.985); opacity: 0; } }
@@ -530,7 +530,7 @@ code { padding: 1px 6px; border-radius: 6px; background: var(--surface-3); font-
 .panel-loading { padding: 22px 18px; display: grid; gap: 12px; }
 
 .scrim { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 16px; background: rgba(28, 26, 36, 0.45); }
-.dialog { width: min(520px, 100%); padding: 20px; border-radius: 20px; background: var(--surface); box-shadow: var(--shadow-lg); }
+.dialog { max-height: calc(100dvh - 32px - env(safe-area-inset-top, 0px) - var(--safe-bottom)); overflow-y: auto; overscroll-behavior: contain; width: min(520px, 100%); padding: 20px; border-radius: 20px; background: var(--surface); box-shadow: var(--shadow-lg); }
 .about { display: grid; grid-template-columns: auto 1fr; gap: 8px 14px; margin: 0; font-size: 0.9rem; }
 .about dt { color: var(--muted); font-weight: 600; }
 .about dd { margin: 0; }
@@ -551,8 +551,11 @@ code { padding: 1px 6px; border-radius: 6px; background: var(--surface-3); font-
   .window-layer.half { background: none; pointer-events: none; }
   .window.half { height: calc(100% * var(--sheet-share)); border-radius: 22px 22px 0 0; box-shadow: var(--shadow-lg); }
 }
-/* Upright phone: messages go under the player cluster, away from the thumbs. */
+/* Portrait: counts keep their accessible label and details behind a touch-sized icon. */
 @media (max-width: 720px) and (orientation: portrait) {
-  .toasts:not(.over-nav) { bottom: auto; top: calc(var(--shell-top) + 6px); }
+  .topbar-row { gap: 6px; }
+  .topbar-row :deep(.counts-button) { width: 44px; min-height: 44px; padding: 0; justify-content: center; }
+  .topbar-row :deep(.counts-button span:not(.online-dot)) { display: none; }
+  .toasts:not(.over-nav) { bottom: calc(142px + var(--safe-bottom)); top: auto; }
 }
 </style>

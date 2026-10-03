@@ -140,12 +140,15 @@ function refreshInRange(): void {
 }
 
 let lastMoveSent = 0
+let moveSequence = 0
 function sendMove(pos: Vec2, heading: number, moving: boolean): void {
   if (!world.roomKey || vehicles.seated.value) return
+  const sequence = ++moveSequence, scene = generation, target = engine, memberId = myId(), room = world.roomKey, instance = world.instance
   lastMoveSent = performance.now()
   api('room.move', { pos, heading, moving }).then(result => {
     // The service rejected an impossible jump: stand where it says we are.
-    if (!result.accepted) engine?.snapTo(result.pos)
+    if (!result.accepted && sequence === moveSequence && scene === generation && target === engine && memberId === myId()
+      && room === world.roomKey && instance === world.instance && !vehicles.seated.value) target?.snapTo(result.pos)
   }).catch(() => undefined)
   if (district && world.kind === 'district') world.street = nearestStreetName(district, pos)
   ambience.update({ playerSpeed: moving ? 1.6 : 0, indoors: world.kind !== 'district' })

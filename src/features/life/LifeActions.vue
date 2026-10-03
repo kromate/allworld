@@ -342,10 +342,10 @@ onBeforeUnmount(() => {
       <HudIcon class="nudge-icon" name="food" :size="20" />
       <span class="grow nudge-text">
         <strong>{{ state.hunger.label }}</strong>
-        <span v-if="nearest && atDoor" class="truncate">&nbsp;· {{ nearest.poi.name }} is right here{{ nearest.kind === 'grocery' ? ' and sells groceries' : ' and has food' }}{{ welcome ? ' · first meal is on the house' : '' }}</span>
-        <span v-else-if="nearest && !nearest.reachable" class="truncate">&nbsp;· {{ nearest.poi.name }} has food, but there is no walking route to it from here</span>
-        <span v-else-if="nearest" class="truncate">&nbsp;· {{ nearest.poi.name }}{{ nearest.kind === 'kiosk' ? ' has snacks and drinks' : nearest.kind === 'grocery' ? ' sells groceries' : ' has food' }}, {{ walkWords(nearest) }}{{ welcome ? ' · first meal is on the house' : '' }}</span>
-        <span v-else>&nbsp;· no food places on this district’s map. Home has a plain meal.</span>
+        <span v-if="nearest && atDoor" class="truncate">&nbsp;· {{ nearest.poi.name }} · food here</span>
+        <span v-else-if="nearest && !nearest.reachable" class="truncate">&nbsp;· {{ nearest.poi.name }} · no walking route</span>
+        <span v-else-if="nearest" class="truncate">&nbsp;· {{ nearest.poi.name }} · {{ walkWords(nearest) }}</span>
+        <span v-else>&nbsp;· free meal at home</span>
       </span>
       <button v-if="nearest && !atDoor" class="btn sm primary" type="button" :disabled="nearest.reachable && !permits('foot')" @click="walk">{{ nearest.reachable ? 'Walk there' : 'Open the map' }}</button>
       <button v-else-if="!nearest" class="btn sm primary" type="button" @click="router.push('/home')">Go home</button>
@@ -494,7 +494,9 @@ onBeforeUnmount(() => {
   .you :deep(.meter):nth-child(2) { grid-row: 2; }
   .coins { grid-row: 1 / span 2; grid-column: 2; }
   .nudge { border-radius: 18px; padding: 7px 5px 7px 12px; width: 100%; max-width: 100%; align-items: center; }
-  .nudge-text { white-space: normal; display: block; line-height: 1.3; }
+  .nudge-text { white-space: normal; display: block; line-height: 1.3; overflow-wrap: anywhere; }
+  .nudge-text strong { display: block; }
+  .nudge .btn { flex: none; }
   .nudge-text .truncate { white-space: normal; }
 }
 </style>

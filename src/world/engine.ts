@@ -173,6 +173,10 @@ export class WorldEngine {
   private coveredWalkTimer: number | null = null
   private coveredWalkAt = 0
   private actualSpeed = 0
+  private remoteGeneration = 0
+  private readonly remoteLoads = new Map<MemberId, object>()
+  private readonly remoteMoves = new Map<MemberId, Pick<PresenceMember, 'pos' | 'heading' | 'moving'>>()
+  private remoteChanges: Map<MemberId, object> | null = null
   private localMemberId: MemberId | null = null
   private readonly vehicles = new VehicleScene()
   private vehicleSelf: VehicleSelf | null = null
@@ -581,11 +585,19 @@ export class WorldEngine {
 
   /** Reconcile remote avatars with a presence list. */
   async syncRemotes(members: PresenceMember[], selfId: MemberId): Promise<void> {
+    const generation = ++this.remoteGeneration
+    this.remoteLoads.clear()
+    this.remoteMoves.clear()
+    const changes = new Map<MemberId, object>()
+    this.remoteChanges = changes
     this.localMemberId = selfId
-    await loadAvatarLibrary()
-    const wanted = new Set(members.filter(member => member.id !== selfId).map(member => member.id))
-    for (const [id, remote] of this.remotes) if (!wanted.has(id)) { this.vehicles.clearActor(remote.actor); remote.actor.dispose(); disposeTag(remote.tag); this.remotes.delete(id) }
-    for (const member of members) if (member.id !== selfId) this.upsertRemote(member)
+    try {
+      await loadAvatarLibrary()
+      if (generation !== this.remoteGeneration) return
+      const wanted = new Set(members.filter(member => member.id !== selfId).map(member => member.id))
+      for (const [id, remote] of this.remotes) if (!wanted.has(id) && !changes.has(id)) { this.vehicles.clearActor(remote.actor); remote.actor.dispose(); disposeTag(remote.tag); this.remotes.delete(id) }
+      for (const member of members) if (member.id !== selfId && !changes.has(member.id)) this.upsertRemote(member)
+    } finally { if (this.remoteChanges === changes) this.remoteChanges = null }
   }
 
   private upsertRemote(member: PresenceMember): void {
@@ -614,12 +626,30 @@ export class WorldEngine {
       }
     }
     if (!member.look.face) { remote.actor.setFace(null); remote.faceVersion = 0 }
+    const movement = this.remoteMoves.get(member.id)
+    if (movement) {
+      remote.target = { ...movement.pos }; remote.heading = movement.heading; remote.moving = movement.moving
+      this.remoteMoves.delete(member.id)
+    }
     this.wake()
   }
 
-  async upsertMember(member: PresenceMember): Promise<void> { await loadAvatarLibrary(); this.upsertRemote(member) }
+  async upsertMember(member: PresenceMember): Promise<void> {
+    const generation = this.remoteGeneration, token = {}
+    this.remoteMoves.delete(member.id)
+    this.remoteLoads.set(member.id, token)
+    this.remoteChanges?.set(member.id, token)
+    try {
+      await loadAvatarLibrary()
+      if (generation !== this.remoteGeneration || this.remoteLoads.get(member.id) !== token || member.id === this.localMemberId) return
+      this.upsertRemote(member)
+    } finally { if (this.remoteLoads.get(member.id) === token) this.remoteLoads.delete(member.id) }
+  }
 
   removeMember(id: MemberId): void {
+    this.remoteLoads.delete(id)
+    this.remoteMoves.delete(id)
+    this.remoteChanges?.set(id, {})
     const remote = this.remotes.get(id)
     if (!remote) return
     this.vehicles.clearActor(remote.actor)
@@ -629,8 +659,9 @@ export class WorldEngine {
   }
 
   moveMember(id: MemberId, pos: Vec2, heading: number, moving: boolean): void {
+    if (this.remoteLoads.has(id) || this.remoteChanges) this.remoteMoves.set(id, { pos: { ...pos }, heading, moving })
     const remote = this.remotes.get(id)
-    if (remote) { remote.target = pos; remote.heading = heading; remote.moving = moving; this.wake() }
+    if (remote) { remote.target = { ...pos }; remote.heading = heading; remote.moving = moving; this.wake() }
   }
 
   /** Remote members whose photo face has not been mounted at this version yet. */
@@ -840,6 +871,7 @@ export class WorldEngine {
   }
 
   private clearScenes(): void {
+    this.remoteGeneration++; this.remoteLoads.clear(); this.remoteMoves.clear(); this.remoteChanges = null
     this.localCameraOccluded = false
     this.clearHomeRoute()
     for (const house of this.homeMeshes) house.dispose()
@@ -1403,9 +1435,9 @@ export class WorldEngine {
         const ease = gap > 12 ? 1 : 1 - Math.exp(-10 * delta)
         const from = { x: position.x, z: position.z }
         const desired = { x: position.x + (targetX - position.x) * ease, z: position.z + (targetZ - position.z) * ease }
-        const near = this.footGrid.query(from, desired).filter(entry => entry.key !== `member:${id}`).map(entry => entry.obstacle)
-        if (!this.vehicleSelf?.seat) near.push({ kind: 'disc', pos: this.localPos, radius: PERSON_RADIUS })
-        const presented = gap > 12 ? desired : moveFoot(from, desired, near, point => this.interior ? this.interior.walkable(point) : this.navigator?.standable(point) ?? true)
+        // The service already checked this pose. Rendered obstacles lag accepted positions and
+        // must not stop another member's accepted movement on this viewer's screen.
+        const presented = desired
         const moved = Math.hypot(presented.x - from.x, presented.z - from.z)
         position.x = presented.x
         position.z = presented.z
