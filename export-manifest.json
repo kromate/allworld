@@ -2602,7 +2602,7 @@
       ],
       "path": "scripts/source-export-reference.json",
       "root": "project",
-      "sha256": "b958ddcf11a81c9cc8de65ca31f9c549a342d2c7262e4673722865f2b3635ad5",
+      "sha256": "ba7e725850c85bbb4937836f3aba4eda8347e40fe7b9061cd481c134a487d928",
       "target": "scripts/source-export-reference.json"
     },
     {
@@ -6405,7 +6405,7 @@
       "target": "src/features/world/WorldRoute.vue"
     },
     {
-      "bytes": 55955,
+      "bytes": 56402,
       "kind": "source",
       "license": "Apache-2.0",
       "notices": [
@@ -6414,7 +6414,7 @@
       ],
       "path": "src/features/world/WorldStage.vue",
       "root": "project",
-      "sha256": "121257d8b8313eace495e1929aa35ba6ef32139182b7f744576c20d43632d829",
+      "sha256": "b3f8b46b4efd1032f12f8475a9d25ec96da10869e35a18dc6fd5a71be9041749",
       "target": "src/features/world/WorldStage.vue"
     },
     {

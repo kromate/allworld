@@ -161,6 +161,8 @@ watch(() => props.dimmed, covered => { if (covered) { closePanel(false, false); 
 // closing one can never unlock the world under another. The Menu, the account menu, welcome and about
 // dialogs, the meal sheet and an order on its way hold from their own files.
 const engineHere = ref(false)
+// Keep the scene visible during recovery without allowing unaccepted movement.
+useHold('stage.unavailable', () => world.state !== 'ready' || app.link !== 'online', { role: 'window' })
 useHold('window', () => props.dimmed, { role: 'window', preserveWalking: () => router.currentRoute.value.path === '/map' || Boolean(work.trip) })
 useHold('seated', () => Boolean(props.seated), { role: 'seated' })
 useHold('typing', () => chatFocused.value, { role: 'typing' })
@@ -191,7 +193,7 @@ onMounted(() => {
   // The engine arrives a moment after the canvas; what the stage already knows is applied when it does.
   void engineReady().then(() => {
     engineHere.value = true
-    getEngine()?.setSuspended(props.suspended || world.state !== 'ready')
+    getEngine()?.setSuspended(props.suspended)
     syncEngine()
   })
   // The mini-map redraws five times a second from the engine's own cached district map, and not at all when it cannot be seen.
@@ -203,7 +205,7 @@ onMounted(() => {
     getEngine()?.drawMinimap(target, { radius: 130, headingUp: false })
   }, 200)
 })
-watch(() => props.suspended || world.state !== 'ready', paused => { getEngine()?.setSuspended(paused) })
+watch(() => props.suspended, paused => { getEngine()?.setSuspended(paused) })
 
 const radius = computed(() => (world.kind ? PROXIMITY_RADIUS[world.kind] : 0))
 const localTime = computed(() => {
@@ -354,20 +356,19 @@ const chatLabel = computed(() => (chatUnseen.value ? `Nearby chat, ${chatUnseen.
         <strong>{{ world.state === 'loading' ? world.loadingLabel : 'Getting the game ready…' }}</strong>
         <!-- Shown only while files are downloading: a place whose files are already on this device has nothing to show here. -->
         <AssetProgress blocking />
-        <span class="muted small">Real streets and places are drawn from open map data.</span>
+        <span class="muted small">Movement is paused while this place loads.</span>
       </div>
     </div>
     <div v-else-if="world.state === 'error'" class="veil" role="alert">
       <div class="veil-card glass">
-        <span class="art" aria-hidden="true"><HudIcon :name="world.errorKind === 'forbidden' ? 'door' : 'map'" :size="34" /></span>
-        <strong>{{ world.errorKind === 'forbidden' ? 'That door is closed' : 'This place did not load' }}</strong>
-        <span class="muted small">{{ world.error }}</span>
+        <strong>{{ world.errorKind === 'forbidden' ? 'That door is closed' : app.link === 'reconnecting' || app.link === 'offline' ? 'Reconnecting…' : 'This place could not finish loading' }}</strong>
+        <span class="muted small">Movement is paused. Actions and saving need a connection.</span>
         <div class="row wrap" style="justify-content: center">
           <button v-if="updated" class="btn primary sm" type="button" :disabled="Boolean(reloadBlocked)" @click="reloadGame">Reload</button>
-          <button v-else class="btn primary sm" type="button" @click="retryScene">Try again</button>
+          <button v-else class="btn primary sm" type="button" :disabled="app.link !== 'online'" @click="retryScene">Try again</button>
           <button class="btn sm" type="button" @click="router.push('/travel')">Open Travel</button>
         </div>
-        <span class="muted tiny">Travel is how your character goes to another place. Settings only records where you are in real life and does not move your character.</span>
+        <details class="scene-details"><summary>Details</summary><p class="muted small">{{ world.error }}</p></details>
         <p v-if="updated && reloadBlocked" class="muted small" role="status">{{ reloadBlocked }}</p>
       </div>
     </div>
@@ -587,10 +588,14 @@ const chatLabel = computed(() => (chatUnseen.value ? `Nearby chat, ${chatUnseen.
 }
 .canvas { width: 100%; height: 100%; display: block; touch-action: none; outline: none; }
 .stage.dimmed .canvas { filter: saturate(0.9); }
-.veil { position: absolute; inset: 0; display: grid; place-items: center; padding: 20px; background: linear-gradient(180deg, rgba(215, 236, 247, 0.55), rgba(243, 237, 227, 0.75)); }
-.veil-card { display: grid; justify-items: center; gap: 8px; padding: 22px 26px; border-radius: 20px; text-align: center; max-width: 360px; }
+.veil { position: absolute; inset: 0; display: grid; align-items: end; justify-items: center; padding: 12px 12px calc(var(--pad-b) + 8px); pointer-events: none; }
+.veil-card { pointer-events: auto; display: grid; justify-items: center; gap: 6px; padding: 12px 16px; border-radius: 16px; text-align: center; width: min(360px, 100%); max-height: min(42dvh, calc(100% - var(--shell-top) - 12px)); overflow-y: auto; overflow-wrap: anywhere; }
+.veil-card .btn, .scene-details summary { min-height: 44px; }
+.scene-details { width: 100%; }
+.scene-details summary { cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.scene-details p { margin: 0 0 6px; }
 .veil-card .art { color: var(--ink-2); }
-.spinner { width: 34px; height: 34px; border-radius: 50%; border: 4px solid var(--accent-soft); border-top-color: var(--accent-strong); animation: spin 0.8s linear infinite; }
+.spinner { width: 22px; height: 22px; border-radius: 50%; border: 3px solid var(--accent-soft); border-top-color: var(--accent-strong); animation: spin 0.8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .hud-live { display: contents; }
 

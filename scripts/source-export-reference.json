@@ -3845,7 +3845,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "121257d8b8313eace495e1929aa35ba6ef32139182b7f744576c20d43632d829"
+      "sha256": "b3f8b46b4efd1032f12f8475a9d25ec96da10869e35a18dc6fd5a71be9041749"
     },
     "src/features/world/touchStick.ts": {
       "kind": "source",
