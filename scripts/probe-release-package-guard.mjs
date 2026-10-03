@@ -31,6 +31,7 @@ function reset() {
   for (const [name, content] of Object.entries(files)) writeFileSync(join(assets, name), content)
   writeFileSync(join(assets, 'playtest-build.json'), JSON.stringify(metadata)); writeFileSync(join(assets, '_headers'), headers); writeFileSync(join(assets, road.path.slice(1)), '{}\n')
   config.assets.run_worker_first = ['/*', '!/assets/*', '!/avatars/*', '!/packs/*', '!/regions/*', '!/wardrobe/*']
+  config.vars.WORLD_ACCOUNT = '{"projectId":"synthetic-project","projectNumber":"123"}'
   config.vars.WORLD_BINDING = JSON.stringify({ ...Object.fromEntries(Object.entries(pub).filter(([k]) => k !== 'endpoint')), artifactId: metadata.artifactSha256 })
   writeFileSync(configPath, JSON.stringify(config))
   options = { package: fixture, config: configPath, artifact: assets, buildId: pub.buildId, artifactSha: metadata.artifactSha256, configSha: hash(readFileSync(configPath)), roadSource: source }
@@ -46,6 +47,10 @@ function negative(name, expected, mutate, extra = []) {
 }
 try {
   reset(); assert.equal(verifyPackage(options, road).status, 'PASS'); results.push({ name: 'synthetic-complete-package', status: 'PASS' })
+  reset(); config.vars.WORLD_ACCOUNT = JSON.stringify({ projectId: 'synthetic-project', projectNumber: '123', googleClientId: '123-fixture.apps.googleusercontent.com' }); writeFileSync(configPath, JSON.stringify(config)); options.configSha = hash(readFileSync(configPath)); assert.equal(verifyPackage(options, road).status, 'PASS'); results.push({ name: 'synthetic-google-config-package', status: 'PASS' })
+  negative('malformed-google-client-id', 'PUBLIC_VARS_FIELD', () => { config.vars.WORLD_ACCOUNT = JSON.stringify({ projectId: 'synthetic-project', projectNumber: '123', googleClientId: 'https://attacker.invalid/client' }); writeFileSync(configPath, JSON.stringify(config)) })
+  negative('google-client-secret-field', 'PUBLIC_VARS_FIELD', () => { config.vars.WORLD_ACCOUNT = JSON.stringify({ projectId: 'synthetic-project', projectNumber: '123', googleClientId: '123-fixture.apps.googleusercontent.com', clientSecret: 'synthetic-refused' }); writeFileSync(configPath, JSON.stringify(config)) })
+  negative('google-client-id-wrong-type', 'PUBLIC_VARS_FIELD', () => { config.vars.WORLD_ACCOUNT = JSON.stringify({ projectId: 'synthetic-project', projectNumber: '123', googleClientId: 123 }); writeFileSync(configPath, JSON.stringify(config)) })
   negative('missing-road', 'ROAD_MISSING', () => rmSync(join(assets, road.path.slice(1))))
   negative('wrong-road-size', 'ROAD_SIZE_MISMATCH', () => {})
   negative('wrong-road-hash', 'ROAD_HASH_MISMATCH', () => writeFileSync(join(assets, road.path.slice(1)), Buffer.alloc(23347699)))

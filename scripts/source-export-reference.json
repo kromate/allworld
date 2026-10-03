@@ -52,7 +52,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "6908f249cf470a50e1a1e320e8c47f0aa216ef396f409677cfdaf0d2923d8678"
+      "sha256": "081a40b2e0b4abd60ac2dff17248777e4f7caab32c05373037b2ec69a4430042"
     },
     ".github/wrangler/package-lock.json": {
       "kind": "notice-or-metadata",
@@ -97,7 +97,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "69fc150d987599d541028386617c9d45a73bef34816c5c1a5668da64c5c808d0"
+      "sha256": "03a79d93973c6e0f26c316f945d33f2cf6959254a40bcd61da0f2dfa84109d0d"
     },
     "CONTRIBUTING.md": {
       "kind": "documentation",
@@ -1478,7 +1478,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "4adbc9b9591af66091e91e11e1cb97d78566ff58cbdc340bd81a83740acaadc8"
+      "sha256": "67bdde46e9f96e33e6fb4bc27e1258006e2cd68246f0cca95ffc62a90ce784f5"
     },
     "scripts/build-asset-manifest.mjs": {
       "kind": "source",
@@ -1568,7 +1568,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "26a180c095ac0e31c6c1885cc10eb0f7cc2910b041b945f319beafc6fd1e9d86"
+      "sha256": "35f4f08d940962be02f84c7ec40eddcef4d824bd25fa6549e4acf544489876fe"
     },
     "scripts/preview/build-info.mjs": {
       "kind": "source",
@@ -1872,7 +1872,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "1365d9ae9f9bc457a5b109058fc65cc80f88d5291ab7509dd07a9bc2f26ad4eb"
+      "sha256": "7a1102d4c544e3ae32f9c36706f526769ae13ab013edffa8b1c6d546c7c54572"
     },
     "service/cluster-edge.ts": {
       "kind": "source",
@@ -2063,7 +2063,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "e175eef0f861911a397a17cb4336a6def0d90b58fe23c01ff8d05e993023de70"
+      "sha256": "e268182d79da8c3ade1e8b2c02657a69672ba849eb64a09006dd22b07c7ceae1"
     },
     "service/hostedStandalone.ts": {
       "kind": "source",
@@ -2909,7 +2909,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "8da25589f49f3ce41d65f86bcd74eed21edf5546fa8f394c90dc17c05ec6406c"
+      "sha256": "51e40434a08197190c36a3165cbf68b89421e3c39b6f73d1b172510fb5549215"
     },
     "src/features/guest/GuestConflict.vue": {
       "kind": "source",
@@ -2954,7 +2954,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "634f36fef4007c5bd5ffc561d1abc2230fb0bed60b644b67a78e1e2750a2ab47"
+      "sha256": "966a489518343ae97a781f3c1da1c130d098576c7c30cd875e4104a1217f0479"
     },
     "src/features/guest/GuestWelcome.vue": {
       "kind": "source",
@@ -2972,7 +2972,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "adc04f7c46a2de1839bc27addf0af0a70ac908548e260e862bd8606b1c010b83"
+      "sha256": "1eb6b822da49010fa057b2534f04f3f7ba35507c03bd55fff4b0d4dfc64406a9"
     },
     "src/features/guest/guestHooks.ts": {
       "kind": "source",
@@ -2981,7 +2981,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "a1b535fa2d49e97587fa25b485bc83a972a443984f7a9e90dd851adbb639f8e7"
+      "sha256": "c9f72cec38659c730dc8a6cb7e8a3c5398c23350989f674a1fe87a8c5ecbcee3"
     },
     "src/features/guest/guestMay.ts": {
       "kind": "source",
@@ -4196,7 +4196,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "1f5d9496d0df7b176bf001f19e5f0ead22caa1883826f1600ff803781c5867dd"
+      "sha256": "61e1687d76d3e940cbd9074d8bf4136ff4e30de691cfc572828b3b17ac40870f"
     },
     "src/state/arena.ts": {
       "kind": "source",
@@ -5058,6 +5058,60 @@
         "NOTICE"
       ],
       "sha256": "58dcdc5bd4b9b1e67115a2f23f836335c7068292ef9eb76b79be2c075a516ef0"
+    },
+    "scripts/probe-release-package-guard.mjs": {
+      "kind": "tooling",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "015f599fa55753d081d60b1cd50b9530bfa15bb040a45243acb421470b181c4b"
+    },
+    "service/accountProvider.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "87ae522e2a15dc7cf4bf9367a97d8c51cafa72d0d8b9bf22d1598494a9935c7e"
+    },
+    "service/cloudflare/accountHttp.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "53fde8a1456bbb850bbf8ba036f0f801205b61037fc3a0d77ae8916c1a6653ed"
+    },
+    "src/features/account/AccountAccess.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "32a4ab24ee24e4e7d8b83f80306b4f02a4f053db50607125e40aa0ba3fdc6c3d"
+    },
+    "src/features/account/googleIdentity.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "525055cefbefd3471e76535c671aacc5caed02b993466a79b055e6cdec477072"
+    },
+    "src/platform/account.ts": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "72fcab453731f5dc8daafaf18c81b24d1ddd5d23866c4c713611e0cc6dd3747f"
     }
   },
   "priorManifestSha256": "491b4ac1913ba05807f1c5e3eb11f9c84ec293fb9722f5f0e39a13e8f14dab4b",

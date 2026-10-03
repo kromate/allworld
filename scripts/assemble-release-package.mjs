@@ -36,7 +36,7 @@ const pattern = (name, value, expression) => { if (typeof value !== 'string' || 
 
 /** Validates the public settings. `env` is any object, so a probe can pass its own. */
 export function releaseSettings(env, synthetic = false) {
-  const source = synthetic ? { ...SYNTHETIC, ...Object.fromEntries(['ALLWORLD_BUILD_ID'].filter(k => env[k]).map(k => [k, env[k]])) } : env
+  const source = synthetic ? { ...SYNTHETIC, ...Object.fromEntries(['ALLWORLD_BUILD_ID', 'ALLWORLD_GOOGLE_CLIENT_ID'].filter(k => env[k] !== undefined && env[k] !== '').map(k => [k, env[k]])) } : env
   const missing = REQUIRED.filter(name => !source[name])
   if (missing.length) fail(`Missing settings: ${missing.join(', ')}.`)
   const origin = exactOrigin('ALLWORLD_ORIGIN', source.ALLWORLD_ORIGIN)
@@ -53,6 +53,7 @@ export function releaseSettings(env, synthetic = false) {
     accountId: pattern('ALLWORLD_CF_ACCOUNT_ID', source.ALLWORLD_CF_ACCOUNT_ID, /^[a-f0-9]{32}$/),
     firebaseProjectId: pattern('ALLWORLD_FIREBASE_PROJECT_ID', source.ALLWORLD_FIREBASE_PROJECT_ID, /^[a-z][a-z0-9-]{4,62}$/),
     firebaseProjectNumber: pattern('ALLWORLD_FIREBASE_PROJECT_NUMBER', source.ALLWORLD_FIREBASE_PROJECT_NUMBER, /^\d{1,20}$/),
+    ...(source.ALLWORLD_GOOGLE_CLIENT_ID === undefined || source.ALLWORLD_GOOGLE_CLIENT_ID === '' ? {} : { googleClientId: pattern('ALLWORLD_GOOGLE_CLIENT_ID', source.ALLWORLD_GOOGLE_CLIENT_ID, /^[0-9]+-[A-Za-z0-9_-]+\.apps\.googleusercontent\.com$/) }),
     maxConnections: pattern('ALLWORLD_MAX_CONNECTIONS', source.ALLWORLD_MAX_CONNECTIONS || '4', /^[1-9]\d{0,2}$/),
     importMaxBytes: pattern('ALLWORLD_IMPORT_MAX_BYTES', source.ALLWORLD_IMPORT_MAX_BYTES || '65536', /^[1-9]\d{0,9}$/),
     migrationTag: pattern('ALLWORLD_DO_MIGRATION_TAG', source.ALLWORLD_DO_MIGRATION_TAG || 'v1', /^[A-Za-z0-9._-]{1,32}$/),
@@ -88,7 +89,7 @@ export function wranglerConfig(settings, artifactSha256, root) {
       WORLD_BINDING: JSON.stringify(binding),
       WORLD_GUEST_ADMISSION: '{"kind":"public"}',
       WORLD_MAX_CONNECTIONS: settings.maxConnections,
-      WORLD_ACCOUNT: JSON.stringify({ projectId: settings.firebaseProjectId, projectNumber: settings.firebaseProjectNumber }),
+      WORLD_ACCOUNT: JSON.stringify({ projectId: settings.firebaseProjectId, projectNumber: settings.firebaseProjectNumber, ...(settings.googleClientId ? { googleClientId: settings.googleClientId } : {}) }),
       WORLD_LEGACY_ORIGIN: settings.legacyOrigin,
       WORLD_IMPORT_MAX_BYTES: settings.importMaxBytes,
     },

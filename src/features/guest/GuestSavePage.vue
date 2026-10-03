@@ -36,13 +36,13 @@ const subtitle = computed(() => (details.value ? 'How long this guest session la
 
 // A finished attempt is cleared however the page is left (Close, Escape, another section), so the
 // chip does not go on saying "Not saved" about something the visitor has already read.
-onBeforeUnmount(() => { if (claim.value.kind === 'failed' || claim.value.kind === 'claimed') guest?.reset() })
+onBeforeUnmount(() => { if (account?.access.at === 'save') account.cancelAccess(); if (claim.value.kind === 'failed' || claim.value.kind === 'claimed') guest?.reset() })
 </script>
 
 <template>
   <PanelPage :title="title" :subtitle="subtitle">
     <GuestClaim
-      :session="session" :claim="shown" :busy="guest?.busy.value" :access="access" :password-policy="account?.passwordPolicy()" :uncertain="account?.claimUncertain.value"
+      :session="session" :claim="shown" :busy="guest?.busy.value" :access="access" :password-policy="account?.passwordPolicy()" :google-sign-in="account?.googleAvailable.value ? account.submitGoogleAccess : undefined" :uncertain="account?.claimUncertain.value"
       @save="guest?.save()" @retry="guest?.save()" @cancel="guest?.cancel()" @access="account?.submitAccess($event)"
       @continue-as="account?.continueAs()" @use-another="account?.useAnother()"
       @use-saved="guest?.useSaved()" @keep-guest="guest?.keepGuest()"

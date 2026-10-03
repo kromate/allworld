@@ -102,6 +102,7 @@ async function retryVehicleMapAction(): Promise<void> {
 // The session controller says who is a guest and takes the claim; this only places the windows.
 // `guest.session` is null for a signed-in member and for a local test member.
 const guest = createGuestControl(guestHooks, path => { void router.push(path) })
+onBeforeUnmount(guest.dispose)
 provide(GUEST_CONTROL, guest)
 // The account form's state for the save window. The form on the first screen below reads the same state.
 provide(GUEST_ACCESS, guest)
@@ -292,7 +293,7 @@ onBeforeUnmount(() => { stopBuildChecks?.(); releaseCounts?.(); window.removeEve
         <button class="btn block" type="button" :disabled="guest.access.pending" @click="guest.useAnother">Use another account</button>
         <button class="btn ghost block" type="button" @click="guest.cancelAccess">Cancel</button>
       </template>
-      <AccountAccess v-else class="access-form" :pending="guest.access.pending" :error="guest.access.error" :password-policy="guest.passwordPolicy()" @submit="guest.submitAccess" @cancel="guest.cancelAccess" />
+      <AccountAccess v-else class="access-form" :pending="guest.access.pending" :error="guest.access.error" :password-policy="guest.passwordPolicy()" :google-sign-in="guest.googleAvailable.value ? guest.submitGoogleAccess : undefined" @submit="guest.submitAccess" @cancel="guest.cancelAccess" />
     </div>
   </main>
 
