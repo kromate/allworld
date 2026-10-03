@@ -6,6 +6,7 @@ import { computed, nextTick, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { NAV, sectionOf } from './shell.ts'
 import HudIcon from './HudIcon.vue'
+import FullscreenControl from './FullscreenControl.vue'
 
 const props = defineProps<{ /** Unread counts, by section path. */ badges: Record<string, number> }>()
 /** The More menu. The shell owns it so that Escape closes one thing at a time. */
@@ -51,6 +52,7 @@ watch(open, async value => {
 
   <div v-if="open" class="more-layer" @click.self="open = false">
     <section id="shell-more" ref="sheet" class="more-sheet" role="dialog" aria-label="More sections">
+      <FullscreenControl />
       <ul class="more-grid">
         <li v-for="item in rest" :key="item.to">
           <RouterLink :to="item.to" class="more-item" :class="{ active: section === item.to }" :aria-current="section === item.to ? 'page' : undefined" @click="open = false">
@@ -76,7 +78,7 @@ watch(open, async value => {
 .more { display: none; }
 
 .more-layer { position: absolute; inset: 0; z-index: 17; background: rgba(28, 26, 36, 0.3); }
-.more-sheet { position: absolute; left: 8px; right: 8px; bottom: calc(var(--shell-nav) + 8px); max-width: 420px; margin: 0 auto; padding: 8px; border-radius: 20px; background: var(--surface); border: 1px solid var(--line-strong); box-shadow: var(--shadow-lg); animation: more-rise 0.16s ease; }
+.more-sheet { position: absolute; left: 8px; right: 8px; bottom: calc(var(--shell-nav) + 8px); max-width: 420px; max-height: calc(100dvh - var(--shell-nav) - 24px - env(safe-area-inset-top, 0px)); overflow-y: auto; overscroll-behavior: contain; margin: 0 auto; padding: 8px; border-radius: 20px; background: var(--surface); border: 1px solid var(--line-strong); box-shadow: var(--shadow-lg); animation: more-rise 0.16s ease; }
 @keyframes more-rise { from { transform: translateY(10px); opacity: 0; } }
 .more-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; }
 .more-item { position: relative; display: grid; justify-items: center; align-content: center; gap: 2px; min-height: 64px; padding: 8px 4px; border-radius: 14px; color: var(--ink); text-decoration: none; font-size: 0.8rem; font-weight: 650; }
@@ -87,11 +89,11 @@ watch(open, async value => {
 .more-item .count-badge { right: 14%; box-shadow: 0 0 0 2px var(--surface); }
 
 /* Not enough room for every section: five stay, the rest go under More. */
-@media (max-width: 860px) {
+@media (max-width: 860px), (pointer: coarse) {
   .extra { display: none; }
   .more { display: grid; }
 }
-@media (min-width: 861px) { .more-layer { display: none; } }
+@media (min-width: 861px) and (pointer: fine) { .more-layer { display: none; } }
 /* On a phone the bar is the bottom edge of the screen, and pages stop above it. Its height is --shell-nav. */
 @media (max-width: 720px) {
   .shell-nav { left: 0; right: 0; bottom: 0; transform: none; max-width: none; gap: 2px; padding: 4px 6px calc(4px + var(--safe-bottom)); border: 0; border-radius: 0; background: #1c1a24; box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.12); backdrop-filter: none; -webkit-backdrop-filter: none; }

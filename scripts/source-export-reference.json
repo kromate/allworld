@@ -3845,7 +3845,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "70486438537077e3e73892bdc1beac14b59befe894b9f851b9c5f229b4297070"
+      "sha256": "121257d8b8313eace495e1929aa35ba6ef32139182b7f744576c20d43632d829"
     },
     "src/features/world/touchStick.ts": {
       "kind": "source",
@@ -4304,7 +4304,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "1ba95eba407033727add96c4c0c3c107b8f53c1658caeb11e2f4ede97826bde4"
+      "sha256": "a63d513f1f4fd15b9730ac3ed4838a4bfe7d8ffff55f4c015ec3b8da2292af2b"
     },
     "src/ui/HudIcon.vue": {
       "kind": "source",
@@ -4358,7 +4358,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "459924153aafc2b032e0fed279a54f35470532ce212dd39c8c4c3cc6ec89b413"
+      "sha256": "a222f6e7cf87b77d3d67d77dee9288f8449ae671b52cdcc70f96c8dd9faafbd9"
     },
     "src/ui/StateView.vue": {
       "kind": "source",
@@ -4421,7 +4421,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "f6ea30b7b8d0d140aea4d371dbcd392563c284c7251af07acd346f9907ed1e6c"
+      "sha256": "c003780434bab7aa4b08ca4890c586edcd446cacaa063ef933b72dc3470a62ac"
     },
     "src/ui/hudIcons.ts": {
       "kind": "source",
@@ -5175,6 +5175,15 @@
         "NOTICE"
       ],
       "sha256": "963e06e1106dad64a4a0f8d1c33127639af109e41046e3f6cfdca8f2e1f5fa98"
+    },
+    "src/ui/FullscreenControl.vue": {
+      "kind": "source",
+      "license": "Apache-2.0",
+      "notices": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "sha256": "5a9a7a311d1e2169cebebe1753e461b30ec68107bf6e655b78c54d2118f8cc7c"
     }
   },
   "priorManifestSha256": "491b4ac1913ba05807f1c5e3eb11f9c84ec293fb9722f5f0e39a13e8f14dab4b",

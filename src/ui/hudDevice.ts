@@ -1,7 +1,6 @@
-// Device and viewport facts the HUD reacts to, and the three things it may ask of the browser on a
-// press: full screen, a landscape lock inside it, and a once-per-session hint. Every browser call is
-// optional: when it is missing or refused the HUD simply does not offer it, and nothing here assumes
-// a phone can be locked (iOS cannot) or that a refused request is an error to show.
+// Device and viewport facts the HUD reacts to, and the things it may ask of the browser on a
+// press: full screen and a once-per-session hint. Fullscreen never locks orientation or the keyboard.
+// Capability and refusal are reported to the control; browser change events own the displayed state.
 import { onBeforeUnmount, ref } from 'vue'
 import type { Ref } from 'vue'
 
@@ -41,26 +40,28 @@ export interface FullscreenHost {
   webkitExitFullscreen?: () => Promise<void> | void
   documentElement: { requestFullscreen?: (options?: { navigationUI?: 'hide' }) => Promise<void>; webkitRequestFullscreen?: () => Promise<void> | void }
 }
-export interface OrientationHost { orientation?: { lock?: (kind: 'landscape') => Promise<void> } }
-
-export const fullscreenAvailable = (doc: FullscreenHost): boolean => Boolean(doc.fullscreenEnabled || doc.webkitFullscreenEnabled)
+export const fullscreenAvailable = (doc: FullscreenHost): boolean => Boolean(
+  (doc.fullscreenEnabled && doc.documentElement.requestFullscreen) ||
+  (doc.webkitFullscreenEnabled && doc.documentElement.webkitRequestFullscreen),
+)
 export const inFullscreen = (doc: FullscreenHost): boolean => Boolean(doc.fullscreenElement || doc.webkitFullscreenElement)
 
-/**
- * Enter or leave full screen. Call from a press only. Entering also asks for a landscape lock where
- * the browser has one, and ignores any refusal: the lock is a courtesy, never a requirement.
- */
-export async function toggleFullscreen(doc: FullscreenHost, screenHost: OrientationHost): Promise<'entered' | 'left' | 'unsupported' | 'refused'> {
-  if (!fullscreenAvailable(doc)) return 'unsupported'
+/** Request from a direct press only. The document stays mounted, including dialogs and forms. */
+export async function toggleFullscreen(doc: FullscreenHost): Promise<'requested' | 'left' | 'unsupported' | 'refused'> {
   try {
+    // Exiting must remain available even if the browser's capability flag changes while full screen.
     if (inFullscreen(doc)) {
-      await (doc.exitFullscreen ?? doc.webkitExitFullscreen)?.call(doc)
+      const exit = doc.fullscreenElement ? doc.exitFullscreen : doc.webkitExitFullscreen
+      if (!exit) return 'refused'
+      await exit.call(doc)
       return 'left'
     }
-    const request = doc.documentElement.requestFullscreen ?? doc.documentElement.webkitRequestFullscreen
-    if (!request) return 'unsupported'
-    await request.call(doc.documentElement)
+    if (!fullscreenAvailable(doc)) return 'unsupported'
+    if (doc.fullscreenEnabled && doc.documentElement.requestFullscreen) {
+      await doc.documentElement.requestFullscreen({ navigationUI: 'hide' })
+    } else {
+      await doc.documentElement.webkitRequestFullscreen?.()
+    }
+    return 'requested'
   } catch { return 'refused' }
-  try { await screenHost.orientation?.lock?.('landscape') } catch { /* iOS and desktops refuse; that is fine */ }
-  return 'entered'
 }
