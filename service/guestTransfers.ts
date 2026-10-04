@@ -87,11 +87,19 @@ function exactOrigin(value: string): string {
 const REFUSED = 'This transfer link is not valid. Open your old Allworld page and choose Continue with my character again.'
 const registered = new WeakSet<World>()
 
+/** Preserve the original hosted origin only during this exact approved v1 transition. */
+export function guestTransferOrigins(legacyOrigin: string, targetOrigin: string): readonly string[] {
+  const legacy = exactOrigin(legacyOrigin), target = exactOrigin(targetOrigin)
+  if (legacy === target) throw new Error('The legacy and target origins must differ.')
+  return target === 'https://v1.joinallworld.com' && legacy === 'https://joinallworld.com'
+    ? [legacy, 'https://allworld.akpananthony33.workers.dev'] : [legacy]
+}
+
 export function createGuestTransfers(options: GuestTransferOptions) {
   const { world, guests } = options
   if (registered.has(world)) throw new Error('Guest transfers registered twice on one world.')
-  const legacy = exactOrigin(options.legacyOrigin), target = exactOrigin(options.targetOrigin)
-  if (legacy === target) throw new Error('The legacy and target origins must differ.')
+  const target = exactOrigin(options.targetOrigin)
+  const legacy = guestTransferOrigins(options.legacyOrigin, target)
   if (options.sealKey.length !== 32) throw new Error('The seal key must be exactly 32 bytes.')
   const key = Buffer.from(options.sealKey)
   const keyId = createHash('sha256').update('allworld-guest-transfer-key-id\n').update(key).digest('hex').slice(0, 16)
@@ -219,8 +227,8 @@ export function createGuestTransfers(options: GuestTransferOptions) {
   /** The two routes, for any listener. Null for any other path. Never reads or sets a cookie. */
   async function respond(request: TransferRequest): Promise<TransferAnswer | null> {
     if (request.path === '/world/guest-transfer/start') {
-      if (request.origin !== legacy) return failure(new WorldError('forbidden', 'This page origin is not allowed.'))
-      const cors = { 'access-control-allow-origin': legacy, vary: 'Origin' }
+      if (!request.origin || !legacy.includes(request.origin)) return failure(new WorldError('forbidden', 'This page origin is not allowed.'))
+      const cors = { 'access-control-allow-origin': request.origin, vary: 'Origin' }
       try {
         if (request.method === 'OPTIONS') {
           const headers = (request.accessControlRequestHeaders ?? '').toLowerCase().split(',').map(value => value.trim())
