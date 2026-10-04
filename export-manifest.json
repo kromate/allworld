@@ -84,7 +84,7 @@
       "target": ".github/workflows/ci.yml"
     },
     {
-      "bytes": 7141,
+      "bytes": 7237,
       "kind": "notice-or-metadata",
       "license": "Apache-2.0",
       "notices": [
@@ -93,7 +93,7 @@
       ],
       "path": ".github/workflows/release.yml",
       "root": "project",
-      "sha256": "081a40b2e0b4abd60ac2dff17248777e4f7caab32c05373037b2ec69a4430042",
+      "sha256": "9b71333e5a48b473366b3d098e5e991d1f2df4e1ce3a4702e6148b2f16cfc487",
       "target": ".github/workflows/release.yml"
     },
     {
@@ -266,7 +266,7 @@
       "target": "docs/ASSETS-LICENSES.md"
     },
     {
-      "bytes": 4270,
+      "bytes": 4736,
       "kind": "documentation",
       "license": "Apache-2.0",
       "notices": [
@@ -275,7 +275,7 @@
       ],
       "path": "docs/CI-CD.md",
       "root": "project",
-      "sha256": "a468f1ab64a120dbcac0857048a0baff8560ee76287857c767e2a2c984a65e48",
+      "sha256": "b7ab9c02b5180d761cbd1f6534b3a891a3d38b91a6bb3633b5fbdeb18fac3888",
       "target": "docs/CI-CD.md"
     },
     {
@@ -2602,7 +2602,7 @@
       ],
       "path": "scripts/source-export-reference.json",
       "root": "project",
-      "sha256": "c311f4deaa1d103149955eedc18d654bac827bd3f95bc5ee9e2823c2e3f59317",
+      "sha256": "dce41035dc5828c8bdc27e2be5bbc56dff9b4d6e21846bed443a0c36135ae0e2",
       "target": "scripts/source-export-reference.json"
     },
     {

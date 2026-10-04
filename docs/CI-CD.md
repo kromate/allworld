@@ -6,7 +6,11 @@ Two GitHub Actions workflows live in `.github/workflows/`. Neither uses `pull_re
 | Workflow | Runs | Secrets | Does |
 | --- | --- | --- | --- |
 | `ci.yml` | Pull requests to `main`, pushes to `main` | None, no environment, read-only token | `npm ci --ignore-scripts`, workflow validation, `npm run check`, the CI probes, a synthetic release package through the package gate, and a Worker bundle dry run. Never deploys |
-| `release.yml` | Manual dispatch only | `CLOUDFLARE_API_TOKEN`, in the `production` environment only | `package` builds and gates the complete package with no secrets and seals it as one archive. `deploy` runs only for `refs/heads/main`, only when the `deploy` input is set, and only after the environment approves |
+| `release.yml` | Manual dispatch only | `CLOUDFLARE_API_TOKEN`, in the `production` environment only | `package` builds and gates the complete package with no secrets and seals it as one archive. `deploy` runs only for `refs/heads/main`, only when the `deploy` input is set, and when the environment's deployment restrictions allow it |
+
+The environment scopes the provider token and restricts deployment branches. Human approval is
+enforced only if required reviewers are configured in GitHub; naming the environment in the
+workflow does not create an approval requirement.
 
 `deploy` checks that its commit is still the head of `main`, verifies the sealed archive digest
 from the `package` job's outputs, then calls `scripts/run-release-gate.mjs deploy`. That wrapper
@@ -18,13 +22,15 @@ new build ID and confirms the internal road data is not public.
 
 ## One-time repository settings (owner)
 
-Workflow files cannot set these. Until they exist, the deploy job is not protected.
+Workflow files cannot set these. Verify the repository settings separately from workflow checks.
 
-1. Environment `production`: required reviewers, deployment branches limited to `main`, and the
+1. Environment `production`: deployment branches limited to `main`, and the
    secret `CLOUDFLARE_API_TOKEN` stored here and nowhere else. Scope the token to Workers Scripts
-   edit on the one account. Add nothing else.
-2. Branch protection on `main`: pull request and review required, status check `Check, build and
-   package gate` required, no direct pushes.
+   edit on the one account. Add nothing else. Configure required reviewers if releases must wait
+   for human approval; the workflow alone does not enforce it.
+2. Branch protection on `main`: pull request required, status check `Check, build and
+   package gate` required, no direct pushes. Verify the required approval count separately if
+   the owner chooses to require a human review before merging.
 3. Actions settings: read-only default token, approval required for fork pull request workflows.
 4. Repository variables (public values, not secrets). Names only; values are the owner's:
 
