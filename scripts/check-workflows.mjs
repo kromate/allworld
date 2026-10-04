@@ -109,7 +109,8 @@ export function parseYaml(text) {
 
 const object = value => value !== null && typeof value === 'object' && !Array.isArray(value)
 const TRIGGERS = ['pull_request', 'push', 'workflow_dispatch']
-const SECRETS_ALLOWED = { 'release.yml': ['CLOUDFLARE_API_TOKEN'] }
+const SECRETS_ALLOWED = { 'release.yml': ['CLOUDFLARE_API_TOKEN'], 'joinallworld-release.yml': ['CLOUDFLARE_API_TOKEN'] }
+const DEPLOY_COMMAND = { 'release.yml': 'scripts/run-release-gate.mjs deploy', 'joinallworld-release.yml': 'node scripts/guard-joinallworld-package.mjs deploy "$RUNNER_TEMP/joinallworld-package" "$SOURCE_SHA" "$PUBLISH" "$PACKAGE_SHA" "$GITHUB_WORKSPACE/.github/wrangler/node_modules/wrangler/bin/wrangler.js"' }
 const LOCAL_PATH = /\/(?:Users|home|private\/tmp|tmp)\//
 
 /** Returns a list of problems. Empty means the workflow keeps every rule. */
@@ -169,7 +170,7 @@ export function checkWorkflow(file, document) {
         if (/\bsecrets\b(?!\.[A-Z][A-Z0-9_]*\b)/.test(String(value))) say(`${where} env ${name} reads secrets as a whole`)
         for (const m of String(value).matchAll(/\bsecrets\.([A-Za-z0-9_]+)/g)) {
           if (!allowed.includes(m[1])) say(`${where} reads secret ${m[1]} outside the reviewed deploy job`)
-          else if (!String(step.run ?? '').includes('scripts/run-release-gate.mjs deploy')) say(`${where} gives secret ${m[1]} to a step that is not the guarded deploy`)
+          else if (!DEPLOY_COMMAND[file] || (file === 'release.yml' ? !String(step.run ?? '').includes(DEPLOY_COMMAND[file]) : String(step.run ?? '').trim() !== DEPLOY_COMMAND[file])) say(`${where} gives secret ${m[1]} to a step that is not the guarded deploy`)
         }
       }
     })
