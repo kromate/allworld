@@ -102,7 +102,7 @@ await build({
     enforce: 'pre',
     transformIndexHtml: { order: 'pre', handler(html) {
       if (!html.includes('src="/main.ts"')) throw new Error('App HTML entry changed; review boot hook.')
-      return html.replace('src="/main.ts"', `src="${entry}"`)
+      return html.replace('src="/main.ts"', `src="${entry}"`).replaceAll('https://joinallworld.com', origin)
     } },
     resolveId(id) {
       if (id === entry) return '\0' + entry
@@ -126,6 +126,10 @@ await build({
   }],
   build: { outDir: output, emptyOutDir: false, sourcemap: false, target: 'es2022', chunkSizeWarningLimit: 900 },
 })
+for (const name of ['robots.txt', 'sitemap.xml']) {
+  const file = join(output, name)
+  await writeFile(file, (await readFile(file, 'utf8')).replaceAll('https://joinallworld.com', origin))
+}
 const files = {}
 async function inventory(directory, prefix = '') {
   for (const entry of (await readdir(directory, { withFileTypes: true })).sort((a, b) => a.name.localeCompare(b.name, 'en'))) {
