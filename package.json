@@ -14,7 +14,7 @@
     "typecheck:worker": "tsc --noEmit -p tsconfig.worker.json",
     "service": "node service/standalone.ts",
     "packs": "node scripts/build-asset-packs.mjs",
-    "verify": "node scripts/verify-social.ts && node scripts/verify-play.ts && node scripts/verify-market.ts && node scripts/verify-travel.ts && node scripts/verify-persist.ts && node scripts/verify-life.ts && node scripts/verify-direct.ts && node scripts/verify-comeback.ts && node scripts/verify-arena.ts",
+    "verify": "node scripts/verify-social.ts && node scripts/verify-play.ts && node scripts/verify-market.ts && node scripts/verify-travel.ts && node scripts/verify-persist.ts && node scripts/verify-life.ts && node scripts/verify-direct.ts && node scripts/verify-comeback.ts && node scripts/verify-arena.ts && node scripts/verify-v1-transfer.ts",
     "verify:geo": "node scripts/verify-geo.ts",
     "avatars": "node scripts/build-avatars.mjs",
     "check:structure": "node scripts/check-structure.mjs",

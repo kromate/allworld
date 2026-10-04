@@ -20,7 +20,7 @@ import { registerLiveCounts } from '../liveCounts.ts'
 import type { AccountProvider } from '../accountProvider.ts'
 import { createAccountSessions } from '../accountSessions.ts'
 import { createAccountGrants } from '../accountGrants.ts'
-import { createGuestTransfers, GUEST_TRANSFER_PATHS } from '../guestTransfers.ts'
+import { createGuestTransfers, guestTransferOrigins, GUEST_TRANSFER_PATHS } from '../guestTransfers.ts'
 import { ACCOUNT_PATHS, boundedText, createAccountHttp } from './accountHttp.ts'
 
 export type GuestAdmission = { kind: 'disabled' } | { kind: 'public' } | { kind: 'invite'; hashes: readonly string[] }
@@ -522,8 +522,8 @@ export function createCloudflareWorldServer(options: CloudflareServerOptions) {
     new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json', 'cache-control': 'private, no-store', ...headers } })
   /** The two transfer routes. Their answer is written as a fresh response: no target CORS header is merged into a legacy one. */
   async function transfer(request: Request, path: string): Promise<Response> {
-    const legacy: Record<string, string> = path === '/world/guest-transfer/start' && options.transfer && request.headers.get('origin') === options.transfer.legacyOrigin
-      ? { 'access-control-allow-origin': options.transfer.legacyOrigin, vary: 'Origin' } : {}
+    const legacy: Record<string, string> = path === '/world/guest-transfer/start' && options.transfer && guestTransferOrigins(options.transfer.legacyOrigin, binding.origin).includes(request.headers.get('origin') ?? '')
+      ? { 'access-control-allow-origin': request.headers.get('origin')!, vary: 'Origin' } : {}
     try {
       if (new URL(request.url).search) throw new WorldError('invalid', 'Query parameters are not accepted.')
       if (!transfers || down()) throw new WorldError('unavailable', 'The world is unavailable. Retry shortly.')

@@ -10,7 +10,7 @@ import type { GuestAdmission } from './transport.ts'
 import { ACCOUNT_PATHS, boundedText } from './accountHttp.ts'
 import { createWorldImport } from './worldImport.ts'
 import { createNativeImportStore } from './importPhases.ts'
-import { GUEST_TRANSFER_PATHS } from '../guestTransfers.ts'
+import { GUEST_TRANSFER_PATHS, guestTransferOrigins } from '../guestTransfers.ts'
 import { WorldError } from '../../src/shared/model.ts'
 import { pageMetadata } from '../pageMetadata.ts'
 
@@ -142,7 +142,7 @@ function legacyLanding(binding: HostedBinding, head: boolean): Response {
 <body>
   <main>
     <h1>Allworld has moved</h1>
-    <p>The world now lives at joinallworld.com.</p>
+    <p>Your original world and character are preserved. Continue to the world below.</p>
     <section id="guest">
       <p>This browser has a guest character from the old address. Choose when you are ready to open that same character at the new address.</p>
       <div class="actions">
@@ -290,7 +290,7 @@ export default {
       if (decoded === '/__world-data' || decoded.startsWith('/__world-data/') || decoded === '/world'
         || (decoded.startsWith('/world/') && decoded !== url.pathname)) return notFound()
       const config = configuration(env)
-      if (config.transfer && url.origin === config.transfer.legacyOrigin && ['GET', 'HEAD'].includes(request.method)
+      if (config.transfer && guestTransferOrigins(config.transfer.legacyOrigin, config.binding.origin).includes(url.origin) && ['GET', 'HEAD'].includes(request.method)
         && !url.pathname.startsWith('/world/') && !/\.[^/]+$/.test(decoded)) return pageMetadata(request, legacyLanding(config.binding, request.method === 'HEAD'))
       if (!url.pathname.startsWith('/world/')) {
         const asset = await env.ASSETS.fetch(request)
@@ -309,7 +309,7 @@ export default {
       const from = request.headers.get('origin')
       const forbidden = (): Response => Response.json({ code: 'forbidden', message: 'This App origin is not allowed.' }, { status: 403, headers: { 'cache-control': 'no-store' } })
       if (url.pathname === IMPORT_PATH) { if (from !== null) return forbidden() }
-      else if (url.pathname === '/world/guest-transfer/start') { if (!config.transfer || from !== config.transfer.legacyOrigin) return forbidden() }
+      else if (url.pathname === '/world/guest-transfer/start') { if (!config.transfer || !from || !guestTransferOrigins(config.transfer.legacyOrigin, config.binding.origin).includes(from)) return forbidden() }
       else if (url.pathname !== '/world/health' && from !== config.binding.origin) return forbidden()
       const forwarded = new Request(request)
       // Replace client supplied values, including absent CF IP in local diagnostics.
