@@ -52,7 +52,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "081a40b2e0b4abd60ac2dff17248777e4f7caab32c05373037b2ec69a4430042"
+      "sha256": "9b71333e5a48b473366b3d098e5e991d1f2df4e1ce3a4702e6148b2f16cfc487"
     },
     ".github/wrangler/package-lock.json": {
       "kind": "notice-or-metadata",
@@ -169,7 +169,7 @@
         "LICENSE",
         "NOTICE"
       ],
-      "sha256": "a468f1ab64a120dbcac0857048a0baff8560ee76287857c767e2a2c984a65e48"
+      "sha256": "b7ab9c02b5180d761cbd1f6534b3a891a3d38b91a6bb3633b5fbdeb18fac3888"
     },
     "docs/CONTRIBUTOR-MAP.md": {
       "kind": "documentation",

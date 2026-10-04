@@ -1,7 +1,8 @@
 # Manual release of reviewed main to Cloudflare Workers Free. Two jobs:
 #   package  builds and gates the complete package with no secrets, from the dispatched commit.
 #   deploy   runs only for refs/heads/main, only when asked, and only after the protected
-#            "production" environment approves. The provider token exists only in that environment.
+#            "production" environment's deployment restrictions allow it. The provider token
+#            exists only in that environment. Human approval requires configured reviewers.
 # Nothing here uses pull_request_target, workflow_run or a pull request's code.
 name: Release
 
@@ -9,7 +10,7 @@ on:
   workflow_dispatch:
     inputs:
       deploy:
-        description: Deploy after the package gate passes (main only; waits for environment approval)
+        description: Deploy after the package gate passes (main only; production environment restrictions apply)
         type: boolean
         default: false
 
