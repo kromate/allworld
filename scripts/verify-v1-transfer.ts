@@ -19,6 +19,11 @@ let source = 0
 const request = (path: string, origin: string, body: unknown) => transfers.respond({ path: '/world/guest-transfer/' + path, origin, method: 'POST', contentType: 'application/json', body: JSON.stringify(body), source: `test-${++source}` })
 try {
   for (const origin of [legacy, original]) {
+    const preflight = await transfers.respond({ path: '/world/guest-transfer/start', method: 'OPTIONS', origin, accessControlRequestMethod: 'POST', accessControlRequestHeaders: 'content-type', body: '', source: `preflight-${++source}` })
+    assert.equal(preflight?.status, 204)
+    assert.equal(preflight.headers['access-control-allow-origin'], origin)
+    const badPreflight = await transfers.respond({ path: '/world/guest-transfer/start', method: 'OPTIONS', origin, accessControlRequestMethod: 'POST', accessControlRequestHeaders: 'authorization', body: '', source: `preflight-${++source}` })
+    assert.equal(badPreflight?.status, 403)
     const guest = guests.issue({ source: `issue-${++source}` })
     const start = await request('start', origin, { token: guest.session.token })
     assert.equal(start?.status, 200)
