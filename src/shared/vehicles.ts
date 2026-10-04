@@ -177,6 +177,10 @@ export interface VehicleOps {
   /** Borrow a vehicle at a depot. One at a time for each member. */
   'vehicle.loan': Op<{ depotId: string; kind: VehicleKind; requestId: string }, { vehicle: VehicleSnapshot; self: VehicleSelf }>
   'vehicle.return': Op<{ vehicleId: VehicleId; expectedRevision: number; requestId: string }, { returned: true; self: VehicleSelf }>
+  /** Choose the nearest eligible seat and reachable entry using the member's current service position. */
+  'vehicle.enter': Op<{ vehicleId: VehicleId; requestId: string; inviteId?: VehicleInviteId }, { vehicle: VehicleSnapshot; self: VehicleSelf }>
+  /** Move to the next free permitted seat in spec order while stopped, after all door transitions finish. */
+  'vehicle.cycleSeat': Op<{ vehicleId: VehicleId; requestId: string }, { vehicle: VehicleSnapshot; self: VehicleSelf }>
   'vehicle.board': Op<{ vehicleId: VehicleId; seatId: SeatId; entryId: string; expectedRevision: number; inviteId?: VehicleInviteId; requestId: string }, { vehicle: VehicleSnapshot; self: VehicleSelf }>
   /**
    * `pos` and `heading` are where the service stood the member. The App uses them and nothing of its own.

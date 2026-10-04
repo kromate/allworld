@@ -34,6 +34,8 @@ export interface BoardPlan {
 
 const dist = (a: Vec2, b: Vec2): number => Math.hypot(a.x - b.x, a.z - b.z)
 const free = (vehicle: VehicleSnapshot, seatId: SeatId): boolean => vehicle.seats.some(seat => seat.id === seatId && !seat.occupant && !seat.reservedByService)
+// A reserved service driver's seat is unavailable to sit in, but its reservation is not a person blocking passage.
+const occupied = (vehicle: VehicleSnapshot, seatId: SeatId): boolean => vehicle.seats.some(seat => seat.id === seatId && Boolean(seat.occupant))
 
 /** Every entry of a vehicle with where a member stands to use it, nearest first. */
 export function entriesNear(vehicle: VehicleSnapshot, at: Vec2): { id: string; distance: number }[] {
@@ -47,33 +49,39 @@ export interface PlanOptions {
   invites: readonly VehicleInvite[]
   /** A paid ride: the member is a passenger and the service keeps the driver's seat. */
   paid?: boolean
+  /** A fresh vehicle.inspect answer for this vehicle; a hint, never an access grant. */
+  driveAllowed?: boolean
+  /** A borrow-and-drive approach hint only; Enter still selects the actual seat on the service. */
+  driverOnly?: boolean
+  /** Keep an accepted approach entry stable while rechecking current seats. */
+  entryId?: string
 }
 
 /**
  * The seat to ask for from where the member stands: the free seat whose nearest usable entry is nearest,
- * the driver's first for the borrower (or someone invited to drive). Null when no seat is free to ask for.
+ * without prioritising the driver. This is an approach hint, never boarding authority.
  * A seat behind an occupied one (`across`) is not offered from that side.
  */
 export function planBoarding(vehicle: VehicleSnapshot, at: Vec2, options: PlanOptions): BoardPlan | null {
   const spec = VEHICLE_SPECS[vehicle.kind]
   const accepted = (role: 'driver' | 'passenger'): VehicleInvite | undefined => options.invites.find(invite => invite.vehicleId === vehicle.id && invite.recipient === options.me && invite.status === 'accepted' && invite.role === role)
-  const mayDrive = !options.paid && vehicle.source === 'borrowed' && (vehicle.ownerId === options.me || Boolean(accepted('driver')))
+  const mayDrive = !options.paid && vehicle.source === 'borrowed' && (options.driveAllowed || vehicle.ownerId === options.me || Boolean(accepted('driver')))
   const near = entriesNear(vehicle, at)
   const candidates: BoardPlan[] = []
   for (const seat of spec.seats) {
-    if (!free(vehicle, seat.id)) continue
+    if (!free(vehicle, seat.id) || (options.driverOnly && seat.role !== 'driver')) continue
     if (seat.role === 'driver' && !mayDrive) continue
     for (const entry of near) {
+      if (options.entryId && entry.id !== options.entryId) continue
       if (!seat.entries.includes(entry.id)) continue
-      if ((seat.across[entry.id] ?? []).some(other => !free(vehicle, other))) continue
+      if ((seat.across[entry.id] ?? []).some(other => occupied(vehicle, other))) continue
       const invite = accepted(seat.role)
       candidates.push({ seatId: seat.id, role: seat.role, entryId: entry.id, distance: entry.distance, ...(invite ? { inviteId: invite.id } : {}) })
       break
     }
   }
-  // The borrower drives before riding; otherwise nearest wins, and the seat order of the model breaks a tie.
-  const rank = (plan: BoardPlan): number => (plan.role === 'driver' && mayDrive ? -1000 : 0) + plan.distance
-  return candidates.reduce<BoardPlan | null>((best, plan) => (!best || rank(plan) < rank(best) - 1e-9 ? plan : best), null)
+  // Nearest entry wins; the model's seat order breaks an exact tie.
+  return candidates.reduce<BoardPlan | null>((best, plan) => (!best || plan.distance < best.distance - 1e-9 ? plan : best), null)
 }
 
 export interface TargetInput {
@@ -84,17 +92,18 @@ export interface TargetInput {
   invites: readonly VehicleInvite[]
   /** What was offered a moment ago: it is kept until it is further than the keep distance. */
   previous: RideTarget | null
+  driveAllowedVehicleId?: VehicleId | null
 }
 
 /** A vehicle is offered only while it is standing still with nobody getting in or out through a door in the way. */
-const standing = (vehicle: VehicleSnapshot): boolean => (vehicle.phase === 'parked' || vehicle.phase === 'boarding') && Math.abs(vehicle.speed) <= VEHICLE_RULES.stoppedSpeed
+const standing = (vehicle: VehicleSnapshot): boolean => (vehicle.phase === 'parked' || vehicle.phase === 'boarding') && Math.abs(vehicle.speed) < VEHICLE_RULES.stoppedSpeed
 
 /** The one thing to offer: the nearest boardable vehicle, else a depot, else nothing. */
 export function nearestRideTarget(input: TargetInput): RideTarget | null {
   let best: { target: RideTarget; distance: number } | null = null
   for (const vehicle of input.vehicles) {
     if (!standing(vehicle)) continue
-    const plan = planBoarding(vehicle, input.at, { me: input.me, invites: input.invites, paid: vehicle.source === 'service' })
+    const plan = planBoarding(vehicle, input.at, { me: input.me, invites: input.invites, paid: vehicle.source === 'service', driveAllowed: input.driveAllowedVehicleId === vehicle.id })
     if (!plan) continue
     const kept = input.previous?.kind === 'vehicle' && input.previous.id === vehicle.id
     if (plan.distance > (kept ? RIDE_REACH.keep : RIDE_REACH.take)) continue
@@ -114,12 +123,55 @@ export const sameTarget = (a: RideTarget | null, b: RideTarget | null): boolean 
 
 export interface RideWords { verb: string; target: string; label: string }
 /**
- * What the one button says. A paid vehicle never says "Enter": pressing it only asks where to, and the fare
- * appears for confirmation before anything is paid, so the words say that.
+ * Paid service entry requires an existing boarding grant or fare consent first.
  */
-export function rideWords(vehicle: VehicleSnapshot, plan: BoardPlan): RideWords {
+/** An active booking or accepted invitation may be entered without buying another ride. */
+export function hasRideAuthorization(vehicle: VehicleSnapshot, me: MemberId | null, invites: readonly VehicleInvite[], boardAllowed = false): boolean {
+  return vehicle.source === 'borrowed' || boardAllowed || Boolean(vehicle.trip?.mode === 'paid-service' && vehicle.trip.state === 'boarding' && (
+    (vehicle.control.kind === 'service' && vehicle.control.bookingMemberId === me) ||
+    invites.some(invite => invite.vehicleId === vehicle.id && invite.recipient === me && invite.status === 'accepted')
+  ))
+}
+
+export function rideWords(vehicle: VehicleSnapshot, _plan: BoardPlan, authorized = vehicle.source === 'borrowed'): RideWords {
   const name = `${vehicle.source === 'borrowed' ? 'borrowed ' : ''}${VEHICLE_SPECS[vehicle.kind].label.toLowerCase()}`
-  if (vehicle.source === 'service') return { verb: 'Ride', target: 'see fare first', label: `Choose a destination for this ${name} and see the fare before you pay` }
-  if (plan.role === 'driver') return { verb: 'Drive', target: VEHICLE_SPECS[vehicle.kind].label, label: `Get in the ${name} and drive` }
-  return { verb: 'Get in', target: VEHICLE_SPECS[vehicle.kind].label, label: `Get in the ${name} as a passenger` }
+  if (!authorized) return { verb: 'Ride', target: 'see fare first', label: `Choose a destination for this ${name} and see the fare before you pay` }
+  return { verb: 'Enter', target: VEHICLE_SPECS[vehicle.kind].label, label: `Enter the ${name} in the nearest available permitted seat` }
+}
+
+/** A display hint; the service rechecks stopped state, access, reservations and seat occupancy. */
+export function cycleSeatReason(vehicle: VehicleSnapshot, seatId: SeatId): string {
+  if (vehicle.phase === 'transferring' || vehicle.phase === 'stopping' || Math.abs(vehicle.speed) >= VEHICLE_RULES.stoppedSpeed) return 'Stop the vehicle before changing seats.'
+  if (vehicle.transitions.length) return 'Wait for everyone to finish entering or leaving.'
+  if (!vehicle.seats.some(seat => seat.id !== seatId && !seat.occupant && !seat.reservedByService)) return 'No other free seat is available.'
+  return ''
+}
+
+/** Nearest passenger entry the member can currently reach for fare confirmation. The service rechecks it before charging. */
+export function paidBookingEntry(vehicle: VehicleSnapshot, at: Vec2): string | undefined {
+  const spec = VEHICLE_SPECS[vehicle.kind]
+  const aside = (at.x - vehicle.pos.x) * Math.cos(vehicle.heading) - (at.z - vehicle.pos.z) * Math.sin(vehicle.heading)
+  return entriesNear(vehicle, at).find(near => {
+    const entry = spec.entries.find(item => item.id === near.id)
+    if (!entry || near.distance > VEHICLE_RULES.boardRangeMetres || (entry.side === 'left' ? aside <= 0.2 : aside >= -0.2)) return false
+    return spec.seats.some(seat => seat.role === 'passenger' && free(vehicle, seat.id) && seat.entries.includes(entry.id)
+      && !(seat.across[entry.id] ?? []).some(other => occupied(vehicle, other)))
+  })?.id
+}
+
+/** Approach outside the body. A drive intent stops forward of the driver's seat so Enter ranks it nearest. */
+export function entryApproachPoint(vehicle: VehicleSnapshot, plan: BoardPlan, drive = false): Vec2 | null {
+  const spec = VEHICLE_SPECS[vehicle.kind], entry = spec.entries.find(item => item.id === plan.entryId)
+  if (!entry) return null
+  const driver = drive ? spec.seats.find(seat => seat.role === 'driver') : null
+  if (drive && (plan.role !== 'driver' || !driver)) return null
+  return vehiclePoint(vehicle.pos, vehicle.heading, entry.x + Math.sign(entry.x) * 0.45, driver ? Math.max(entry.z, driver.z) + 0.45 : entry.z)
+}
+
+/** One eligible hint per entry, nearest first. The engine still decides whether each route is walkable. */
+export function boardingApproachPlans(vehicle: VehicleSnapshot, at: Vec2, options: PlanOptions): BoardPlan[] {
+  return VEHICLE_SPECS[vehicle.kind].entries.flatMap(entry => {
+    const plan = planBoarding(vehicle, at, { ...options, entryId: entry.id })
+    return plan ? [plan] : []
+  }).sort((a, b) => a.distance - b.distance)
 }

@@ -1504,6 +1504,100 @@ export function registerVehicles(world: World): void {
     return { returned: true as const, self: selfOf(world, rt, me) }
   })
 
+  world.register('vehicle.enter', value => {
+    const raw = obj(value)
+    return { vehicleId: vehicleId(raw), requestId: requestId(raw), inviteId: optId<VehicleInviteId>(raw, 'inviteId', 'vi') ?? undefined }
+  }, (ctx, input) => {
+    roadsOrRefuse()
+    const me = ctx.memberId
+    const vehicle = findVehicle(rt, input.vehicleId)
+    const key = `enter|${input.vehicleId}|${input.inviteId ?? ''}`
+    const again = repeated(rt, me, input.requestId, key)
+    const at = here(world, vehicle, me)
+    // A replay acknowledges the original intent; it never seats someone again after an exit or cycle.
+    if (again) return { vehicle: snapshotFor(world, vehicle, me), self: selfOf(world, rt, me) }
+    if (rt.seatOf.has(me) || rt.heldOf.has(me)) throw new WorldError('conflict', SEATED)
+    if (moving(vehicle) || vehicle.crossing !== null || (vehicle.phase !== 'parked' && vehicle.phase !== 'boarding')) throw new WorldError('conflict', 'Wait for the vehicle to stop.')
+    if (input.inviteId) {
+      const invite = rt.invites.get(input.inviteId)
+      if (!invite || invite.vehicleId !== vehicle.id || invite.recipient !== me || invite.status !== 'accepted' || Date.parse(invite.expiresAt) <= ctx.now) throw new WorldError('forbidden', 'That invitation is not for you and this vehicle.')
+    }
+    // Rank only valid combinations. Occupied or held seats and inaccessible doors never win.
+    const candidates = vehicle.spec.seats.flatMap((spec, order) => {
+      if (refusal(world, rt, vehicle, spec, me)) return []
+      const entries = vehicle.spec.entries.flatMap((entry, entryOrder) => {
+        if (!spec.entries.includes(entry.id) || !atEntry(vehicle, entry.id, at.pos) || barred(vehicle, spec, entry.id)) return []
+        const point = vehiclePoint(vehicle.pos, vehicle.heading, entry.x, entry.z)
+        return [{ entryId: entry.id, distance: Math.hypot(point.x - at.pos.x, point.z - at.pos.z), entryOrder }]
+      }).sort((a, b) => a.distance - b.distance || a.entryOrder - b.entryOrder)
+      const entry = entries[0]
+      if (!entry) return []
+      const point = seatPos(vehicle, spec)
+      return [{ spec, entryId: entry.entryId, distance: Math.hypot(point.x - at.pos.x, point.z - at.pos.z), entryDistance: entry.distance, order }]
+    }).sort((a, b) => a.distance - b.distance || a.entryDistance - b.entryDistance || a.order - b.order)
+    const chosen = candidates[0]
+    if (!chosen) {
+      const permitted = vehicle.spec.seats.some(spec => refusal(world, rt, vehicle, spec, me) === null)
+      if (permitted) throw new WorldError('forbidden', 'Go up to an accessible side of the vehicle to get in.')
+      const free = vehicle.spec.seats.find(spec => !vehicle.seats.get(spec.id)!.memberId && !vehicle.seats.get(spec.id)!.held && !(vehicle.source === 'service' && spec.role === 'driver'))
+      throw new WorldError(free ? 'forbidden' : 'conflict', free ? refusal(world, rt, vehicle, free, me)! : 'There is no available seat in this vehicle.')
+    }
+    // Dispatch is synchronous: the latest free seat is allocated in the same step as validation.
+    sit(world, rt, vehicle, chosen.spec, me)
+    passThrough(world, rt, vehicle, 'board', chosen.entryId, chosen.spec.id, me)
+    if (chosen.spec.role === 'driver') takeControl(rt, vehicle, me)
+    vehicle.notice = ''
+    remember(world, rt, me, input.requestId, key, { vehicleId: vehicle.id })
+    publish(world, rt, vehicle)
+    return { vehicle: snapshotFor(world, vehicle, me), self: selfOf(world, rt, me) }
+  })
+
+  world.register('vehicle.cycleSeat', value => {
+    const raw = obj(value)
+    return { vehicleId: vehicleId(raw), requestId: requestId(raw) }
+  }, (ctx, input) => {
+    roadsOrRefuse()
+    const me = ctx.memberId
+    const vehicle = findVehicle(rt, input.vehicleId)
+    const key = `cycleSeat|${input.vehicleId}`
+    const again = repeated(rt, me, input.requestId, key)
+    here(world, vehicle, me)
+    if (again) return { vehicle: snapshotFor(world, vehicle, me), self: selfOf(world, rt, me) }
+    const mine = rt.seatOf.get(me)
+    if (mine?.vehicle !== vehicle) throw new WorldError('conflict', 'Take a seat in this vehicle first.')
+    if (moving(vehicle) || vehicle.crossing !== null || (vehicle.phase === 'transferring' || vehicle.phase === 'stopping')) throw new WorldError('conflict', 'Wait for the vehicle to stop.')
+    if (vehicle.transitions.some(entry => entry.endsAt > ctx.now)) throw new WorldError('conflict', 'Wait for the doors to close.')
+    if (vehicle.exitWanted.has(me) || vehicle.putDown.has(me)) throw new WorldError('conflict', 'Wait until you have stepped out.')
+    const current = vehicle.spec.seats.findIndex(spec => spec.id === mine.seatId)
+    let next: VehicleSeatSpec | undefined
+    for (let offset = 1; offset < vehicle.spec.seats.length; offset++) {
+      const candidate = vehicle.spec.seats[(current + offset) % vehicle.spec.seats.length]!
+      const state = vehicle.seats.get(candidate.id)!
+      if (!state.memberId && !state.held && mayKeepSeat(world, vehicle, candidate, me)) { next = candidate; break }
+    }
+    if (!next) throw new WorldError('conflict', 'There is no other available seat you may use.')
+    // Like acceptDriver, stopped internal re-seating is atomic and does not traverse an exterior door.
+    // across[] describes boarding from a door, not an internal seat move.
+    vehicle.seats.set(mine.seatId, { memberId: null, held: null })
+    vehicle.seats.set(next.id, { memberId: me, held: null })
+    rt.seatOf.set(me, { vehicle, seatId: next.id })
+    if (vehicle.control.kind === 'member' && vehicle.control.driverId === me) dropControl(rt, vehicle)
+    if (next.role === 'driver') takeControl(rt, vehicle, me)
+    if (mine.seatId === 'driver' || next.role === 'driver') {
+      vehicle.epoch = `${rt.boot}-${++rt.counter}`
+      vehicle.input = null
+      vehicle.lastSeq = -1
+    }
+    vehicle.speed = 0
+    for (const [offerId, offer] of rt.offers) if (offer.vehicleId === vehicle.id && (offer.from === me || offer.to === me)) rt.offers.delete(offerId)
+    vehicle.notice = ''
+    carry(world, rt, vehicle)
+    announce(world, me)
+    remember(world, rt, me, input.requestId, key, { vehicleId: vehicle.id })
+    publish(world, rt, vehicle)
+    return { vehicle: snapshotFor(world, vehicle, me), self: selfOf(world, rt, me) }
+  })
+
   world.register('vehicle.board', value => {
     const raw = obj(value)
     return { vehicleId: vehicleId(raw), seatId: seatIn(raw), entryId: entryIn(raw), expectedRevision: revisionIn(raw), inviteId: optId<VehicleInviteId>(raw, 'inviteId', 'vi') ?? undefined, requestId: requestId(raw) }

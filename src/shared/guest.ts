@@ -82,7 +82,7 @@ export const GUEST_OPS = {
     'notify.list', 'notify.open', 'notify.readAll', 'notify.prefs', 'comeback.here',
     // Vehicles: a guest borrows, drives, rides, is invited and pays a charter from the same coins as anyone.
     // What the vehicle's borrower or driver allows is decided by the service for guests and accounts alike.
-    'vehicle.state', 'vehicle.inspect', 'vehicle.loan', 'vehicle.return', 'vehicle.board', 'vehicle.exit', 'vehicle.input',
+    'vehicle.state', 'vehicle.inspect', 'vehicle.loan', 'vehicle.return', 'vehicle.board', 'vehicle.enter', 'vehicle.cycleSeat', 'vehicle.exit', 'vehicle.input',
     'vehicle.access', 'vehicle.invite', 'vehicle.respondInvite', 'vehicle.offerDriver', 'vehicle.acceptDriver',
     'vehicle.quote', 'vehicle.book', 'vehicle.depart', 'vehicle.cancelTrip', 'vehicle.destination', 'vehicle.ackTransfer', 'vehicle.resume',
   ],

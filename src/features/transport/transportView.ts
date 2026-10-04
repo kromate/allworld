@@ -1,5 +1,5 @@
 import type { MemberId, VehicleId, VehicleInviteId, VehicleQuoteId } from '../../shared/ids.ts'
-import type { DriverOffer, SeatId, VehicleAccess, VehicleControls, VehicleKind } from '../../shared/vehicles.ts'
+import type { DriverOffer, VehicleAccess, VehicleControls, VehicleKind } from '../../shared/vehicles.ts'
 import type { createVehicleClient } from '../../state/vehicles.ts'
 export type DriverIntent = VehicleControls
 export { NEUTRAL_CONTROLS as STOPPED_INPUT } from '../../shared/vehicles.ts'
@@ -8,7 +8,8 @@ export type TransportCommand =
   | { kind: 'inspect'; vehicleId: VehicleId }
   | { kind: 'loan'; depotId: string; vehicleKind: VehicleKind }
   | { kind: 'return' }
-  | { kind: 'board'; seatId: SeatId; entryId: string; inviteId?: VehicleInviteId }
+  | { kind: 'enter'; inviteId?: VehicleInviteId }
+  | { kind: 'cycle-seat' }
   | { kind: 'exit' }
   | { kind: 'access'; access: VehicleAccess }
   | { kind: 'invite'; to: MemberId; role: 'driver' | 'passenger' }
