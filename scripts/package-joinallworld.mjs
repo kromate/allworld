@@ -8,7 +8,7 @@ if (!['true', 'false'].includes(publishing)) throw Error('Invalid publish mode')
 const source = resolve(sourcePath), root = resolve(packagePath), publish = publishing === 'true';
 mkdirSync(root);
 const require = createRequire(join(resolve(toolingPath), 'package.json'));
-await require('esbuild').build({ entryPoints: [join(source, 'deploy/cloudflare-worker.js')], outfile: join(root, 'worker.js'), bundle: true, format: 'esm', platform: 'neutral', external: ['cloudflare:workers'] });
+await require('esbuild').build({ entryPoints: [join(source, 'deploy/cloudflare-worker.js')], outfile: join(root, 'worker.js'), bundle: true, minifyWhitespace: true, format: 'esm', platform: 'neutral', external: ['cloudflare:workers'] });
 cpSync(join(source, 'dist'), join(root, 'assets'), { recursive: true, dereference: false });
 writeFileSync(join(root, 'wrangler.json'), JSON.stringify(expectedConfig(sourceSha, publish), null, 2) + '\n');
 const files = [];
