@@ -1,5 +1,7 @@
 # CI and release workflows
 
+For the current game's separate `joinallworld-release.yml` workflow, see [Fast Allworld releases](FAST-RELEASES.md).
+
 Two GitHub Actions workflows live in `.github/workflows/`. Neither uses `pull_request_target`,
 `workflow_run` or a cache, and every action is pinned to a full commit SHA.
 

@@ -8,7 +8,11 @@ on:
         required: true
         type: string
       deploy:
-        description: Deploy reviewed candidate after all runtime gates pass
+        description: Deploy reviewed candidate after the selected checks pass
+        type: boolean
+        default: false
+      full_checks:
+        description: Run exhaustive checks here only if they have not already passed locally for this source SHA
         type: boolean
         default: false
       publish_staging:
@@ -25,7 +29,7 @@ concurrency:
 
 jobs:
   package:
-    name: Check and seal new game
+    name: Build, check and seal new game
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     outputs:
@@ -58,7 +62,7 @@ jobs:
         run: |
           node scripts/check-workflows.mjs
           node --test scripts/guard-joinallworld-package.test.mjs
-      - name: Build and test exact public game source
+      - name: Install exact public game source
         env:
           SOURCE_SHA: ${{ inputs.source_sha }}
         run: |
@@ -66,9 +70,38 @@ jobs:
           git -C new-source fetch --no-tags origin main
           node scripts/check-joinallworld-source.mjs "$GITHUB_WORKSPACE/new-source" "$SOURCE_SHA"
           npm ci --ignore-scripts --no-audit --no-fund --prefix new-source
-          npm test --prefix new-source
+      - name: Build once and enforce download budgets
+        timeout-minutes: 3
+        run: |
           npm run build --prefix new-source
-          JOINALLWORLD_TOOLS="$GITHUB_WORKSPACE/.github/wrangler" node --test new-source/deploy/cloudflare.test.mjs
+          npm run size:download --prefix new-source
+      - name: Fast source smoke checks
+        if: ${{ !inputs.full_checks }}
+        timeout-minutes: 1
+        working-directory: new-source
+        run: node --experimental-strip-types --test --test-concurrency=1 src/app/entry.test.ts server/release.test.ts src/types/protocol.test.ts
+      - name: Full source checks on request
+        if: inputs.full_checks
+        working-directory: new-source
+        run: |
+          npm run typecheck
+          npm test
+      - name: Fast Worker runtime checks
+        if: ${{ !inputs.full_checks }}
+        timeout-minutes: 1
+        working-directory: new-source
+        env:
+          JOINALLWORLD_TOOLS: ${{ github.workspace }}/.github/wrangler
+        run: |
+          node --experimental-strip-types --test --test-reporter=tap --test-name-pattern='^(Cloudflare: public IDs,|Cloudflare: settlement once|Cloudflare: real static HTML|Combined game on the Worker:|assets: a missing hashed file)' deploy/cloudflare.test.mjs | tee "$RUNNER_TEMP/worker-smoke.tap"
+          node -e 'const s=require("fs").readFileSync(process.argv[1],"utf8"); if(!/^# pass 5$/m.test(s)||!/^# fail 0$/m.test(s)) throw Error("Expected all five Worker smoke checks to pass")' "$RUNNER_TEMP/worker-smoke.tap"
+      - name: Full Worker runtime checks on request
+        if: inputs.full_checks
+        timeout-minutes: 15
+        working-directory: new-source
+        env:
+          JOINALLWORLD_TOOLS: ${{ github.workspace }}/.github/wrangler
+        run: node --experimental-strip-types --test --test-concurrency=1 "deploy/*.test.ts"
       - name: Assemble and seal fixed new-worker package
         id: package
         env:
