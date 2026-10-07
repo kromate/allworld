@@ -40,6 +40,24 @@ for (const [name, change] of [
   writeFileSync(join(f.root, 'wrangler.json'), JSON.stringify(config)); f.seal();
   assert.throws(() => checkPackage(f.root, sha, false), /Unapproved deployment configuration/);
 });
+function glb(jsonText) {
+  const json = Buffer.from(jsonText.padEnd(Math.ceil(jsonText.length / 4) * 4, ' '));
+  const out = Buffer.alloc(20 + json.length);
+  out.writeUInt32LE(0x46546c67, 0); out.writeUInt32LE(2, 4); out.writeUInt32LE(out.length, 8);
+  out.writeUInt32LE(json.length, 12); out.writeUInt32LE(0x4e4f534a, 16); json.copy(out, 20);
+  return out;
+}
+test('accepts binary glTF models and rejects files only named .glb', t => {
+  const f = fixture(t); mkdirSync(join(f.root, 'assets/models'));
+  writeFileSync(join(f.root, 'assets/models/body-a1b2.glb'), glb('{"asset":{"version":"2.0"}}')); f.seal();
+  assert.match(checkPackage(f.root, sha, false), /^[a-f0-9]{64}$/);
+  writeFileSync(join(f.root, 'assets/models/body-a1b2.glb'), 'export default 1'); f.seal();
+  assert.throws(() => checkPackage(f.root, sha, false), /Invalid model file/);
+  const truncated = glb('{"asset":{"version":"2.0"}}').subarray(0, 24); writeFileSync(join(f.root, 'assets/models/body-a1b2.glb'), truncated); f.seal();
+  assert.throws(() => checkPackage(f.root, sha, false), /Invalid model file/);
+  rmSync(join(f.root, 'assets/models/body-a1b2.glb')); writeFileSync(join(f.root, 'assets/models/body.gltf'), '{}'); f.seal();
+  assert.throws(() => checkPackage(f.root, sha, false), /Unexpected package file/);
+});
 test('rejects hidden, state and symlink files', t => {
   const f = fixture(t); writeFileSync(join(f.root, '.env'), 'synthetic'); assert.throws(() => checkPackage(f.root, sha, false), /Forbidden package path/); rmSync(join(f.root, '.env'));
   symlinkSync(join(f.root, 'worker.js'), join(f.root, 'assets/link.js')); assert.throws(() => checkPackage(f.root, sha, false), /Forbidden package path/);

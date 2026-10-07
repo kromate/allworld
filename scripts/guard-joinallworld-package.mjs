@@ -27,8 +27,10 @@ export function checkPackage(root, sourceSha, publish) {
       if (stat.isDirectory()) { if (rel !== 'assets' && !rel.startsWith('assets/')) throw Error('Unexpected directory'); walk(full); }
       else {
         if (!stat.isFile() || stat.size > 5 * 1024 * 1024) throw Error('Invalid package file');
-        if (!['worker.js', 'wrangler.json', 'manifest.json'].includes(rel) && !/^assets\/(?:[A-Za-z0-9_-]+\/)*[A-Za-z0-9_.-]+\.(?:html|js|css|svg|png|jpg|jpeg|webp|ico|woff2|txt)$/.test(rel)) throw Error('Unexpected package file');
-        files.push({ path: rel, bytes: stat.size, sha256: hash(readFileSync(full)) });
+        if (!['worker.js', 'wrangler.json', 'manifest.json'].includes(rel) && !/^assets\/(?:[A-Za-z0-9_-]+\/)*[A-Za-z0-9_.-]+\.(?:html|js|css|svg|png|jpg|jpeg|webp|ico|woff2|txt|glb)$/.test(rel)) throw Error('Unexpected package file');
+        const bytes = readFileSync(full);
+        if (rel.endsWith('.glb') && !isGlb(bytes)) throw Error('Invalid model file');
+        files.push({ path: rel, bytes: stat.size, sha256: hash(bytes) });
       }
     }
   }
@@ -41,6 +43,14 @@ export function checkPackage(root, sourceSha, publish) {
   if (JSON.stringify(config) !== JSON.stringify(expectedConfig(sourceSha, publish))) throw Error('Unapproved deployment configuration');
   if (!files.some(file => file.path === 'worker.js') || !files.some(file => file.path === 'assets/index.html')) throw Error('Missing runtime files');
   return hash(JSON.stringify(files));
+}
+// A binary glTF 2.0 file: "glTF" magic, version 2, a declared length equal to the file size, then a JSON chunk first.
+// Anything else under a .glb name (a renamed script, an HTML page, a truncated upload) is refused.
+export function isGlb(bytes) {
+  if (bytes.length < 20 || bytes.length > 2 * 1024 * 1024) return false;
+  const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+  return view.getUint32(0, true) === 0x46546c67 && view.getUint32(4, true) === 2
+    && view.getUint32(8, true) === bytes.length && view.getUint32(16, true) === 0x4e4f534a;
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
