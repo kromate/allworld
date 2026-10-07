@@ -60,7 +60,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   if (expectedDigest && expectedDigest !== digest) throw Error('Package digest changed');
   if (mode === 'check') console.log(digest);
   else {
-    if (process.env.GITHUB_EVENT_NAME !== 'workflow_dispatch' || process.env.GITHUB_REF !== 'refs/heads/main' || process.env.GITHUB_REPOSITORY !== 'kromate/allworld') throw Error('Deployment context rejected');
+    if (process.env.GITHUB_EVENT_NAME !== 'workflow_dispatch' || process.env.GITHUB_REF !== 'refs/heads/main' || process.env.GITHUB_REPOSITORY !== 'kromate/v1-allworld') throw Error('Deployment context rejected');
     if (!expectedDigest || !wrangler || !process.env.CLOUDFLARE_API_TOKEN || !process.env.CLOUDFLARE_ACCOUNT_ID) throw Error('Missing protected deployment inputs');
     if (checkPackage(root, sourceSha, publishing === 'true') !== expectedDigest) throw Error('Package changed before deploy');
     const result = spawnSync(process.execPath, [realpathSync(wrangler), 'deploy', '--config', join(realpathSync(root), 'wrangler.json')], {

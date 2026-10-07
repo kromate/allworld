@@ -7,7 +7,9 @@ root = pathlib.Path(destination)
 root.mkdir()
 with tarfile.open(archive) as source:
     members = source.getmembers()
-    if len(members) > 1000 or sum(item.size for item in members) > 50 * 1024 * 1024:
+    # Current street packs: about 5,850 entries and 90 MB including the Worker.
+    # Keep a bounded archive and enforce the same 5 MiB per-file ceiling as the package guard.
+    if len(members) > 6500 or sum(item.size for item in members) > 100 * 1024 * 1024 or any(item.size > 5 * 1024 * 1024 for item in members):
         raise ValueError('Package size limit')
     for item in members:
         path = pathlib.PurePosixPath(item.name)

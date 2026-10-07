@@ -90,10 +90,12 @@ test('source gate rejects unmerged and foreign-repository revisions', t => {
 test('deploy context rejects before invoking any executable', t => {
   const f = fixture(t), digest = checkPackage(f.root, sha, false);
   const guard = fileURLToPath(new URL('./guard-joinallworld-package.mjs', import.meta.url));
-  for (const context of [{ GITHUB_EVENT_NAME: 'push', GITHUB_REF: 'refs/heads/main', GITHUB_REPOSITORY: 'kromate/allworld' }, { GITHUB_EVENT_NAME: 'workflow_dispatch', GITHUB_REF: 'refs/heads/other', GITHUB_REPOSITORY: 'kromate/allworld' }, { GITHUB_EVENT_NAME: 'workflow_dispatch', GITHUB_REF: 'refs/heads/main', GITHUB_REPOSITORY: 'other/repo' }]) {
+  for (const context of [{ GITHUB_EVENT_NAME: 'push', GITHUB_REF: 'refs/heads/main', GITHUB_REPOSITORY: 'kromate/v1-allworld' }, { GITHUB_EVENT_NAME: 'workflow_dispatch', GITHUB_REF: 'refs/heads/other', GITHUB_REPOSITORY: 'kromate/v1-allworld' }, { GITHUB_EVENT_NAME: 'workflow_dispatch', GITHUB_REF: 'refs/heads/main', GITHUB_REPOSITORY: 'other/repo' }]) {
     const result = spawnSync(process.execPath, [guard, 'deploy', f.root, sha, 'false', digest, '/does-not-exist'], { encoding: 'utf8', env: { PATH: process.env.PATH, ...context } });
     assert.notEqual(result.status, 0); assert.match(result.stderr, /Deployment context rejected/);
   }
+  const allowed = spawnSync(process.execPath, [guard, 'deploy', f.root, sha, 'false', digest, '/does-not-exist'], { encoding: 'utf8', env: { PATH: process.env.PATH, GITHUB_EVENT_NAME: 'workflow_dispatch', GITHUB_REF: 'refs/heads/main', GITHUB_REPOSITORY: 'kromate/v1-allworld' } });
+  assert.notEqual(allowed.status, 0); assert.match(allowed.stderr, /Missing protected deployment inputs/);
 });
 
 test('archive extractor rejects traversal, symlink, hardlink and oversize entries', t => {
@@ -104,5 +106,18 @@ test('archive extractor rejects traversal, symlink, hardlink and oversize entrie
     assert.equal(spawnSync('python3', ['-c', script, archive, kind]).status, 0);
     const result = spawnSync('python3', [unpack, archive, destination], { encoding: 'utf8' });
     assert.notEqual(result.status, 0); assert.match(result.stderr, /Unsafe package entry|Package size limit|unexpected end/);
+  }
+});
+
+
+test('archive extractor accepts the street-pack count and rejects excess entries or aggregate bytes', t => {
+  const f = fixture(t), unpack = fileURLToPath(new URL('./unpack-joinallworld.py', import.meta.url));
+  for (const [name, count, size, accepted] of [['streets', 6000, 0, true], ['too-many', 6501, 0, false], ['too-large', 21, 5 * 1024 * 1024, false]]) {
+    const archive = join(f.root, `${name}.tar`), destination = join(f.root, name);
+    const script = `import tarfile,sys,io\nwith tarfile.open(sys.argv[1],'w') as t:\n data=bytes(int(sys.argv[3]))\n for n in range(int(sys.argv[2])):\n  i=tarfile.TarInfo('assets/pack-'+str(n)+'.txt'); i.size=len(data); t.addfile(i,io.BytesIO(data))\n`;
+    assert.equal(spawnSync('python3', ['-c', script, archive, String(count), String(size)]).status, 0);
+    const result = spawnSync('python3', [unpack, archive, destination], { encoding: 'utf8' });
+    if (accepted) assert.equal(result.status, 0, result.stderr);
+    else { assert.notEqual(result.status, 0); assert.match(result.stderr, /Package size limit/); }
   }
 });
